@@ -75,7 +75,10 @@ public class Card {
             short suit1 = ((Card) card1).getSuit();
             short suit2 = ((Card) card2).getSuit();
 
-            return suit1 - suit2;
+            if (((Card) card1).getSuit()).equals(((Card) card2).getSuit()){
+                return 1;
+            }
+            return 0;
         }
     }
 }
