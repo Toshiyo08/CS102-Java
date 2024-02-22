@@ -1,5 +1,7 @@
 // package CS102cardgame.src;
 
+import java.util.Comparator;
+
 public class Card {
     private int number;
     private String suit;
@@ -44,5 +46,36 @@ public class Card {
         name += " of " + this.suit;
 
         return name;
+    }
+
+    // Everything below is a Comparator copied from a different source
+    class rankComparator implements Comparator<Object> {
+        public int compare(Object card1, Object card2) throws ClassCastException {
+            // verify two Card objects are passed in
+            if (!((card1 instanceof Card) && (card2 instanceof Card))) {
+                throw new ClassCastException("A Card object was expeected.  Parameter 1 class: " + card1.getClass()
+                        + " Parameter 2 class: " + card2.getClass());
+            }
+
+            short rank1 = ((Card) card1).getRank();
+            short rank2 = ((Card) card2).getRank();
+
+            return rank1 - rank2;
+        }
+    }
+
+    class suitComparator implements Comparator<Object> {
+        public int compare(Object card1, Object card2) throws ClassCastException {
+            // verify two Card objects are passed in
+            if (!((card1 instanceof Card) && (card2 instanceof Card))) {
+                throw new ClassCastException("A Card object was expeected.  Parameter 1 class: " + card1.getClass()
+                        + " Parameter 2 class: " + card2.getClass());
+            }
+
+            short suit1 = ((Card) card1).getSuit();
+            short suit2 = ((Card) card2).getSuit();
+
+            return suit1 - suit2;
+        }
     }
 }
