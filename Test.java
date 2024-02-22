@@ -4,7 +4,7 @@ public class Test {
         deck.shuffle();
         for (int i = 0; i < 52; i++) {
             Card currentCard = deck.getCard(i);
-            System.out.println(currentCard.getValue() + " of " + currentCard.getSuit());
+            System.out.println(currentCard.toString());
         }
         
     }

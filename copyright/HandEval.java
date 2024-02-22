@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+//package copyright;
 
 import java.util.Arrays;
 

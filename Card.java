@@ -10,6 +10,9 @@ public class Card {
         this.suit = suit;
         this.number = number;
     }
+    public Card(){
+        
+    }
 
     public int getNumber() {
         return this.number;
@@ -57,8 +60,8 @@ public class Card {
                         + " Parameter 2 class: " + card2.getClass());
             }
 
-            short rank1 = ((Card) card1).getRank();
-            short rank2 = ((Card) card2).getRank();
+            int rank1 = ((Card) card1).getNumber();
+            int rank2 = ((Card) card2).getNumber();
 
             return rank1 - rank2;
         }
@@ -72,10 +75,10 @@ public class Card {
                         + " Parameter 2 class: " + card2.getClass());
             }
 
-            short suit1 = ((Card) card1).getSuit();
-            short suit2 = ((Card) card2).getSuit();
+            // short suit1 = ((Card) card1).getSuit();
+            // short suit2 = ((Card) card2).getSuit();
 
-            if (((Card) card1).getSuit()).equals(((Card) card2).getSuit()){
+            if (((Card) card1).getSuit().equals(((Card) card2).getSuit())){
                 return 1;
             }
             return 0;
