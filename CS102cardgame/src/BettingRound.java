@@ -28,9 +28,17 @@ public class BettingRound {
                 // Change plyrturninput to variable that takes in player/bot action
 
                 if (plyrturninput.equals("Call")) {
-                    plyr.setCall(currentHighestBet);
-                    plyr.setCheckTrue();
-                    isActionDone = true;
+                    // If balance less than what they want to bet
+                    if (plyr.getChips() < currentHighestBet) {
+                        // All in
+                        // Check for double counting
+                        plyr.setCall(plyr.getChips());
+                    } else {
+                        plyr.setCall(currentHighestBet);
+                        plyr.setCheckTrue();
+                        isActionDone = true;
+                    }
+                    
                 } else if (plyrturninput.equals("Raise")) {
                     plyrBetInput = plyrbet.nextInt();
                     plyr.setRaise(plyrBetInput);
