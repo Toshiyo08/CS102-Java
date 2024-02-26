@@ -36,6 +36,9 @@ public class BettingRound {
                     plyr.setRaise(plyrBetInput);
                     table1.raiseCurrentBetAmt(plyrBetInput);
                     plyrbet.close();
+                    for (Player e : table1.getActivePlayers()) {
+                        e.setCheckfalse();
+                    }
                     isActionDone = true;
                 } else if (plyrturninput.equals("Fold")) {
                     plyr.fold();
