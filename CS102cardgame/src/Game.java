@@ -15,6 +15,7 @@ public class Game {
         ArrayList<Player> playersList = new ArrayList<Player>();
         int numberOfPlayers = 0;
 
+        // Keeps prompting for number of players to start game
         while(true) {
             Scanner playerNumbers = null;
             try {
@@ -31,7 +32,7 @@ public class Game {
         }
         
         // Initialise a player that user controls and add into list of players
-        Player userPlayer = new Player();
+        Player userPlayer = new Player("Tom", "Player");
         playersList.add(userPlayer);
 
         // Initialise number of bots and add them into list of players
@@ -48,9 +49,6 @@ public class Game {
         //     }
         // }
 
-
-        // Initialise Players
-        Player plyr = new Player("Tom", "Player");
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
         Table table1 = new Table();
