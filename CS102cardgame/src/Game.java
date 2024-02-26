@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+//package CS102cardgame.src;
 import java.util.*;
 
 public class Game {
@@ -13,12 +13,12 @@ public class Game {
         // plyr balance outside
         // Initialise player
 
-        while (Game) {
-            // Prompt for new game
-            while (round) {
-                // stuff
-            }
-        }
+        // while (Game) {
+        //     // Prompt for new game
+        //     while (round) {
+        //         // stuff
+        //     }
+        // }
 
 
         // Initialise Players
@@ -26,6 +26,16 @@ public class Game {
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
         Table table1 = new Table();
+        //Card cards = new Card(null, 0);
+
+        //game constructor
+        public Game() {
+                this.numTurns = 0;
+                this.bettingRoundComplete = false;
+        }
+
+
+
         // Shuffle Deck---------------------------------------------------------------------------
         deck1.shuffleDeck();
 
@@ -100,7 +110,7 @@ public class Game {
 
         // Deal Flop (3 cards)---------------------------------------------------------------------------
         for (int i = 0; i < 3; i++) {
-            Table.drawComm(deck1.dealCard);
+            Table.drawComm(deck1.dealCard());
         }
 
         //2nd Betting Round---------------------------------------------------------------------------

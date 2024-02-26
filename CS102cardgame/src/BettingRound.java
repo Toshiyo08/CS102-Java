@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class BettingRound {
     // private 
 
+    //checks each player with other player's check amount 
     public Boolean isCheckedCalled (Player plyr, Table table1) {
         if (plyr.getBet() == table1.getCurrentBetAmt()) {
             return true;
@@ -11,6 +12,7 @@ public class BettingRound {
         }
     }
 
+    //asks player for action and updates player's bet
     public Boolean isPlayerTurnComplete (Player plyr, int currentHighestBet, Table table1) {
         int numChecks = 0;
         Scanner plyrturn = new Scanner(System.in);
@@ -27,6 +29,9 @@ public class BettingRound {
                 // DOES NOT WORK FOR BOTS, bots cannot input
                 // Change plyrturninput to variable that takes in player/bot action
 
+
+                //add exceptions for player input 
+                //change player turn input to accept bot's input -> once bot receives prompt for action, it needs to create hand eval class instance and return 
                 if (plyrturninput.equals("Call")) {
                     plyr.setCall(currentHighestBet);
                     plyr.setCheckTrue();
@@ -73,6 +78,8 @@ public class BettingRound {
         
         return true;
     }
+
+
 }
 
 
