@@ -101,9 +101,8 @@ public class Game {
         }
 
         // Check if win condition fulfilled:
-            // If everyone but 1 person fold
-            // If everyone but 2 people fold, and the 2 people check and call each other
-            // IN ESSENCE as long as more than 1 person remains, openHand() can only be called AFTER river has been revealed
+            // If everyone but 1 person fold, move to openHand()
+            // BUT as long as more than 1 person remains, openHand() can only be called AFTER river(last card) has been revealed
                 // Procede to openHand() IF AND ONLY IF river has been revealed
         // getWinCheck()
 
