@@ -1,5 +1,7 @@
 //package CS102cardgame.src;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Game {
     private int numTurns;
@@ -9,9 +11,35 @@ public class Game {
         // In 1 Game, multiple rounds:
         // In 1 round: 
 
+        // Initiliase an Arraylist to store number of players
+        ArrayList<Player> playersList = new ArrayList<Player>();
+        int numberOfPlayers = 0;
 
-        // plyr balance outside
-        // Initialise player
+        while(true) {
+            Scanner playerNumbers = null;
+            try {
+                System.out.println("Enter number of players: ");
+                numberOfPlayers = playerNumbers.nextInt();
+                playerNumbers.close();
+                break;
+            } catch (InputMismatchException ime){
+                System.out.println("Please enter valid number");
+            }
+            finally {
+                playerNumbers.nextLine();
+            }
+        }
+        
+        // Initialise a player that user controls and add into list of players
+        Player userPlayer = new Player();
+        playersList.add(userPlayer);
+
+        // Initialise number of bots and add them into list of players
+        for (int i = 0; i < numberOfPlayers - 1; i++){
+            playersList.add(new PlayerBot());
+        }
+
+        // initialise balance of chips for all players outside of game loop
 
         // while (Game) {
         //     // Prompt for new game
