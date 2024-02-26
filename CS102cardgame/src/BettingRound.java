@@ -4,7 +4,7 @@ public class BettingRound {
     // private 
 
     public Boolean isCheckedCalled (Player plyr, Table table1) {
-        if (plyr.getBet() == table1.getCurrentBetAmt()) {
+        if (plyr.getBet() == table1.getCurrentBetAmt() && plyr.getCheckStatus() == true) {
             return true;
         } else {
             return false;
