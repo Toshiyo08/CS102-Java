@@ -74,7 +74,7 @@ public class Card {
                 rankname = "Ace";
                 break;
         
-            default:
+            default: //can remove?
                 rankname = "Joker";
                 break;
         }
