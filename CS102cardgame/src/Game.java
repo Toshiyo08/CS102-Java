@@ -13,15 +13,16 @@ public class Game {
 
         // Initiliase an Arraylist to store number of players
         ArrayList<Player> playersList = new ArrayList<Player>();
+
         int numberOfPlayers = 0;
 
+        Scanner playerNumbers = new Scanner(System.in);
         // Keeps prompting for number of players to start game
         while(true) {
-            Scanner playerNumbers = null;
             try {
                 System.out.println("Enter number of players: ");
+                playerNumbers = new Scanner(System.in);
                 numberOfPlayers = playerNumbers.nextInt();
-                playerNumbers.close();
                 break;
             } catch (InputMismatchException ime){
                 System.out.println("Please enter valid number");
@@ -30,6 +31,7 @@ public class Game {
                 playerNumbers.nextLine();
             }
         }
+        playerNumbers.close();
         
         // Initialise a player that user controls and add into list of players
         Player userPlayer = new Player("Tom", "Player");
