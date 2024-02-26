@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+// package CS102cardgame.src;
 
 public class Card {
     private final String suit;
