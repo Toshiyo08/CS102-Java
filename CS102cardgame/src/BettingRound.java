@@ -3,14 +3,16 @@ import java.util.Scanner;
 public class BettingRound {
     // private 
 
+    //checks each player with other player's check amount 
     public Boolean isCheckedCalled (Player plyr, Table table1) {
-        if (plyr.getBet() == table1.getCurrentBetAmt()) {
+        if (plyr.getBet() == table1.getCurrentBetAmt() && plyr.getCheckStatus() == true) {
             return true;
         } else {
             return false;
         }
     }
 
+    //asks player for action and updates player's bet
     public Boolean isPlayerTurnComplete (Player plyr, int currentHighestBet, Table table1) {
         int numChecks = 0;
         Scanner plyrturn = new Scanner(System.in);
@@ -27,15 +29,29 @@ public class BettingRound {
                 // DOES NOT WORK FOR BOTS, bots cannot input
                 // Change plyrturninput to variable that takes in player/bot action
 
+
+                //add exceptions for player input 
+                //change player turn input to accept bot's input -> once bot receives prompt for action, it needs to create hand eval class instance and return 
                 if (plyrturninput.equals("Call")) {
-                    plyr.setCall(currentHighestBet);
-                    plyr.setCheckTrue();
-                    isActionDone = true;
+                    // If balance less than what they want to bet
+                    if (plyr.getChips() < currentHighestBet) {
+                        // All in
+                        // Check for double counting
+                        plyr.setCall(plyr.getChips());
+                    } else {
+                        plyr.setCall(currentHighestBet);
+                        plyr.setCheckTrue();
+                        isActionDone = true;
+                    }
+                    
                 } else if (plyrturninput.equals("Raise")) {
                     plyrBetInput = plyrbet.nextInt();
                     plyr.setRaise(plyrBetInput);
                     table1.raiseCurrentBetAmt(plyrBetInput);
                     plyrbet.close();
+                    for (Player e : table1.getActivePlayers()) {
+                        e.setCheckfalse();
+                    }
                     isActionDone = true;
                 } else if (plyrturninput.equals("Fold")) {
                     plyr.fold();
@@ -73,6 +89,8 @@ public class BettingRound {
         
         return true;
     }
+
+
 }
 
 

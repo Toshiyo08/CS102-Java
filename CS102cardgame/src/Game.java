@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+//package CS102cardgame.src;
 import java.util.*;
 
 public class Game {
@@ -13,12 +13,12 @@ public class Game {
         // plyr balance outside
         // Initialise player
 
-        while (Game) {
-            // Prompt for new game
-            while (round) {
-                // stuff
-            }
-        }
+        // while (Game) {
+        //     // Prompt for new game
+        //     while (round) {
+        //         // stuff
+        //     }
+        // }
 
 
         // Initialise Players
@@ -26,6 +26,16 @@ public class Game {
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
         Table table1 = new Table();
+        //Card cards = new Card(null, 0);
+
+        //game constructor
+        public Game() {
+                this.numTurns = 0;
+                this.bettingRoundComplete = false;
+        }
+
+
+
         // Shuffle Deck---------------------------------------------------------------------------
         deck1.shuffleDeck();
 
@@ -91,16 +101,15 @@ public class Game {
         }
 
         // Check if win condition fulfilled:
-            // If everyone but 1 person fold
-            // If everyone but 2 people fold, and the 2 people check and call each other
-            // IN ESSENCE as long as more than 1 person remains, openHand() can only be called AFTER river has been revealed
+            // If everyone but 1 person fold, move to openHand()
+            // BUT as long as more than 1 person remains, openHand() can only be called AFTER river(last card) has been revealed
                 // Procede to openHand() IF AND ONLY IF river has been revealed
         // getWinCheck()
 
 
         // Deal Flop (3 cards)---------------------------------------------------------------------------
         for (int i = 0; i < 3; i++) {
-            Table.drawComm(deck1.dealCard);
+            Table.drawComm(deck1.dealCard());
         }
 
         //2nd Betting Round---------------------------------------------------------------------------
