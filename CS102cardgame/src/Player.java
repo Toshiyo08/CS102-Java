@@ -1,11 +1,13 @@
 package CS102cardgame.src;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private String type;
     private String name;
     private boolean playing;
+    private boolean check;
     private boolean bigBlind;
     private boolean smallBlind;
     private int betAmt;
@@ -16,11 +18,15 @@ public class Player {
         this.name = name;
         this.type = type;
         this.playing = true;
-        this.hand = null;
+        this.hand = new ArrayList<Card>();
         this.playerChips = 100;
         this.betAmt = 0;
         this.bigBlind = false;
         this.smallBlind = false;
+    }
+
+    public Boolean getCheckStatus () {
+        return check;
     }
 
     public int getBet(){
@@ -29,6 +35,14 @@ public class Player {
 
     public int getChips(){
         return this.playerChips;
+    }
+    
+    public Boolean setCheckTrue(){
+        return this.check = true;
+    }
+
+    public Boolean setCheckfalse(){
+        return this.check = false;
     }
     
     // Misc Actions: Draw, Buy in
@@ -54,7 +68,7 @@ public class Player {
     }
 
     public Boolean setCheck(String answer) {
-        if (answer.equal("Check")){
+        if (answer.equals("Check")){
             return true;
         } else {
             return false;
