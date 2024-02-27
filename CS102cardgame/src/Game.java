@@ -10,6 +10,7 @@ public class Game {
     public static void main(String[] args) {
         // In 1 Game, multiple rounds:
         // In 1 round: 
+        Table table1 = new Table();
 
         // Initiliase an Arraylist to store number of players
         ArrayList<Player> playersList = new ArrayList<Player>();
@@ -35,11 +36,12 @@ public class Game {
         
         // Initialise a player that user controls and add into list of players
         Player userPlayer = new Player("Tom", "Player");
-        playersList.add(userPlayer);
+
+        table1.addNewPlayer(userPlayer);
 
         // Initialise number of bots and add them into list of players
         for (int i = 0; i < numberOfPlayers - 1; i++){
-            playersList.add(new PlayerBot());
+            table1.addNewPlayer(new PlayerBot());
         }
 
         // initialise balance of chips for all players outside of game loop
@@ -53,7 +55,7 @@ public class Game {
 
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
-        Table table1 = new Table();
+        
         //Card cards = new Card(null, 0);
 
         //game constructor

@@ -11,6 +11,8 @@ public class Table {
     public Table() {
         this.commCards = null;
         this.pot = 0;
+        this.currentBetAmt = 0;
+        this.activePlayers = new ArrayList<Player>();
     }
 
     public void addNewPlayer(Player plyr) {
