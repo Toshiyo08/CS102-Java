@@ -111,7 +111,7 @@ public class PlayerBot extends Player{
     }
 
 
-    public void basicBot(int tightness, int aggression) {
+    public void basicBotSettings(int tightness, int aggression) {
         if (tightness < 0 || tightness > 100) {
             throw new IllegalArgumentException("Invalid tightness setting");
         }
@@ -120,7 +120,10 @@ public class PlayerBot extends Player{
         }
         this.tightness = tightness;
         this.aggression = aggression;
-        double chenScore = calculateChenScore(hand);
-        double chenScoreToPlay = tightness * 0.2;
+    
     }
+
+    //Action class or smth:
+    double chenScore = calculateChenScore(hand);
+    double chenScoreToPlay = tightness * 0.2;
 }
