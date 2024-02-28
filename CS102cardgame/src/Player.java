@@ -1,4 +1,4 @@
-//package CS102cardgame.src;
+// package CS102cardgame.src;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,14 @@ public class Player {
         this.betAmt = 0;
         this.bigBlind = false;
         this.smallBlind = false;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getType() {
+        return this.name;
     }
 
     public Boolean getCheckStatus () {

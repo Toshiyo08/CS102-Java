@@ -1,5 +1,7 @@
 //package CS102cardgame.src;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Game {
     private int numTurns;
@@ -7,25 +9,50 @@ public class Game {
 
     public static void main(String[] args) {
         // In 1 Game, multiple rounds:
-        // In 1 round: 
 
+        // Initiliase an Arraylist to store number of players
+        ArrayList<Player> playersList = new ArrayList<Player>();
 
-        // plyr balance outside
-        // Initialise player
+        int numberOfPlayers = 0;
 
-        // while (Game) {
-        //     // Prompt for new game
-        //     while (round) {
-        //         // stuff
-        //     }
-        // }
+        Scanner playerNumbers = new Scanner(System.in);
+        // Keeps prompting for number of players to start game
+        while(true) {
+            try {
+                System.out.println("Enter number of players: ");
+                playerNumbers = new Scanner(System.in);
+                numberOfPlayers = playerNumbers.nextInt();
+                break;
+            } catch (InputMismatchException ime){
+                System.out.println("Please enter valid number");
+            }
+            finally {
+                playerNumbers.nextLine();
+            }
+        }
+        playerNumbers.close();
+        
+        // Initialise a player that user controls and add into list of players
+        Player userPlayer = new Player("Tom", "Player");
+        playersList.add(userPlayer);
+        
 
+        // Initialise number of bots and add them into list of players
+        for (int i = 0; i < numberOfPlayers - 1; i++){
+            playersList.add(new PlayerBot());
+        }
 
-        // Initialise Players
-        Player plyr = new Player("Tom", "Player");
+        // initialise balance of chips for all players outside of game loop
+
+        // In 1 round: =============================================================================================
+        Table table1 = new Table();
+        table1.addNewPlayer(userPlayer);
+        for (int i = 0; i < numberOfPlayers - 1; i++){
+            table1.addNewPlayer(new PlayerBot());
+        }
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
-        Table table1 = new Table();
+        
         //Card cards = new Card(null, 0);
 
         //game constructor

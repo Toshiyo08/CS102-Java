@@ -1,4 +1,7 @@
+
 //package CS102cardgame.src;
+
+
 
 public class Card {
     private final String suit;
@@ -74,7 +77,7 @@ public class Card {
                 rankname = "Ace";
                 break;
         
-            default:
+            default: //can remove?
                 rankname = "Joker";
                 break;
         }
