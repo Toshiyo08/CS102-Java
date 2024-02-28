@@ -12,15 +12,43 @@ public class PlayerBot extends Player{
     /** Evaluate strength of starting hand */
     private double chenscore;
 
-    public void calculateChenScore (List<Card> hand){
+    public PlayerBot (String name, String type) {
+        super(name, type);
+    }
+
+    public double  calculateChenScore (List<Card> hand){
         chenscore = 0;
 
         Card card1 = hand.get(0);
         Card card2 = hand.get(1);
         int rank1 = card1.getRank();
-        int suit1 = card1.getSuit();
+        String temp_suit1 = card1.getSuit();
         int rank2 = card2.getRank();
-        int suit2 = card2.getSuit();
+        String temp_suit2 = card2.getSuit();
+        int suit1;
+        int suit2;
+        if (temp_suit1.equals("Ace")){
+            suit1 = 14;
+        } else if (temp_suit1.equals("King")){
+            suit1 = 13;
+        } else if (temp_suit1.equals("Queen")){
+            suit1 = 12;
+        } else if (temp_suit1.equals("Jack")){
+            suit1 = 11;
+        } else {
+            suit1 = Integer.parseInt(temp_suit1);
+        }
+        if (temp_suit2.equals("Ace")){
+            suit2 = 14;
+        } else if (temp_suit2.equals("King")){
+            suit2 = 13;
+        } else if (temp_suit2.equals("Queen")){
+            suit2 = 12;
+        } else if (temp_suit2.equals("Jack")){
+            suit2 = 11;
+        } else {
+            suit2 = Integer.parseInt(temp_suit2);
+        }
         int highRank = Math.max(rank1, rank2);
         int lowRank = Math.min(rank1, rank2);
         int rankDiff = highRank - lowRank;
@@ -34,11 +62,11 @@ public class PlayerBot extends Player{
         //Ace
         if (highRank == 14) {
             score = 10.0;
-        } else if (highRank == 13) { //King
+        } else if (highRank == 13) { 
             score = 8.0;
-        } else if (highRank == 12) { //Queen
+        } else if (highRank == 12) { 
             score = 7.0;
-        } else if (highRank == 11) { //Jack
+        } else if (highRank == 11) { 
             score = 6.0;
         } else {
             score = (highRank + 2) / 2.0;
@@ -79,7 +107,7 @@ public class PlayerBot extends Player{
         }
         
         // 6. Round half point scores up.
-        return Math.round(score);        
+        return (double) Math.round(score);        
     }
 
 
@@ -92,5 +120,7 @@ public class PlayerBot extends Player{
         }
         this.tightness = tightness;
         this.aggression = aggression;
+        double chenScore = calculateChenScore(hand);
+        double chenScoreToPlay = tightness * 0.2;
     }
 }
