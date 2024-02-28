@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+//package CS102cardgame.src;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,8 @@ public class Player {
     // Game Actions: Fold, Call, Raise, Check
     public void fold() {
         this.hand = null;
-        playerChips = 0;
+        //pplayerchips will still remain
+        //playerChips = 0;
         this.playing = false;
     }
 

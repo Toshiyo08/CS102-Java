@@ -1,4 +1,4 @@
-package CS102cardgame.src;
+//package CS102cardgame.src;
 
 import java.util.*;
 
@@ -21,6 +21,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    //optional
     public void cutDeck(int cutDeckNum) {
         
     }
