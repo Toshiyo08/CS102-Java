@@ -89,6 +89,7 @@ public class Hand2 {                        /*If no Turn or River, value taken i
             // 10 Check High Card
 
             str8Suit(handTable); // Returns array of 5 SF hand, or null if no
+            // For each card, check if got straight
             isRoyal(str8Suit(handTable)); // Returns RSF if ace, SF if no
             str8F(handTable); // Returns SF if yes, 0 if no
             is4Kind(handTable); // Returns 4kind if yes, 0 if no
