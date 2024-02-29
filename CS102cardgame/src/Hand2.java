@@ -133,5 +133,52 @@ public class Hand2 {                        /*If no Turn or River, value taken i
         return evaledHandTable;
     }
 
+    public static int isFH(ArrayList<Card> handTable) { // Should this return array of points, conflict, conflict#2?
+                                                        // {FH Points, pair points, remaining 2}
+        ArrayList<Card> handTableCopy = new ArrayList<Card>(handTable);
+
+        // Obtains 3 same suit of FH
+        ArrayList<Card> FHeval3 = new ArrayList<Card>();
+        for (int i = 0; i < handTableCopy.size(); i++) {
+            for (int j = i+1; j < handTableCopy.size(); j++) {
+                if (handTableCopy.get(i).getRank() == (handTableCopy.get(i).getRank())) {
+                    FHeval3.add(handTableCopy.get(j));
+                    handTableCopy.remove(j);
+                }
+            }
+            if (FHeval3.size() == 3) {
+                break;
+            } else {
+                FHeval3.clear();
+            }
+        }
+        // If no 3 same suit, is not a FH
+        if (FHeval3.size() != 3) {
+            return 0;
+        } 
+
+        // Obtains 2 same suit of remaining FH
+        ArrayList<Card> FHeval2 = new ArrayList<Card>();
+        for (int i = 0; i < handTableCopy.size(); i++) {
+            for (int j = i + 1; j < handTableCopy.size(); j++) {
+                if (handTableCopy.get(i).getRank() == (handTableCopy.get(i).getRank())) {
+                    FHeval2.add(handTableCopy.get(j));
+                    handTableCopy.remove(j);
+                }
+            }
+            if (FHeval2.size() == 2) {
+                break;
+            } else {
+                FHeval2.clear();
+            }
+        }
+        // If no 2 same suit, is not a FH
+        if (FHeval3.size() != 2) {
+            return 0;
+        } 
+
+        return 20; // ??? Return FH points cause by this line, we've found a 3 same suit and 2 same suit
+    }
+
     // Change
 }
