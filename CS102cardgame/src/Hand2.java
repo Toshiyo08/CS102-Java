@@ -89,14 +89,23 @@ public class Hand2 {                        /*If no Turn or River, value taken i
             // 10 Check High Card
 
             str8Suit(handTable); // Returns array of 5 SF hand, or null if no
-            // For each card, check if got straight
+// For each card, check array first 
             isRoyal(str8Suit(handTable)); // Returns RSF if ace, SF if no
             str8F(handTable); // Returns SF if yes, 0 if no
             is4Kind(handTable); // Returns 4kind if yes, 0 if no
+            // Loop through array to find 4 cards of same rank
             isFH(handTable); // Returns FH if yes, 0 if no ||||| checks then remove 3 kind, checks then remove 2 kind
+            // Loop through array to find 3 cards of same rank
+            // Remove those card into a separate array, if don't have, return 0
+            // Loop through remaining 4 cards to find 2 cards of same rank, if don't have return 0
+            // Remove those cards into array from above
+
+            // Loop through remaining 2 cards to find pair, if have, assign point, if not, high card
             flush(handTable); // Returns F if yes, 0 if no
+            // Loop through array to find 5 cards of same suit
             str8(handTable); // Returns S if yes, 0 if no
             is3Kind(handTable); // Returns 3kind if yes, 0 if no
+            // Loop through array to find
             is2Pair(handTable); // Returns 2pair if yes, 0 if no
             isPair(handTable); // Returns pair if yes, highCard() if no
             highCard(handTable); // Returns highest rank card
