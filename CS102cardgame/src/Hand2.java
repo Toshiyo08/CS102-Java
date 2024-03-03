@@ -5,42 +5,41 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Hand2 {                        /*If no Turn or River, value taken in parameter is 0 or B */
+public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B */
     public int getHandValue(ArrayList<Card> playerHand, ArrayList<Card> tableCommCards) {
-        // Royal Straight Flush 13      AKQJ10, same suit
-        // Straight Flush       12      56789, same suit
-        // 4 kind               11      '7777'Q
-        // Full House (3:2)     10      '999'KK'(3:2)
-        // Flush                8       Same suit
-        // Straight             7       '56789'
-        // 3 kind               6       '333'45
-        // 2 pairs              4       'AA88'J
-        // 1 pair               2       '66'5K2
-        // High Card            1       2846'A'
+        // Royal Straight Flush 13 AKQJ10, same suit
+        // Straight Flush 12 56789, same suit
+        // 4 kind 11 '7777'Q
+        // Full House (3:2) 10 '999'KK'(3:2)
+        // Flush 8 Same suit
+        // Straight 7 '56789'
+        // 3 kind 6 '333'45
+        // 2 pairs 4 'AA88'J
+        // 1 pair 2 '66'5K2
+        // High Card 1 2846'A'
 
-        // Check suits first. 
+        // Check suits first.
         // If duplicate suit = 5
-            // RSFlush, SFlush, Flush
-                // RSF: Check for Ace, else
-                // SF: Check for consecutive ranks else
-                // F: Assign points
-
+        // RSFlush, SFlush, Flush
+        // RSF: Check for Ace, else
+        // SF: Check for consecutive ranks else
+        // F: Assign points
 
         // Check ranks
         // If consecutive rank = 5
-            // Straight
+        // Straight
         // If duplicate rank = 4
-            // 4 kind
+        // 4 kind
         // If duplicate rank = 3
-            // Fhouse, 3 kind
-                // FH: Check other 2 is pair, else
-                // 3k: Assign points
+        // Fhouse, 3 kind
+        // FH: Check other 2 is pair, else
+        // 3k: Assign points
         // If duplicate rank = 2
-            // 2 pair, 1 pair
-                // 2p: Check other 3 for pair, else
-                // 1p: Assign points
+        // 2 pair, 1 pair
+        // 2p: Check other 3 for pair, else
+        // 1p: Assign points
         // High card :(
-        
+
         // Create an array for the function to refer
         ArrayList<Card> handTable = new ArrayList<Card>();
         for (int i = 0; i < playerHand.size(); i++) {
@@ -51,33 +50,34 @@ public class Hand2 {                        /*If no Turn or River, value taken i
         }
 
         // A K K Q J 10 8
-        
-// Go from more strict to less strict. conditions MUST be like (if straight && flush)
-//                                                        THEN (if straight) OR (if flush)
+
+        // Go from more strict to less strict. conditions MUST be like (if straight &&
+        // flush)
+        // THEN (if straight) OR (if flush)
         // If consecutive:
-                // Check duplicate suits = 5
-                    // If 5 duplicates: 
-                        // Check Ace
-                            // If Ace:
-                                // RSF points
-                            // If no Ace:
-                                // SF points
-                    // If <5 duplicates:
-                        // S points
-            // If not consecutive:
-                // Check duplicate ranks:
-                    // 4 duplicate = 4 kind + high card
-                    // 3 duplicate = FH (3kind priority)
-                    // 3 duplicate = triple + high card
-                    // 2 duplicate = 2 pair + high card
-                    // 2 duplicate = 1 pair + high card
-                    // 1 duplicate = high card :(
-        
+        // Check duplicate suits = 5
+        // If 5 duplicates:
+        // Check Ace
+        // If Ace:
+        // RSF points
+        // If no Ace:
+        // SF points
+        // If <5 duplicates:
+        // S points
+        // If not consecutive:
+        // Check duplicate ranks:
+        // 4 duplicate = 4 kind + high card
+        // 3 duplicate = FH (3kind priority)
+        // 3 duplicate = triple + high card
+        // 2 duplicate = 2 pair + high card
+        // 2 duplicate = 1 pair + high card
+        // 1 duplicate = high card :(
 
         while (!evalcomplete(handTable)) {
             // Sort the hand+table in order of ranking
             Collections.sort(handTable, Comparator.comparing(Card::getRank).reversed());
-            // 1 Check RSF: Find 5 consecutive && same suit, put into new array and check Ace
+            // 1 Check RSF: Find 5 consecutive && same suit, put into new array and check
+            // Ace
             // 2 Check SF: Find 5 consecutive && same suit
             // 6 Check S: Find 5 consecutive
             // 5 Check F: Find 5 flush
@@ -89,18 +89,21 @@ public class Hand2 {                        /*If no Turn or River, value taken i
             // 10 Check High Card
 
             str8Suit(handTable); // Returns array of 5 SF hand, or null if no
-// For each card, check array first 
+            // For each card, check array first
             isRoyal(str8Suit(handTable)); // Returns RSF if ace, SF if no
             str8F(handTable); // Returns SF if yes, 0 if no
             is4Kind(handTable); // Returns 4kind if yes, 0 if no
             // Loop through array to find 4 cards of same rank
-            isFH(handTable); // Returns FH if yes, 0 if no ||||| checks then remove 3 kind, checks then remove 2 kind
+            isFH(handTable); // Returns FH points if yes, 0 if no ||||| checks then remove 3 kind, checks
+                             // then remove 2 kind
             // Loop through array to find 3 cards of same rank
             // Remove those card into a separate array, if don't have, return 0
-            // Loop through remaining 4 cards to find 2 cards of same rank, if don't have return 0
+            // Loop through remaining 4 cards to find 2 cards of same rank, if don't have
+            // return 0
             // Remove those cards into array from above
 
-            // Loop through remaining 2 cards to find pair, if have, assign point, if not, high card
+            // Loop through remaining 2 cards to find pair, if have, assign point, if not,
+            // high card
             flush(handTable); // Returns F if yes, 0 if no
             // Loop through array to find 5 cards of same suit
             str8(handTable); // Returns S if yes, 0 if no
@@ -120,12 +123,12 @@ public class Hand2 {                        /*If no Turn or River, value taken i
     // A-H A-H K-H K-H Q-H J-H 10-H: RSF
     // 4-S 4-S 4-S J-S J-S K-D K-D: FH 444KK or F444JJ? Answer: FH
     // 9-H 8-H 7-C 6-C 5-C 3-C 2-C: Str8:98765 or F:76532? Answer: Str8
-        public static ArrayList<Card> str8Suit(ArrayList<Card> handTable) {
+    public static ArrayList<Card> str8Suit(ArrayList<Card> handTable) {
         ArrayList<Card> evaledHandTable = new ArrayList<Card>();
         for (int i = 0; i < handTable.size(); i++) {
 
             if (handTable.get(i).getRank() == handTable.get(i + 1).getRank()) {
-                
+
             }
 
             evaledHandTable.add(handTable.get(i));
@@ -133,52 +136,52 @@ public class Hand2 {                        /*If no Turn or River, value taken i
         return evaledHandTable;
     }
 
-    public static int isFH(ArrayList<Card> handTable) { // Should this return array of points, conflict, conflict#2?
-                                                        // {FH Points, pair points, remaining 2}
+    public static int isFH(ArrayList<Card> handTable) { 
         ArrayList<Card> handTableCopy = new ArrayList<Card>(handTable);
-
-        // Obtains 3 same suit of FH
         ArrayList<Card> FHeval3 = new ArrayList<Card>();
-        for (int i = 0; i < handTableCopy.size(); i++) {
-            for (int j = i+1; j < handTableCopy.size(); j++) {
-                if (handTableCopy.get(i).getRank() == (handTableCopy.get(i).getRank())) {
+
+        for (int i = 0; i < handTable.size(); i++) {
+            for (int j = 0; j < handTable.size(); j++) {
+                if ((handTable.get(i).getRank() == (handTable.get(j).getRank()))) {
                     FHeval3.add(handTableCopy.get(j));
-                    handTableCopy.remove(j);
+                    handTableCopy.set(j, new Card(null, 0));
                 }
             }
+
             if (FHeval3.size() == 3) {
                 break;
             } else {
                 FHeval3.clear();
             }
         }
-        // If no 3 same suit, is not a FH
+
         if (FHeval3.size() != 3) {
             return 0;
-        } 
+        }
 
-        // Obtains 2 same suit of remaining FH
         ArrayList<Card> FHeval2 = new ArrayList<Card>();
-        for (int i = 0; i < handTableCopy.size(); i++) {
-            for (int j = i + 1; j < handTableCopy.size(); j++) {
-                if (handTableCopy.get(i).getRank() == (handTableCopy.get(i).getRank())) {
+
+        for (int i = 0; i < handTable.size(); i++) {
+            for (int j = 0; j < handTable.size(); j++) {
+                if ((handTableCopy.get(i).getRank() == (handTableCopy.get(j).getRank())) && handTableCopy.get(i).getRank() != 0) {
                     FHeval2.add(handTableCopy.get(j));
-                    handTableCopy.remove(j);
                 }
             }
+            
             if (FHeval2.size() == 2) {
                 break;
             } else {
                 FHeval2.clear();
             }
         }
-        // If no 2 same suit, is not a FH
-        if (FHeval3.size() != 2) {
+        
+        if (FHeval2.size() != 2) {
+            System.out.println("RIP");
             return 0;
-        } 
+        }
 
-        return 20; // ??? Return FH points cause by this line, we've found a 3 same suit and 2 same suit
+        return 20; 
     }
 
-    // Change
+
 }
