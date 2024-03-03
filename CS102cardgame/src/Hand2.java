@@ -126,11 +126,8 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
     public static ArrayList<Card> str8Suit(ArrayList<Card> handTable) {
         ArrayList<Card> evaledHandTable = new ArrayList<Card>();
         for (int i = 0; i < handTable.size(); i++) {
-
             if (handTable.get(i).getRank() == handTable.get(i + 1).getRank()) {
-
             }
-
             evaledHandTable.add(handTable.get(i));
         }
         return evaledHandTable;
@@ -167,7 +164,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                     FHeval2.add(handTableCopy.get(j));
                 }
             }
-            
+
             if (FHeval2.size() == 2) {
                 break;
             } else {
@@ -181,6 +178,31 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         }
 
         return 20; 
+    }
+
+    public static int is3Kind(ArrayList<Card> handTable) {
+        ArrayList<Card> handTableCopy = new ArrayList<Card>(handTable);
+        ArrayList<Card> FHeval3 = new ArrayList<Card>();
+
+        for (int i = 0; i < handTable.size(); i++) {
+            for (int j = 0; j < handTable.size(); j++) {
+                if ((handTable.get(i).getRank() == (handTable.get(j).getRank()))) {
+                    FHeval3.add(handTableCopy.get(j));
+                    handTableCopy.set(j, new Card(null, 0));
+                }
+            }
+
+            if (FHeval3.size() == 3) {
+                break;
+            } else {
+                FHeval3.clear();
+            }
+        }
+
+        if (FHeval3.size() != 3) {
+            return 0;
+        }
+        return 4;
     }
 
 
