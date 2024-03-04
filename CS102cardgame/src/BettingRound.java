@@ -25,9 +25,12 @@ public class BettingRound {
 
             if (currentHighestBet > plyr.getBet()) {
                 System.out.println("Raise, Call or Fold");
-                plyrturninput = plyrturn.nextLine(); 
+                plyrturninput = plyrturn.nextLine();
                 // DOES NOT WORK FOR BOTS, bots cannot input
                 // Change plyrturninput to variable that takes in player/bot action
+
+                //IMPORTANT
+                //getAction() if player return player, if bot, return check. DONT need to request bot ANYTHING
 
 
                 //add exceptions for player input 
