@@ -1,6 +1,10 @@
 // package CS102cardgame.src;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
+
+import javax.swing.Action;
 
 public class PlayerBot extends Player{
     /** Tightness (0 = loose, 100 = tight). */
@@ -124,6 +128,10 @@ public class PlayerBot extends Player{
     }
 
     //Action class or smth:
-    double chenScore = calculateChenScore(hand);
-    double chenScoreToPlay = tightness * 0.2;
+    // double chenScore = calculateChenScore(hand);
+    // double chenScoreToPlay = tightness * 0.2;
+
+
+
+    
 }
