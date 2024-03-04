@@ -114,8 +114,6 @@ public class Game {
                     bettingRoundComplete = true;
                 }
 
-            
-
             // Update numChecks:
                 // If Check/Call:
                 // Increase numChecks by 1
