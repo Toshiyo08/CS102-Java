@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.BorderLayout;
+
 public class Game {
     private int numTurns;
     private Boolean bettingRoundComplete;
@@ -170,7 +176,14 @@ public class Game {
 
         // Assign Pot---------------------------------------------------------------------------
         
+        // JFrame frame = new JFrame("Testing");
+        // frame.setVisible(true);
+        // frame.setSize(600, 600);
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // JPanel panel = new JPanel();
+        // panel.setLayout(new BorderLayout());
+        // panel.setBackground(new Color(53, 101, 77));
     }
     
 }
