@@ -205,5 +205,31 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         return 4;
     }
 
+    public static int is2Kind(ArrayList<Card> handTable) {
+        ArrayList<Card> handTableCopy = new ArrayList<Card>(handTable);
+        ArrayList<Card> FHeval2 = new ArrayList<Card>();
+
+        for (int i = 0; i < handTable.size(); i++) {
+            for (int j = 0; j < handTable.size(); j++) {
+                if ((handTableCopy.get(i).getRank() == (handTableCopy.get(j).getRank())) && handTableCopy.get(i).getRank() != 0) {
+                    FHeval2.add(handTableCopy.get(j));
+                }
+            }
+
+            if (FHeval2.size() == 2) {
+                break;
+            } else {
+                FHeval2.clear();
+            }
+        }
+        
+        if (FHeval2.size() != 2) {
+            System.out.println("RIP");
+            return 0;
+        }
+
+        return 20; 
+    }
+
 
 }
