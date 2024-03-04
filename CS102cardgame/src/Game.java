@@ -45,16 +45,15 @@ public class Game {
 
         // Initialise number of bots and add them into list of players
         for (int i = 0; i < numberOfPlayers - 1; i++){
-            playersList.add(new PlayerBot());
+            playersList.add(new PlayerBot("Bot", "Bot"));
         }
 
         // initialise balance of chips for all players outside of game loop
 
         // In 1 round: =============================================================================================
         Table table1 = new Table();
-        table1.addNewPlayer(userPlayer);
-        for (int i = 0; i < numberOfPlayers - 1; i++){
-            table1.addNewPlayer(new PlayerBot());
+        for (Player player: playersList){
+            table1.addNewPlayer(player);
         }
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
