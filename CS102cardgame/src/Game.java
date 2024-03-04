@@ -102,7 +102,7 @@ public class Game {
                 // Fold: If player wants to not play for that round anymore
                 for (Player o : table1.getActivePlayers()) {
                     
-                    isPlayerTurnComplete(o, table1.getCurrentBetAmt(), table1);
+                    isPlayerTurnComplete(o, table1.getCurrentBetAmt(), table1); // Replace with if player: scan, if bot: logic (logic returns)
                     if (isCheckedCalled(o, table1)){ // Checks if player current bet matches table's current bet
                         numChecks++;
                     } else {
