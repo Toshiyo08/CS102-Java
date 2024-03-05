@@ -7,6 +7,12 @@ public class Game {
     private int numTurns;
     private Boolean bettingRoundComplete;
 
+    //game constructor
+    public Game() {
+        this.numTurns = 0;
+        this.bettingRoundComplete = false;
+    }
+
     public static void main(String[] args) {
         // In 1 Game, multiple rounds:
 
@@ -56,10 +62,10 @@ public class Game {
         //Card cards = new Card(null, 0);
 
         //game constructor
-        // public Game() {
-        //         this.numTurns = 0;
-        //         this.bettingRoundComplete = false;
-        // }
+        public Game() {
+                this.numTurns = 0;
+                this.bettingRoundComplete = false;
+        }
 
 
 

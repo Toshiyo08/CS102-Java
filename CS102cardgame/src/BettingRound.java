@@ -30,12 +30,13 @@ public class BettingRound {
             if (currentHighestBet > plyr.getBet()) {
                 System.out.println("Raise, Call or Fold");
                 plyrturninput = plyrturn.nextLine();
+                plyrturninput = plyrturn.nextLine();
                 // DOES NOT WORK FOR BOTS, bots cannot input
                 // Change plyrturninput to variable that takes in player/bot action
 
-                // add exceptions for player input
-                // change player turn input to accept bot's input -> once bot receives prompt
-                // for action, it needs to create hand eval class instance and return
+
+                //add exceptions for player input 
+                //change player turn input to accept bot's input -> once bot receives prompt for action, it needs to create hand eval class instance and return 
                 if (plyrturninput.equals("Call")) {
                     // If balance less than what they want to bet
                     if (plyr.getChips() < currentHighestBet) {
