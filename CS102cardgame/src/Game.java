@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.BorderLayout;
+
 public class Game {
     private int numTurns;
     private Boolean bettingRoundComplete;
@@ -45,16 +51,15 @@ public class Game {
 
         // Initialise number of bots and add them into list of players
         for (int i = 0; i < numberOfPlayers - 1; i++){
-            playersList.add(new PlayerBot());
+            playersList.add(new PlayerBot("Bot", "Bot"));
         }
 
         // initialise balance of chips for all players outside of game loop
 
         // In 1 round: =============================================================================================
         Table table1 = new Table();
-        table1.addNewPlayer(userPlayer);
-        for (int i = 0; i < numberOfPlayers - 1; i++){
-            table1.addNewPlayer(new PlayerBot());
+        for (Player player: playersList){
+            table1.addNewPlayer(player);
         }
         //create deck---------------------------------------------------------------------------
         Deck deck1 = new Deck();
@@ -104,7 +109,7 @@ public class Game {
                 // Fold: If player wants to not play for that round anymore
                 for (Player o : table1.getActivePlayers()) {
                     
-                    isPlayerTurnComplete(o, table1.getCurrentBetAmt(), table1);
+                    isPlayerTurnComplete(o, table1.getCurrentBetAmt(), table1); // Replace with if player: scan, if bot: logic (logic returns)
                     if (isCheckedCalled(o, table1)){ // Checks if player current bet matches table's current bet
                         numChecks++;
                     } else {
@@ -115,8 +120,6 @@ public class Game {
                 if (numChecks == table1.getActivePlayers().size()) {
                     bettingRoundComplete = true;
                 }
-
-            
 
             // Update numChecks:
                 // If Check/Call:
@@ -178,7 +181,14 @@ public class Game {
 
         // Assign Pot---------------------------------------------------------------------------
         
+        // JFrame frame = new JFrame("Testing");
+        // frame.setVisible(true);
+        // frame.setSize(600, 600);
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // JPanel panel = new JPanel();
+        // panel.setLayout(new BorderLayout());
+        // panel.setBackground(new Color(53, 101, 77));
     }
     
 }

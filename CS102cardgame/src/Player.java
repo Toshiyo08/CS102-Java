@@ -12,8 +12,7 @@ public class Player {
     private boolean smallBlind;
     private int betAmt;
     private int playerChips;
-    private List<Card> hand; // 10jqka|23456789 10|11|12|13|14
-    private double chenscore;
+    private ArrayList<Card> hand; // 10jqka|23456789 10|11|12|13|14
     
     //what is type?
     public Player(String name, String type) {
