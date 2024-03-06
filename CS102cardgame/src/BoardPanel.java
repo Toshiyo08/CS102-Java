@@ -22,7 +22,7 @@ public class BoardPanel extends JPanel {
             // cardLabels[i] = new JLabel(ImageFinder.getCardImage(cards.get(i)));
           
             gc.gridx = i;
-            gc.gridy = 2;
+            gc.gridy = 0;
             gc.gridwidth = 1;
             gc.gridheight = 1;
             gc.anchor = GridBagConstraints.CENTER;
@@ -46,6 +46,7 @@ public class BoardPanel extends JPanel {
         gc.gridy = 1;
         gc.anchor = GridBagConstraints.NORTH;
         add(label, gc);
+
     }
 
     // public void update(List<Card> cards) {
@@ -64,13 +65,49 @@ public class BoardPanel extends JPanel {
         List<Card> cardsList = new ArrayList<>();
         cardsList.add(new Card("h", 2));
         cardsList.add(new Card("d", 7)); // Populate this list with Card objects
+        
 
         JFrame frame = new JFrame("Testing");
-        frame.setSize(600, 600);
+        frame.setSize(1300, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BoardPanel boardPanel = new BoardPanel(cardsList);
-        frame.add(boardPanel);
+        BoardPanel boardPanelCommunityCards = new BoardPanel(cardsList);
+        BoardPanel boardPanel1 = new BoardPanel(cardsList);
+        BoardPanel boardPanel2 = new BoardPanel(cardsList);
+        BoardPanel boardPanel3 = new BoardPanel(cardsList);
+        BoardPanel boardPanel4 = new BoardPanel(cardsList);
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        JPanel actionLayout = new JPanel();
+        actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER));
+        actionLayout.setPreferredSize(new Dimension(150, 100));
+        actionLayout.setBackground(new Color(53, 101, 77));
+
+        JButton foldButton = new JButton("Fold");
+        JButton checkButton = new JButton("Check");
+        JButton betButton = new JButton("Bet");
+        JButton callButton = new JButton("Call");
+        JButton raiseButton = new JButton("Raise");
+
+        actionLayout.add(foldButton);
+        actionLayout.add(checkButton);
+        actionLayout.add(betButton);
+        actionLayout.add(callButton);
+        actionLayout.add(raiseButton);
+
+        centerPanel.add(boardPanelCommunityCards);
+        centerPanel.add(actionLayout);
+
+        
+
+        
+        frame.add(centerPanel, BorderLayout.CENTER);
+        frame.add(boardPanel1, BorderLayout.SOUTH);
+        frame.add(boardPanel2, BorderLayout.WEST);
+        frame.add(boardPanel3, BorderLayout.NORTH);
+        frame.add(boardPanel4, BorderLayout.EAST);
 
         frame.setVisible(true);
     }
