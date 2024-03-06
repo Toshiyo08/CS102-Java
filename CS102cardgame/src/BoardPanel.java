@@ -22,11 +22,11 @@ public class BoardPanel extends JPanel {
             // cardLabels[i] = new JLabel(ImageFinder.getCardImage(cards.get(i)));
           
             gc.gridx = i;
-            gc.gridy = 0;
+            gc.gridy = 2;
             gc.gridwidth = 1;
             gc.gridheight = 1;
             gc.anchor = GridBagConstraints.CENTER;
-            gc.fill = GridBagConstraints.NONE;
+            gc.fill = GridBagConstraints.CENTER;
             gc.weightx = 0.0;
             gc.weighty = 0.0;
             gc.insets = new Insets(10, 1, 5, 1);
@@ -43,7 +43,7 @@ public class BoardPanel extends JPanel {
 
         // Add label to the panel
         gc.gridx = 0;
-        gc.gridy = 1;
+        gc.gridy = 0;
         gc.anchor = GridBagConstraints.NORTH;
         add(label, gc);
 
@@ -69,6 +69,8 @@ public class BoardPanel extends JPanel {
 
         JFrame frame = new JFrame("Testing");
         frame.setSize(1300, 800);
+        frame.setLayout(new BorderLayout());
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         BoardPanel boardPanelCommunityCards = new BoardPanel(cardsList);
@@ -77,12 +79,9 @@ public class BoardPanel extends JPanel {
         BoardPanel boardPanel3 = new BoardPanel(cardsList);
         BoardPanel boardPanel4 = new BoardPanel(cardsList);
 
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-
         JPanel actionLayout = new JPanel();
-        actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER));
-        actionLayout.setPreferredSize(new Dimension(150, 100));
+        actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER, 0,0));
+        actionLayout.setPreferredSize(new Dimension(500, 300));
         actionLayout.setBackground(new Color(53, 101, 77));
 
         JButton foldButton = new JButton("Fold");
@@ -96,12 +95,24 @@ public class BoardPanel extends JPanel {
         actionLayout.add(betButton);
         actionLayout.add(callButton);
         actionLayout.add(raiseButton);
-
-        centerPanel.add(boardPanelCommunityCards);
-        centerPanel.add(actionLayout);
-
         
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.gridwidth = 1;
+        gc.gridheight = 1;
+        gc.anchor = GridBagConstraints.NORTH;
+        gc.fill = GridBagConstraints.BOTH;
+        gc.weightx = 1.0;
+        gc.weighty = 1.0;
 
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.add(boardPanelCommunityCards, gc);
+
+
+        gc.gridy = 1;
+        gc.weighty = 0.0;
+        centerPanel.add(actionLayout, gc);
         
         frame.add(centerPanel, BorderLayout.CENTER);
         frame.add(boardPanel1, BorderLayout.SOUTH);
