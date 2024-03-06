@@ -17,6 +17,9 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         // 2 pairs 4 'AA88'J
         // 1 pair 2 '66'5K2
         // High Card 1 2846'A'
+        
+        // !!! Create array of {2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A}
+        // Just count the number of cards
 
         // Check suits first.
         // If duplicate suit = 5
