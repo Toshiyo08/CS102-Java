@@ -110,7 +110,11 @@ public class BoardPanel extends JPanel{
         gc.weightx = 1.0;
         gc.weighty = 1.0;
 
+        
+
         JPanel centerPanel = new JPanel(new GridBagLayout());
+        gc.gridy = 1;
+        gc.insets = new Insets(0, 0, 0, 0);
         centerPanel.add(boardPanelCommunityCards, gc);
 
         JLabel textLabel = new JLabel("Action performed");
@@ -119,11 +123,13 @@ public class BoardPanel extends JPanel{
         textLabel.setHorizontalAlignment(JLabel.CENTER); // Center align text
         textLabel.setPreferredSize(new Dimension(100, 30));
         gc.gridy = 2;
-        gc.weighty = 0.0;
+        gc.weighty = 2.0;
+        gc.insets = new Insets(0, 0, 0, 0);
         centerPanel.add(textLabel, gc);
 
         gc.gridy = 4;
         gc.weighty = 0.0;
+        gc.insets = new Insets(0, 0, 0, 0);
         centerPanel.add(actionLayout, gc);
 
         foldButton.addActionListener(new ActionListener() {
