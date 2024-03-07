@@ -105,7 +105,7 @@ public class BoardPanel extends JPanel{
         gc.gridy = 0;
         gc.gridwidth = 1;
         gc.gridheight = 1;
-        gc.anchor = GridBagConstraints.NORTH;
+        //gc.anchor = GridBagConstraints.NORTH;
         gc.fill = GridBagConstraints.BOTH;
         gc.weightx = 1.0;
         gc.weighty = 1.0;
@@ -114,18 +114,19 @@ public class BoardPanel extends JPanel{
 
         JPanel centerPanel = new JPanel(new GridBagLayout());
         gc.gridy = 1;
+        gc.gridheight = 1;
         gc.insets = new Insets(0, 0, 0, 0);
         centerPanel.add(boardPanelCommunityCards, gc);
 
-        JLabel textLabel = new JLabel("Action performed");
-        textLabel.setBackground(new Color(53, 101, 77));
-        textLabel.setOpaque(true);
-        textLabel.setHorizontalAlignment(JLabel.CENTER); // Center align text
-        textLabel.setPreferredSize(new Dimension(100, 30));
+        JLabel actionTextLabel = new JLabel("Action performed");
+        actionTextLabel.setBackground(new Color(53, 101, 77));
+        actionTextLabel.setOpaque(true);
+        actionTextLabel.setHorizontalAlignment(JLabel.CENTER);
+        actionTextLabel.setPreferredSize(new Dimension(100, 30));
         gc.gridy = 2;
-        gc.weighty = 2.0;
+        gc.weighty = 0;
         gc.insets = new Insets(0, 0, 0, 0);
-        centerPanel.add(textLabel, gc);
+        centerPanel.add(actionTextLabel, gc);
 
         gc.gridy = 4;
         gc.weighty = 0.0;
@@ -134,31 +135,31 @@ public class BoardPanel extends JPanel{
 
         foldButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textLabel.setText("Fold");
+                actionTextLabel.setText("Fold");
             }
         });
         
         checkButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textLabel.setText("Check");
+                actionTextLabel.setText("Check");
             }
         });
         
         betButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textLabel.setText("Bet");
+                actionTextLabel.setText("Bet");
             }
         });
         
         callButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textLabel.setText("Call");
+                actionTextLabel.setText("Call");
             }
         });
         
         raiseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textLabel.setText("Raise");
+                actionTextLabel.setText("Raise");
             }
         });
         
