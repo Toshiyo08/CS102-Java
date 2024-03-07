@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel{
 
     private static final int NO_OF_CARDS = 5;
     private JLabel[] cardLabels;
@@ -60,6 +62,8 @@ public class BoardPanel extends JPanel {
     //     }
     // }
 
+
+
     public static void main(String[] args) {
         // Example usage: Create a list of cards
         List<Card> cardsList = new ArrayList<>();
@@ -81,7 +85,7 @@ public class BoardPanel extends JPanel {
 
         JPanel actionLayout = new JPanel();
         actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER, 0,0));
-        actionLayout.setPreferredSize(new Dimension(500, 300));
+        actionLayout.setPreferredSize(new Dimension(500, 100));
         actionLayout.setBackground(new Color(53, 101, 77));
 
         JButton foldButton = new JButton("Fold");
@@ -109,10 +113,48 @@ public class BoardPanel extends JPanel {
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(boardPanelCommunityCards, gc);
 
+        JLabel textLabel = new JLabel("Action performed");
+        textLabel.setBackground(new Color(53, 101, 77));
+        textLabel.setOpaque(true);
+        textLabel.setHorizontalAlignment(JLabel.CENTER); // Center align text
+        textLabel.setPreferredSize(new Dimension(100, 30));
+        gc.gridy = 2;
+        gc.weighty = 0.0;
+        centerPanel.add(textLabel, gc);
 
-        gc.gridy = 1;
+        gc.gridy = 4;
         gc.weighty = 0.0;
         centerPanel.add(actionLayout, gc);
+
+        foldButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textLabel.setText("Fold");
+            }
+        });
+        
+        checkButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textLabel.setText("Check");
+            }
+        });
+        
+        betButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textLabel.setText("Bet");
+            }
+        });
+        
+        callButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textLabel.setText("Call");
+            }
+        });
+        
+        raiseButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textLabel.setText("Raise");
+            }
+        });
         
         frame.add(centerPanel, BorderLayout.CENTER);
         frame.add(boardPanel1, BorderLayout.SOUTH);
