@@ -23,7 +23,7 @@ public class Table {
         return activePlayers;
     }
 
-    public void raiseCurrentBetAmt (int raisedValue) {
+    public void setCurrentBet (int raisedValue) {
         this.currentBetAmt = raisedValue;
     }
 

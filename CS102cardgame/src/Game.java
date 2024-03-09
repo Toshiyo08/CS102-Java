@@ -110,6 +110,9 @@ public class Game extends JPanel {
         // deck1.burnCard();
 
         // // 1st Betting
+
+        // bettingRound(totalPlayers, table1); DONT DELETE THIS LINE
+
         // Round---------------------------------------------------------------------------
 
         // int numChecks = 0;
@@ -245,6 +248,93 @@ public class Game extends JPanel {
 
         // frame.add(panel);
 
+    }
+
+    public static void bettingRound(ArrayList<Player> totalPlayers, Table table1) {
+        ArrayList<Player> current = new ArrayList<Player>();
+        for (Player o : totalPlayers) {
+            if (o.getIsPlaying() == true) {
+                current.add(o);
+            }
+        }
+
+        //BIG BLIND SMALL BLIND SORTING ORDER
+
+        int counter = 0;
+        Boolean betted = false;
+        while (counter != getCurrentSize(current)) {
+            
+            for (Player o : current) {
+
+                if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
+                    
+                    Scanner sc = new Scanner(System.in);
+                    if (o.getBet() < table1.getCurrentBet()) {
+                        System.out.println("1: Call, 2: Raise, 3: Fold");
+                    } else {
+                        System.out.println("1: Check, 2: Bet, 3: Fold");
+                    }
+                    System.out.println("Action Num> ");
+                    int action = sc.nextInt();
+
+                    if (action == 1) {
+                        o.setChecked(true);
+                        System.out.println("Before Bet " + o.getBet());
+                        System.out.println("Before Balance "+ o.getBalance());
+                        System.out.println("Before Table Bet " + table1.getCurrentBet());
+                        o.setBet(table1.getCurrentBet());
+                        o.setBalance(o.getBet());
+                        counter++;
+                        System.out.println("After Bet " + o.getBet());
+                        System.out.println("After Balance "+ o.getBalance());
+                        System.out.println("After Table Bet " + table1.getCurrentBet());
+
+                    } else if (action == 2) {
+                        System.out.println("Bet?> ");
+                        int newBet = sc.nextInt();
+                        System.out.println("Before Bet " + o.getBet());
+                        System.out.println("Before Balance "+ o.getBalance());
+                        System.out.println("Before Table Bet " + table1.getCurrentBet());
+                        o.setBet(newBet);
+                        o.setBalance(newBet);
+                        table1.setCurrentBet(newBet);
+                        o.setChecked(true);
+                        counter = 1;
+                        for (Player e : current) {
+                            if (!e.equals(o)) {
+                                e.setChecked(false);
+                            }
+                        }
+                        System.out.println("After Bet " + o.getBet());
+                        System.out.println("After Balance "+ o.getBalance());
+                        System.out.println("After Table Bet " + table1.getCurrentBet());
+                        
+
+                    } else if (action == 3) {
+                        o.setIsPlaying(false);
+                        // counter++;
+                        // current.remove(o);
+                        
+                    }
+                } else {
+                    // botLogic(o); // void method, returns nothing
+                    
+                }
+                
+            }
+            
+        }
+        // Move BIG BLIND SMALL BLIND
+    }
+
+    public static int getCurrentSize(ArrayList<Player> current) {
+        int counter = 0;
+        for (Player o : current) {
+            if (o.getIsPlaying()) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
 }
