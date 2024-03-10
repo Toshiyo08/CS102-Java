@@ -3,8 +3,8 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 
 public class ImageFinder {
-    private static final String IMAGE_PATH_FORMAT = "././cards/%s%s.gif";
-    private static final String PLACEHOLDER_PATH = "././cards/card_placeholder.png";
+    private static final String IMAGE_PATH_FORMAT = "../cards/%s%s.gif";
+    private static final String PLACEHOLDER_PATH = "../cards/card_placeholder.png";
 
     public static ImageIcon getCardImage(Card card) {
         String rank = getRankString(card.getRank());
