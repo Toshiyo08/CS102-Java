@@ -3,8 +3,8 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 
 public class ImageFinder {
-    private static final String IMAGE_PATH_FORMAT = "../cards/%s%s.gif";
-    private static final String PLACEHOLDER_PATH = "../cards/card_placeholder.png";
+    private static final String IMAGE_PATH_FORMAT = "././cards/%s%s.gif";
+    private static final String PLACEHOLDER_PATH = "././cards/card_placeholder.png";
 
     public static ImageIcon getCardImage(Card card) {
         String rank = getRankString(card.getRank());
@@ -23,10 +23,12 @@ public class ImageFinder {
     private static String getRankString(int rank) {
         // Assuming ranks 2-10 are represented by their numbers, and others by letters
         // (J, Q, K, A)
-        if (rank >= 2 && rank <= 10) {
+        if (rank >= 2 && rank < 10) {
             return String.valueOf(rank);
         } else {
             switch (rank) {
+                case 10:
+                    return "t";
                 case 11:
                     return "j";
                 case 12:

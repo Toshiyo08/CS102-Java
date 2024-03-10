@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardPanel extends JPanel{
+public class BoardPanel extends JPanel {
 
     private static final int NO_OF_CARDS = 5;
     private JLabel[] cardLabels;
@@ -22,7 +22,7 @@ public class BoardPanel extends JPanel{
         for (int i = 0; i < NO_OF_CARDS; i++) {
             cardLabels[i] = new JLabel(ImageFinder.getIcon("./cards/card_placeholder.png"));
             // cardLabels[i] = new JLabel(ImageFinder.getCardImage(cards.get(i)));
-          
+
             gc.gridx = i;
             gc.gridy = 2;
             gc.gridwidth = 1;
@@ -52,24 +52,43 @@ public class BoardPanel extends JPanel{
     }
 
     // public void update(List<Card> cards) {
-    //     int noOfCards = (cards == null) ? 0 : cards.size();
-    //     for (int i = 0; i < NO_OF_CARDS; i++) {
-    //         if (i < noOfCards) {
-    //             cardLabels[i].setIcon(ImageFinder.getCardImage(cards.get(i)));
-    //         } else {
-    //             cardLabels[i].setIcon(ImageFinder.getIcon("/images/card_placeholder.png"));
-    //         }
-    //     }
+    // int noOfCards = (cards == null) ? 0 : cards.size();
+    // for (int i = 0; i < NO_OF_CARDS; i++) {
+    // if (i < noOfCards) {
+    // cardLabels[i].setIcon(ImageFinder.getCardImage(cards.get(i)));
+    // } else {
+    // cardLabels[i].setIcon(ImageFinder.getIcon("/images/card_placeholder.png"));
+    // }
+    // }
     // }
 
-
-
     public static void main(String[] args) {
-        // Example usage: Create a list of cards
-        List<Card> cardsList = new ArrayList<>();
-        cardsList.add(new Card("h", 2));
-        cardsList.add(new Card("d", 7)); // Populate this list with Card objects
-        
+        // Example usage: Create a shuffled deck
+        Deck deck = new Deck();
+        ArrayList<Card> shuffledDeck = deck.getCards();
+        Deck.shuffleDeck(shuffledDeck);
+
+        // FOR A SHUFFLED CARD (only 1 hand(for community card))
+        // List<Card> cardsList = new ArrayList<>();
+        // for (int i = 0; i < 5; i++) {
+        //     Card dealtCard = deck.dealCard();
+        //     if (dealtCard != null) {
+        //         cardsList.add(dealtCard);
+        //     }
+        // }
+
+        // 5 different hand cards
+        List<List<Card>> hands = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            List<Card> cardsList = new ArrayList<>();
+            for (int j = 0; j < 5; j++) {  // Assuming each hand has 5 cards
+                Card dealtCard = deck.dealCard();
+                if (dealtCard != null) {
+                    cardsList.add(dealtCard);
+                }
+            }
+            hands.add(cardsList);
+        }
 
         JFrame frame = new JFrame("Testing");
         frame.setSize(1300, 800);
@@ -77,14 +96,15 @@ public class BoardPanel extends JPanel{
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BoardPanel boardPanelCommunityCards = new BoardPanel(cardsList);
-        BoardPanel boardPanel1 = new BoardPanel(cardsList);
-        BoardPanel boardPanel2 = new BoardPanel(cardsList);
-        BoardPanel boardPanel3 = new BoardPanel(cardsList);
-        BoardPanel boardPanel4 = new BoardPanel(cardsList);
+        BoardPanel boardPanelCommunityCards = new BoardPanel(hands.get(0));  // Display community cards
+
+        BoardPanel boardPanel1 = new BoardPanel(hands.get(1));
+        BoardPanel boardPanel2 = new BoardPanel(hands.get(2));
+        BoardPanel boardPanel3 = new BoardPanel(hands.get(3));
+        BoardPanel boardPanel4 = new BoardPanel(hands.get(4));
 
         JPanel actionLayout = new JPanel();
-        actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER, 0,0));
+        actionLayout.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         actionLayout.setPreferredSize(new Dimension(500, 100));
         actionLayout.setBackground(new Color(53, 101, 77));
 
@@ -99,18 +119,16 @@ public class BoardPanel extends JPanel{
         actionLayout.add(betButton);
         actionLayout.add(callButton);
         actionLayout.add(raiseButton);
-        
+
         GridBagConstraints gc = new GridBagConstraints();
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridwidth = 1;
         gc.gridheight = 1;
-        //gc.anchor = GridBagConstraints.NORTH;
+        // gc.anchor = GridBagConstraints.NORTH;
         gc.fill = GridBagConstraints.BOTH;
         gc.weightx = 1.0;
         gc.weighty = 1.0;
-
-        
 
         JPanel centerPanel = new JPanel(new GridBagLayout());
         gc.gridy = 1;
@@ -138,31 +156,31 @@ public class BoardPanel extends JPanel{
                 actionTextLabel.setText("Fold");
             }
         });
-        
+
         checkButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionTextLabel.setText("Check");
             }
         });
-        
+
         betButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionTextLabel.setText("Bet");
             }
         });
-        
+
         callButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionTextLabel.setText("Call");
             }
         });
-        
+
         raiseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionTextLabel.setText("Raise");
             }
         });
-        
+
         frame.add(centerPanel, BorderLayout.CENTER);
         frame.add(boardPanel1, BorderLayout.SOUTH);
         frame.add(boardPanel2, BorderLayout.WEST);
