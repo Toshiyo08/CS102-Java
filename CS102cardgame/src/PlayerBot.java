@@ -1,5 +1,6 @@
 // package CS102cardgame.src;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -127,7 +128,74 @@ public class PlayerBot extends Player {
 
     }
 
-    //Action class or smth:
-    double chenScore = calculateChenScore(hand);
-    double chenScoreToPlay = tightness * 0.2;
+    public Action botAction (int currentBetAmt, int minBet, ArrayList<Card> playerHand, 
+    ArrayList<Action> availableActions){
+
+        Action action = null;
+        int bettingAmount = 0;
+        double chenScore = calculateChenScore(playerHand);
+        double chenScoreToPlay = tightness / 5.0;
+
+        if (chenScore < chenScoreToPlay){ // bad hand
+            if (availableActions.contains(Action.Check)){
+                action = Action.Check;
+            } else {
+                action = Action.Fold;
+            }
+        } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0){ //hand is good 
+            if (aggression == 0){
+                if (availableActions.contains(Action.Call)){
+                    action = Action.Call;
+                } else {
+                    action = Action.Check;
+                }
+            } else if (aggression == 100){
+                bettingAmount = super.getChips();
+                if (availableActions.contains(Action.Bet)){
+                    action = new BetAction(bettingAmount);
+                } else if (availableActions.contains(Action.Raise)){
+                    action = new RaiseAction(bettingAmount);
+                } else if (availableActions.contains(Action.Call)){
+                    action = Action.Call;
+                } else {
+                    action = Action.Check;
+                }
+                
+            } else {
+                bettingAmount = minBet;
+                int increments = aggression / 20;
+                for (int i = 1; i < increments; i++){
+                    bettingAmount += minBet;
+                }
+                if (bettingAmount > super.getChips()){
+                    bettingAmount = super.getChips();
+                }
+                if (bettingAmount > currentBetAmt) {
+                    if (availableActions.contains(Action.Bet)) {
+                        action = new BetAction(bettingAmount);
+                    } else if (availableActions.contains(Action.Raise)){
+                        action = new RaiseAction(bettingAmount);
+                    } else if (availableActions.contains(Action.Call)){
+                        action = Action.Call;
+                    } else {
+                        action = Action.Check;
+                    }
+                
+                } else {
+                    if (availableActions.contains(Action.Call)){
+                        action = Action.Call;
+                    } else {
+                        action = Action.Check;
+                    }
+                }
+            }
+        } else { //if ok hand 
+            if (availableActions.contains(Action.Call)){
+                action = Action.Call;
+            } else {
+                action = Action.Check;
+            }
+        }
+        return action;
+    }
 }
