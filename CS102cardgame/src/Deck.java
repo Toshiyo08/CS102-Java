@@ -22,10 +22,6 @@ public class Deck {
         }
     }
 
-    public static void shuffleDeck(ArrayList<Card> cards) {
-        Collections.shuffle(cards);
-    }
-
     public ArrayList<Card> getCards() {
         return cards;
     }

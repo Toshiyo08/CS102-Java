@@ -85,17 +85,17 @@ public class Player {
         this.hand = null;
         //pplayerchips will still remain
         //playerChips = 0;
-        this.playing = false;
+        this.isPlaying = false;
     }
 
     public void setCall(int calledAmt) {
         this.betAmt = calledAmt;
-        this.playerChips -= calledAmt;
+        this.balance -= calledAmt;
     }
 
     public void setRaise(int raisedAmt) {
         this.betAmt = raisedAmt;
-        this.playerChips -= raisedAmt;
+        this.balance -= raisedAmt;
     }
 
     // public Boolean setCheck(String answer) {

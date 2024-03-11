@@ -5,24 +5,19 @@ import java.util.*;
 public class Table {
     private ArrayList<Card> commCards;
     private int pot;
-    private ArrayList<Player> activePlayers;
     private int currentBetAmt;
 
     public Table() {
-        this.commCards = null;
+        this.commCards = new ArrayList<Card>();
         this.pot = 0;
         this.currentBetAmt = 0;
-        this.activePlayers = new ArrayList<Player>();
     }
 
-    public void addNewPlayer(Player plyr) {
-        activePlayers.add(plyr);
-    }
 
-    public ArrayList<Player> getActivePlayers() {
-        return activePlayers;
+    public ArrayList<Card> getCommCards() {
+        return commCards;
     }
-
+    
     public void setCurrentBet (int raisedValue) {
         this.currentBetAmt = raisedValue;
     }
