@@ -9,22 +9,24 @@ import javax.swing.Action;
 import javax.swing.Action;
 
 public class PlayerBot extends Player {
-//     /** Tightness (0 = loose, 100 = tight). */
-//     private int tightness;
+    /** Tightness (0 = loose, 100 = tight). */
+    // private int tightness;
 
-//     /** Betting aggression (0 = safe, 100 = aggressive). */
-//     private int aggression;
+    // /** Betting aggression (0 = safe, 100 = aggressive). */
+    // private int aggression;
 
-//     /** Evaluate strength of starting hand */
-//     private double chenscore;
+    // /** Evaluate strength of starting hand */
+    // private double chenscore;
 
     public PlayerBot(String name, String type) {
         super(name, type);
+        // this.tightness = tightness;
+        // this.aggression = aggression;
     }
 }
 
 //     public double calculateChenScore(List<Card> hand) {
-//         chenscore = 0;
+//         double chenscore = 0;
 
 //         Card card1 = hand.get(0);
 //         Card card2 = hand.get(1);
@@ -117,18 +119,6 @@ public class PlayerBot extends Player {
 //         return (double) Math.round(score);
 //     }
 
-//     public void basicBotSettings(int tightness, int aggression) {
-//         if (tightness < 0 || tightness > 100) {
-//             throw new IllegalArgumentException("Invalid tightness setting");
-//         }
-//         if (aggression < 0 || aggression > 100) {
-//             throw new IllegalArgumentException("Invalid aggression setting");
-//         }
-//         this.tightness = tightness;
-//         this.aggression = aggression;
-
-//     }
-
 //     public Action botAction (int currentBetAmt, int minBet, ArrayList<Card> playerHand, 
 //     ArrayList<Action> availableActions){
 
@@ -138,7 +128,7 @@ public class PlayerBot extends Player {
 //         double chenScoreToPlay = tightness / 5.0;
 
 //         if (chenScore < chenScoreToPlay){ // bad hand
-//             if (availableActions.contains(Action.Check)){
+//             if (!hasChecked){
 //                 action = Action.Check;
 //             } else {
 //                 action = Action.Fold;
