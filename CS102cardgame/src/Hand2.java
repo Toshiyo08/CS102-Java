@@ -27,7 +27,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             handTable.add(tableCommCards.get(i));
         }
         Collections.sort(handTable, Comparator.comparing(Card::getRank).reversed());
-        System.out.println(handTable);
+        // System.out.println(handTable);
 
         int copy[] = new int[15];
         for (int i = 0; i < 14; i++) {
@@ -53,8 +53,8 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             score = isFH(copy);
             System.out.println("Full House");
             return score;
-        } else if (isF(handTable) != 0) {
-            score = isF(handTable);
+        } else if (isF(handTable, copy) != 0) {
+            score = isF(handTable, copy);
             System.out.println("Flush");
             return score;
         } else if (str8(copy) != 0) {
@@ -100,18 +100,18 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 }
             }
         }
-        
-        String[] suitSample = {"Diamonds", "Clubs", "Hearts", "Spades"};
+
+        String[] suitSample = { "Diamonds", "Clubs", "Hearts", "Spades" };
         for (int i = 0; i < 4; i++) {
             int num = 14;
             for (Card o : handTable) {
                 if (o.getRank() == num && o.getSuit().equals(suitSample[i])) {
                     counter++;
-                    num --;
+                    num--;
                     if (num == 9) {
-                        return 10;
+                        return 402;
                     }
-                } 
+                }
             }
         }
 
@@ -119,20 +119,59 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
     }
 
     public static int isSF(ArrayList<Card> handTable, int[] copy) {
-        String[] suitSample = {"Diamonds", "Clubs", "Hearts", "Spades"};
+        // Boolean isflushed = false;
+        // Boolean isStr8 = false;
+        // for (int i = 1; i < handTable.size(); i++) {
+        // String holder = handTable.get(0).getSuit();
+        // int counter = 1;
+        // if (handTable.get(i).getSuit().equals(holder)) {
+        // for (int j = i; j < handTable.size(); j++) {
+        // counter++;
+        // if (counter == 5) {
+        // isflushed = true;
+        // break;
+        // }
+        // }
+        // if (isflushed) {
+        // break;
+        // }
+        // }
+        // counter = 1;
+        // }
+
+        // int counter = 0;
+        // for (int i = 14; i > 0; i--) {
+        // if (copy[i] >= 1) {
+        // counter++;
+        // } else {
+        // counter = 0;
+        // }
+        // if (counter == 5) {
+        // isStr8 = true;
+        // break;
+        // }
+        // }
+
+        // if (isflushed && isStr8) {
+        // return 9;
+        // }
+
+        String[] suitSample = { "Diamonds", "Clubs", "Hearts", "Spades" };
         for (int i = 0; i < 4; i++) {
             for (Card o : handTable) {
                 int num = o.getRank();
                 int original = num;
+                int sum = num;
                 for (Card e : handTable) {
                     if (e.getRank() == num && e.getSuit().equals(suitSample[i])) {
-                        num --;
+                        num--;
+                        sum += num;
                         if (num == original - 5) {
-                            return 9;
+                            return 347 + sum;
                         }
-                    } 
+                    }
                 }
-                
+
             }
         }
 
@@ -145,7 +184,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         for (int i = 14; i > 0; i--) {
             if (copy[i] == 4) {
                 quad = true;
-                return 8;
+                return 291 + i * 4;
             }
         }
 
@@ -155,6 +194,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
     public static int isFH(int[] copy) {
         Boolean triple = false;
         Boolean pair = false;
+        int sum = 0;
 
         for (int i = 14; i > 0; i--) {
             // 0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -162,17 +202,19 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
 
             if (copy[i] == 3) {
                 triple = true;
+                sum += i;
             } else if (copy[i] == 2) {
                 pair = true;
+                sum += i;
             }
         }
         if (triple && pair) {
-            return 7;
+            return 223 + sum;
         }
         return 0;
     }
 
-    public static int isF(ArrayList<Card> handTable) {
+    public static int isF(ArrayList<Card> handTable, int[] copy) {
         for (int i = 0; i < handTable.size(); i++) {
             String holder = handTable.get(i).getSuit();
             int counter = 0;
@@ -181,7 +223,15 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                     counter++;
                 }
                 if (counter == 5) {
-                    return 6;
+                    if (is3Kind(copy) != 0) {
+                        return 181 + is3Kind(copy);
+                    } else if (is2Pair(copy) != 0) {
+                        return 181 + is2Pair(copy);
+                    } else if (isPair(copy) != 0) {
+                        return 181 + isPair(copy);
+                    } else {
+                        return 181 + highCard(copy);
+                    }
                 }
             }
             counter = 0;
@@ -192,14 +242,17 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
 
     public static int str8(int[] copy) {
         int counter = 0;
+        int sum = 0;
         for (int i = 14; i > 0; i--) {
             if (copy[i] >= 1) {
                 counter++;
+                sum += i;
             } else {
                 counter = 0;
+                sum = 0;
             }
             if (counter == 5) {
-                return 5;
+                return 126 + sum;
             }
         }
 
@@ -214,7 +267,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 3) {
                 triple = true;
-                return 4;
+                return 84 + i * 3;
             }
         }
 
@@ -236,7 +289,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 for (int j = i - 1; j > 0; j--) {
                     if (copy[j] == 2) {
                         pair2 = true;
-                        return 3;
+                        return 28 + i * 2 + j * 2;
                     }
                 }
                 // return 3;
@@ -255,7 +308,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             if (copy[i] == 2) {
                 pair1 = true;
                 // return 14 + i;
-                return 2;
+                return i * 2;
             }
         }
 
@@ -270,7 +323,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             if (copy[i] == 1) {
 
                 // return 14;
-                return 1;
+                return i;
             }
         }
 
