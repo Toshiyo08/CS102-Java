@@ -119,41 +119,21 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
     }
 
     public static int isSF(ArrayList<Card> handTable, int[] copy) {
-        Boolean isflushed = false;
-        Boolean isStr8 = false;
-        for (int i = 1; i < handTable.size(); i++) {
-            String holder = handTable.get(0).getSuit();
-            int counter = 1;
-            if (handTable.get(i).getSuit().equals(holder)) {
-                for (int j = i; j < handTable.size(); j++) {
-                    counter++;
-                    if (counter == 5) {
-                        isflushed = true;
-                        break;
-                    }
+        String[] suitSample = {"Diamonds", "Clubs", "Hearts", "Spades"};
+        for (int i = 0; i < 4; i++) {
+            for (Card o : handTable) {
+                int num = o.getRank();
+                int original = num;
+                for (Card e : handTable) {
+                    if (e.getRank() == num && e.getSuit().equals(suitSample[i])) {
+                        num --;
+                        if (num == original - 5) {
+                            return 9;
+                        }
+                    } 
                 }
-                if (isflushed) {
-                    break;
-                }
+                
             }
-            counter = 1;
-        }
-
-        int counter = 0;
-        for (int i = 14; i > 0; i--) {
-            if (copy[i] >= 1) {
-                counter++;
-            } else {
-                counter = 0;
-            }
-            if (counter == 5) {
-                isStr8 = true;
-                break;
-            }
-        }
-
-        if (isflushed && isStr8) {
-            return 9;
         }
 
         return 0;
