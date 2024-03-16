@@ -158,8 +158,8 @@ public class Game {
             for (Card c : o.getHand()) {
                 System.out.println(c);
             }
-            System.out.println();
             winner.put(o.getName(),Hand2.getHandValue(o.getHand(), table1.getCommCards()));
+            System.out.println();
         }
         int highest = 0;
 
@@ -295,7 +295,7 @@ public class Game {
                     // promtBotLogic(o) -> checks their hand+commCard points -> returns action int
                     int botAction = 1;
                     if (afterRound1){
-                        if ((Hand2.getHandValue(o.getHand(), table1.getCommCards()))  <= 2 && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)){
+                        if ((Hand2.getHandValue(o.getHand(), table1.getCommCards()))  <= 28 && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)){
                                 if (previousAction.equals("Check")){
                                     botAction = 1;
                                 } 
