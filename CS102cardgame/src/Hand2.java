@@ -36,33 +36,38 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             copy[o.getRank()]++;
         }
 
-        while (!evalcomplete(handTable)) {
-            // Sort the hand+table in order of ranking
-
-            // For each card, check array first
-            isRSF(handTable); // Returns RSF if ace, SF if no
-            isSF(handTable); // Returns SF if yes, 0 if no
-            is4Kind(copy); // Returns 4kind if yes, 0 if no
-            // Loop through array to find 4 cards of same rank
-            isFH(copy); // Returns FH points if yes, 0 if no ||||| checks then remove 3 kind, checks
-                        // then remove 2 kind
-            // Loop through array to find 3 cards of same rank
-            // Remove those card into a separate array, if don't have, return 0
-            // Loop through remaining 4 cards to find 2 cards of same rank, if don't have
-            // return 0
-            // Remove those cards into array from above
-
-            // Loop through remaining 2 cards to find pair, if have, assign point, if not,
-            // high card
-            flush(copy); // Returns F if yes, 0 if no
-            // Loop through array to find 5 cards of same suit
-            str8(copy); // Returns S if yes, 0 if no
-            is3Kind(copy); // Returns 3kind if yes, 0 if no
-            // Loop through array to find
-            is2Pair(copy); // Returns 2pair if yes, 0 if no
-            isPair(copy); // Returns pair if yes, highCard() if no
-            highCard(copy); // Returns highest rank card
-        }
+            int score = isRSF(copy);
+            if (score != 0) {
+                return score;
+            } else if (isSF(handTable, copy) != 0) {
+                score = isSF(handTable, copy);
+                return score;
+            } else if (is4Kind(copy) != 0) {
+                score = is4Kind(copy);
+                return score;
+            } else if (isFH(copy) != 0) {
+                score = isFH(copy);
+                return score;
+            } else if (isF(handTable) != 0) {
+                score = isF(handTable);
+                return score;
+            } else if (str8(copy) != 0) {
+                score = str8(copy);
+                return score;
+            } else if (is3Kind(copy) != 0) {
+                score = is3Kind(copy);
+                return score;
+            } else if (is2Pair(copy) != 0) {
+                score = is2Pair(copy);
+                return score;
+            } else if (isPair(copy) != 0) {
+                score = isPair(copy);
+                return score;
+            } else if (highCard(copy) != 0) {
+                score = highCard(copy);
+                return score;
+            }
+            
         return 0;
     }
 
@@ -86,14 +91,14 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         return 0;
     }
 
-    public static int isSF(int[] copy) {
+    public static int isSF(ArrayList<Card> handTable, int[] copy) {
         Boolean isflushed = false;
         Boolean isStr8 = false;
-        for (int i = 14; i > 0; i--) {
-            String holder = getEvalSuit(copy[i]);
+        for (int i = 1; i < handTable.size(); i++) {
+            String holder = handTable.get(0).getSuit();
             int counter = 1;
-            if (getEvalSuit(copy[i]).equals(holder)) {
-                for (int j = i; j > 0; j--) {
+            if (handTable.get(i).getSuit().equals(holder)) {
+                for (int j = i; j < handTable.size(); j++) {
                     counter++;
                     if (counter == 5) {
                         isflushed = true;
@@ -160,11 +165,11 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         return 0;
     }
 
-    public static int isF(int[] copy) {
+    public static int isF(ArrayList<Card> handTable) {
         for (int i = 14; i > 0; i--) {
-            String holder = getEvalSuit(copy[i]);
+            String holder = handTable.get(0).getSuit();
             int counter = 1;
-            if (getEvalSuit(copy[i]).equals(holder)) {
+            if (handTable.get(i).getSuit().equals(holder)) {
                 for (int j = i; j > 0; j--) {
                     counter++;
                     if (counter == 5) {
