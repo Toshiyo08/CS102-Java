@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B */
-    public int getHandValue(ArrayList<Card> playerHand, ArrayList<Card> tableCommCards) {
+    public static int getHandValue(ArrayList<Card> playerHand, ArrayList<Card> tableCommCards) {
         // Royal Straight Flush 13 AKQJ10, same suit
         // Straight Flush 12 56789, same suit
         // 4 kind 11 '7777'Q
@@ -27,6 +27,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             handTable.add(tableCommCards.get(i));
         }
         Collections.sort(handTable, Comparator.comparing(Card::getRank).reversed());
+        System.out.println(handTable);
 
         int copy[] = new int[15];
         for (int i = 0; i < 14; i++) {
@@ -36,58 +37,84 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             copy[o.getRank()]++;
         }
 
-            int score = isRSF(copy);
-            if (score != 0) {
-                return score;
-            } else if (isSF(handTable, copy) != 0) {
-                score = isSF(handTable, copy);
-                return score;
-            } else if (is4Kind(copy) != 0) {
-                score = is4Kind(copy);
-                return score;
-            } else if (isFH(copy) != 0) {
-                score = isFH(copy);
-                return score;
-            } else if (isF(handTable) != 0) {
-                score = isF(handTable);
-                return score;
-            } else if (str8(copy) != 0) {
-                score = str8(copy);
-                return score;
-            } else if (is3Kind(copy) != 0) {
-                score = is3Kind(copy);
-                return score;
-            } else if (is2Pair(copy) != 0) {
-                score = is2Pair(copy);
-                return score;
-            } else if (isPair(copy) != 0) {
-                score = isPair(copy);
-                return score;
-            } else if (highCard(copy) != 0) {
-                score = highCard(copy);
-                return score;
-            }
-            
-        return 0;
+        int score = isRSF(handTable, copy);
+        if (score != 0) {
+            System.out.println("Royal Straight Flush");
+            return score;
+        } else if (isSF(handTable, copy) != 0) {
+            score = isSF(handTable, copy);
+            System.out.println("Straight Flush");
+            return score;
+        } else if (is4Kind(copy) != 0) {
+            score = is4Kind(copy);
+            System.out.println("4 of a kind");
+            return score;
+        } else if (isFH(copy) != 0) {
+            score = isFH(copy);
+            System.out.println("Full House");
+            return score;
+        } else if (isF(handTable) != 0) {
+            score = isF(handTable);
+            System.out.println("Flush");
+            return score;
+        } else if (str8(copy) != 0) {
+            score = str8(copy);
+            System.out.println("Straight");
+            return score;
+        } else if (is3Kind(copy) != 0) {
+            score = is3Kind(copy);
+            System.out.println("3 of a kind");
+            return score;
+        } else if (is2Pair(copy) != 0) {
+            score = is2Pair(copy);
+            System.out.println("2 pairs");
+            return score;
+        } else if (isPair(copy) != 0) {
+            score = isPair(copy);
+            System.out.println("Pair");
+            return score;
+        } else if (highCard(copy) != 0) {
+            score = highCard(copy);
+            System.out.println("High Card");
+            return score;
+        }
+
+        return score;
     }
 
     public static boolean evalcomplete(ArrayList<Card> handTable) {
         return false;
     }
 
-    public static int isRSF(int[] copy) {
+    public static int isRSF(ArrayList<Card> handTable, int[] copy) {
         int counter = 0;
-        if (copy[14] >=1) {
-            for (int i = 14; i > 9; i++) {
-                if (copy[i] >= 1){
+        Boolean isAce5 = false;
+        if (copy[14] >= 1) {
+            for (int i = 14; i > 9; i--) {
+                if (copy[i] >= 1) {
                     counter++;
                 }
                 if (counter == 5) {
-                    return ;
+                    isAce5 = true;
+                    break;
                 }
             }
-            
         }
+        
+        String[] suitSample = {"Diamonds", "Clubs", "Hearts", "Spades"};
+        for (int i = 0; i < 4; i++) {
+            int num = 14;
+            for (Card o : handTable) {
+                if (o.getRank() == num && o.getSuit().equals(suitSample[i])) {
+                    counter++;
+                    num --;
+                    if (num == 9) {
+                        return 10;
+                    }
+                } 
+            }
+        }
+
         return 0;
     }
 
@@ -109,6 +136,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                     break;
                 }
             }
+            counter = 1;
         }
 
         int counter = 0;
@@ -125,7 +153,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         }
 
         if (isflushed && isStr8) {
-            return ;
+            return 9;
         }
 
         return 0;
@@ -137,7 +165,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         for (int i = 14; i > 0; i--) {
             if (copy[i] == 4) {
                 quad = true;
-                return 70 + i;
+                return 8;
             }
         }
 
@@ -147,12 +175,11 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
     public static int isFH(int[] copy) {
         Boolean triple = false;
         Boolean pair = false;
-        int counter = 0;
 
         for (int i = 14; i > 0; i--) {
             // 0 1 2 3 4 5 6 7 8 9 10 11 12
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
-            counter++;
+
             if (copy[i] == 3) {
                 triple = true;
             } else if (copy[i] == 2) {
@@ -160,23 +187,24 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             }
         }
         if (triple && pair) {
-            return;
+            return 7;
         }
         return 0;
     }
 
     public static int isF(ArrayList<Card> handTable) {
-        for (int i = 14; i > 0; i--) {
-            String holder = handTable.get(0).getSuit();
-            int counter = 1;
-            if (handTable.get(i).getSuit().equals(holder)) {
-                for (int j = i; j > 0; j--) {
+        for (int i = 0; i < handTable.size(); i++) {
+            String holder = handTable.get(i).getSuit();
+            int counter = 0;
+            for (int j = i; j < handTable.size(); j++) {
+                if (handTable.get(j).getSuit().equals(holder)) {
                     counter++;
-                    if (counter == 5) {
-                        return;
-                    }
+                }
+                if (counter == 5) {
+                    return 6;
                 }
             }
+            counter = 0;
         }
 
         return 0;
@@ -191,7 +219,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 counter = 0;
             }
             if (counter == 5) {
-                return;
+                return 5;
             }
         }
 
@@ -206,7 +234,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 3) {
                 triple = true;
-                return 42 + i;
+                return 4;
             }
         }
 
@@ -222,13 +250,16 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 2) {
                 pair1 = true;
-                for (int j = i; j > 0; j--) {
+                if (i == 2) {
+                    return 0;
+                }
+                for (int j = i - 1; j > 0; j--) {
                     if (copy[j] == 2) {
                         pair2 = true;
-                        return 28 + i;
+                        return 3;
                     }
                 }
-                return 0;
+                // return 3;
             }
         }
 
@@ -243,7 +274,8 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 2) {
                 pair1 = true;
-                return 14 + i;
+                // return 14 + i;
+                return 2;
             }
         }
 
@@ -257,10 +289,12 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 1) {
 
-                return 14;
+                // return 14;
+                return 1;
             }
         }
 
-        return 2;
+        // return 2;
+        return 0;
     }
 }
