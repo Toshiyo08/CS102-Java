@@ -151,13 +151,34 @@ public class Game {
         table1.setCurrentBet(0);
 
         bettingRound(playersList, table1, afterRound1);
+        Map<String,Integer> winner = new HashMap<>();
 
         for (Player o : playersList) {
             System.out.println("Player " + o.getName() + " hand:");
             for (Card c : o.getHand()) {
                 System.out.println(c);
-                System.out.println();
             }
+            System.out.println();
+            winner.put(o.getName(),Hand2.getHandValue(o.getHand(), table1.getCommCards()));
+        }
+        int highest = 0;
+
+        for (String name: winner.keySet()){
+            if (winner.get(name) > highest){
+                highest = winner.get(name);
+            }
+        }
+
+        ArrayList<String> winnerList = new ArrayList<String>();
+        System.out.println(highest);
+        for (String name: winner.keySet()){
+            if (winner.get(name) == highest){
+            winnerList.add(name);
+            }
+        }
+
+        for (String s : winnerList){
+            System.out.println("Winner is " + s);
         }
 
         // Last Betting
@@ -182,10 +203,30 @@ public class Game {
                     System.out.println("Bet?> ");
                     return input;
                 } else {
-                    throw new InputMismatchException("Invalid Command");
+                    throw new InputMismatchException("Invalid input");
                 }
             } catch (InputMismatchException e){
                 System.out.println("try again");
+            }
+        }
+    }
+
+    public static int getBetInput(Player p){
+        int input;
+        while (true){
+            try {
+                Scanner sc = new Scanner(System.in);
+                if (sc.hasNextInt()){
+                    input = sc.nextInt();
+                    if (input > p.getBalance()){
+                        throw new InputMismatchException("Insufficient Balance, Enter new bet");
+                    }
+                    return input;
+                } else {
+                    throw new InputMismatchException("Invalid input");
+                }
+            } catch (InputMismatchException e){
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -230,7 +271,7 @@ public class Game {
                         }
                         if (action.equals("bet")) {
                             Scanner sc = new Scanner(System.in);
-                            int newBet = sc.nextInt();
+                            int newBet = getBetInput(o);
                             o.setBet(newBet);
                             o.setBalance(newBet);
                             table1.setCurrentBet(newBet);
@@ -252,7 +293,6 @@ public class Game {
                 } else if (o.getType().equals("Bot") && o.getChecked() == false && o.getIsPlaying() == true) {
                     // botLogic(o); // void method, returns nothing
                     // promtBotLogic(o) -> checks their hand+commCard points -> returns action int
-                    int temp = 5;
                     int botAction = 1;
                     if (afterRound1){
                         if ((Hand2.getHandValue(o.getHand(), table1.getCommCards()))  <= 2 && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)){

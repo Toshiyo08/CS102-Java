@@ -12,6 +12,7 @@ public class Player {
     private boolean smallBlind;
     private int betAmt;
     private int balance;
+    private int finalScore = 0;
     private ArrayList<Card> hand; // 10jqka|23456789 10|11|12|13|14
     
     //what is type?
@@ -96,6 +97,14 @@ public class Player {
     public void setRaise(int raisedAmt) {
         this.betAmt = raisedAmt;
         this.balance -= raisedAmt;
+    }
+
+    public void setFinalScore(int finalScore){
+        this.finalScore = finalScore;
+    }
+
+    public int getFinalScore(){
+        return finalScore;
     }
 
     // public Boolean setCheck(String answer) {
