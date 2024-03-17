@@ -109,7 +109,16 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                     counter++;
                     num--;
                     if (num == 9) {
-                        return 402;
+                        if (o.getSuit().equals("Spades")) {
+                            return 421+4;
+                        } else if (o.getSuit().equals("Hearts")) {
+                            return 421+3;
+                        } else if (o.getSuit().equals("Clubs")) {
+                            return 421+2;
+                        } else if (o.getSuit().equals("Diamonds")) {
+                            return 421+1;
+                        }
+                        
                     }
                 }
             }
@@ -167,7 +176,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                         num--;
                         sum += num;
                         if (num == original - 5) {
-                            return 347 + sum;
+                            return 366 + sum;
                         }
                     }
                 }
@@ -184,7 +193,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
         for (int i = 14; i > 0; i--) {
             if (copy[i] == 4) {
                 quad = true;
-                return 291 + i * 4;
+                return 310 + i * 4;
             }
         }
 
@@ -209,7 +218,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             }
         }
         if (triple && pair) {
-            return 223 + sum;
+            return 242 + sum;
         }
         return 0;
     }
@@ -224,13 +233,13 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 }
                 if (counter == 5) {
                     if (is3Kind(copy) != 0) {
-                        return 181 + is3Kind(copy);
+                        return 200 + is3Kind(copy);
                     } else if (is2Pair(copy) != 0) {
-                        return 181 + is2Pair(copy);
+                        return 200 + is2Pair(copy);
                     } else if (isPair(copy) != 0) {
-                        return 181 + isPair(copy);
+                        return 200 + isPair(copy);
                     } else {
-                        return 181 + highCard(copy);
+                        return 200 + highCard(copy);
                     }
                 }
             }
@@ -252,7 +261,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 sum = 0;
             }
             if (counter == 5) {
-                return 126 + sum;
+                return 140 + sum;
             }
         }
 
@@ -267,7 +276,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             // 2 3 4 5 6 7 8 9 10 11 12 13 14
             if (copy[i] == 3) {
                 triple = true;
-                return 84 + i * 3;
+                return 98 + i * 3;
             }
         }
 
@@ -289,7 +298,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
                 for (int j = i - 1; j > 0; j--) {
                     if (copy[j] == 2) {
                         pair2 = true;
-                        return 28 + i * 2 + j * 2;
+                        return 42 + i * 2 + j * 2;
                     }
                 }
                 // return 3;
@@ -308,7 +317,7 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             if (copy[i] == 2) {
                 pair1 = true;
                 // return 14 + i;
-                return i * 2;
+                return 14 + i * 2;
             }
         }
 
