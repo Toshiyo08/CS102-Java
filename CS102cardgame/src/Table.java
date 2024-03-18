@@ -31,16 +31,12 @@ public class Table {
         this.commCards.add(newCard);
     }
 
-    public int getPot(ArrayList<Player> Tableplayer) {
-        pot = 0;
-        for (Player plyr: Tableplayer) {
-            pot += plyr.getBet();
-        }
+    public int getPot() {
         return pot;
     }
 
-    public int checkPot() {
-        return pot;
+    public void setPot(int amount) {
+        pot += amount;
     }
     
 }

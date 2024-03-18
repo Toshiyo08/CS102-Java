@@ -70,6 +70,10 @@ public class Player {
         this.balance -= raised;
     }
 
+    public void setEndBalance(int raised) {
+        this.balance += raised;
+    }
+
     public ArrayList<Card> getHand(){
         return (ArrayList<Card>) this.hand;
     }
