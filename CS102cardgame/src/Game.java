@@ -62,8 +62,63 @@ public class Game {
         System.out.println("                                                | (__) || :\\/: || (__) || (__) || :\\/: || :\\/: || :\\/: |");
         System.out.println("                                                | '--'H|| '--'O|| '--'L|| '--'D|| '--''|| '--'E|| '--'M|");
         System.out.println("                                                `------'`------'`------'`------'`------'`------'`------'");
-       
-       
+        System.out.print("Shuffling Cards ");
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(". ");
+        }
+        
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+        System.out.print("Stacking Chips ");
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(". ");
+        }
+        
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+        System.out.print("Loading ");
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(". ");
+        }
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.print("100%");
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+        System.out.println();
+
+
+
 
         while (gameContinue) {
             Table table1 = new Table();
@@ -79,7 +134,6 @@ public class Game {
             // Scanner getCutNum = new Scanner (System.in);
             // deck1.cutDeck();
 
-            System.out.println("Start");
             // deal cards
             for (Player e : playersList) {
                 e.draw(deck1.dealCard());
@@ -121,8 +175,7 @@ public class Game {
             for (Player p : playersList) {
                 System.out.println(p.getBalance());
             }
-            // Deal
-            // Turn---------------------------------------------------------------------------
+            // Deal Turn------------------------------
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
 
@@ -150,6 +203,7 @@ public class Game {
             // for (Card c : table1.getCommCards()) {
             // System.out.println(c);
             // }
+            
             Card.printCard(table1.getCommCards());
 
             // userPlayer.setChecked(false);
