@@ -1,8 +1,6 @@
 // // package CS102cardgame.src;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.Action;
 
@@ -53,37 +51,22 @@ public class PlayerBot extends Player {
 
     public static void botThinking(String name) {
         System.out.print(name + ": ");
+        Random random = new Random();
+        int randomint = random.nextInt(6) + 1;
         try {
             Thread.sleep(100); // Wait for 0.1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.print("H");
-        try {
-            Thread.sleep(100); // Wait for 0.1 second
-        } catch (InterruptedException e) {
-            // Handle the exception if necessary
-            e.printStackTrace();
+        for (int i = 0; i < randomint; i++) {
+            try {
+                Thread.sleep(100); // Wait for 0.1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print("m");
         }
-        System.out.print("m");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.print("m");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.print("m");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.print("m");
         System.out.println();
     }
 
@@ -108,7 +91,7 @@ public class PlayerBot extends Player {
             default:
                 break;
         }
-        
+
         System.out.print(talkerName + ": ");
         for (int i = 0 ; i < angryreply.length(); i++) {
             try {

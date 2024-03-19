@@ -393,7 +393,6 @@ public class Game {
                                 Random random = new Random();
                                 int randomreply = random.nextInt(5) + 1;
                                 PlayerBot.randomangryreply(f.getName(), o.getName(), randomreply);
-                                
                             }
                         }
 
