@@ -23,6 +23,107 @@ public class PlayerBot extends Player {
         // this.tightness = tightness;
         // this.aggression = aggression;
     }
+
+    public static int getBotAction (Player o, String previousAction, Boolean afterBet1, Table table1) {
+        botThinking(o.getName());
+        if (afterBet1) {// fold if raise too high for given hand value
+            if ((Hand2.getHandValue(o.getHand(), table1.getCommCards())) <= 28
+                    && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)) {
+                if (previousAction == null) {
+                    previousAction = "Check";
+                }
+                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    return 1;
+                } else {
+                    return 3;
+                }
+            } else {
+                if (previousAction == null) {
+                    previousAction = "Check";
+                }
+                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    return 2;
+                } else {
+                    return 1;
+                }
+            }
+        }
+        return 1;
+    }
+
+    public static void botThinking(String name) {
+        System.out.print(name + ": ");
+        try {
+            Thread.sleep(100); // Wait for 0.1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.print("H");
+        try {
+            Thread.sleep(100); // Wait for 0.1 second
+        } catch (InterruptedException e) {
+            // Handle the exception if necessary
+            e.printStackTrace();
+        }
+        System.out.print("m");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.print("m");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.print("m");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.print("m");
+        System.out.println();
+    }
+
+    public static void randomangryreply(String talkerName, String raiserName, int randomreply) {
+        String angryreply = null;
+        switch (randomreply) {
+            case 1:
+                angryreply = "You mf";
+                break;
+            case 2:
+                angryreply = "Arggh screw you " + raiserName;
+                break;
+            case 3:
+                angryreply = "Basket sia " + raiserName;
+                break;
+            case 4:
+                angryreply = "Ah crap";
+                break;
+            case 5:
+                angryreply = "God DAMN IT";
+                break;
+            default:
+                break;
+        }
+        System.out.print(talkerName + ": ");
+        for (int i = 0 ; i < angryreply.length(); i++) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print((angryreply.charAt(i)));
+        }
+        System.out.println();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 //     public double calculateChenScore(List<Card> hand) {
