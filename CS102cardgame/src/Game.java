@@ -49,7 +49,21 @@ public class Game {
         boolean gameContinue = true;
         int allWinning = userPlayer.getBalance() * playersList.size();
 
-        System.out.println("Welcome to Texas Hold'em!");
+        System.out.println("                                                                       Welcome to");
+        System.out.println("                                                        .------..------..------..------..------.          ");
+        System.out.println("                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |          ");
+        System.out.println("                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |          ");
+        System.out.println("                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |          ");
+        System.out.println("                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|          ");
+        System.out.println("                                                        `------'`------'`------'`------'`------'          ");
+        System.out.println("                                                .------..------..------..------..------..------..------.");
+        System.out.println("                                                |H.--. ||O.--. ||L.--. ||D.--. ||'.--. ||E.--. ||M.--. |");
+        System.out.println("                                                | :/\\: || :/\\: || :/\\: || :/\\: || :/\\: || (\\/) || (\\/) |");
+        System.out.println("                                                | (__) || :\\/: || (__) || (__) || :\\/: || :\\/: || :\\/: |");
+        System.out.println("                                                | '--'H|| '--'O|| '--'L|| '--'D|| '--''|| '--'E|| '--'M|");
+        System.out.println("                                                `------'`------'`------'`------'`------'`------'`------'");
+       
+       
 
         while (gameContinue) {
             Table table1 = new Table();

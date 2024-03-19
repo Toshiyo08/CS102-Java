@@ -108,6 +108,7 @@ public class PlayerBot extends Player {
             default:
                 break;
         }
+        
         System.out.print(talkerName + ": ");
         for (int i = 0 ; i < angryreply.length(); i++) {
             try {
@@ -117,6 +118,7 @@ public class PlayerBot extends Player {
             }
             System.out.print((angryreply.charAt(i)));
         }
+
         System.out.println();
         try {
             Thread.sleep(500);
