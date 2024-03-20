@@ -39,43 +39,43 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
 
         int score = isRSF(handTable, copy);
         if (score != 0) {
-            System.out.println("Royal Straight Flush");
+            //System.out.println("Royal Straight Flush");
             return score;
         } else if (isSF(handTable, copy) != 0) {
             score = isSF(handTable, copy);
-            System.out.println("Straight Flush");
+            //System.out.println("Straight Flush");
             return score;
         } else if (is4Kind(copy) != 0) {
             score = is4Kind(copy);
-            System.out.println("4 of a kind");
+            //System.out.println("4 of a kind");
             return score;
         } else if (isFH(copy) != 0) {
             score = isFH(copy);
-            System.out.println("Full House");
+            //System.out.println("Full House");
             return score;
         } else if (isF(handTable, copy) != 0) {
             score = isF(handTable, copy);
-            System.out.println("Flush");
+            //System.out.println("Flush");
             return score;
         } else if (str8(copy) != 0) {
             score = str8(copy);
-            System.out.println("Straight");
+            //System.out.println("Straight");
             return score;
         } else if (is3Kind(copy) != 0) {
             score = is3Kind(copy);
-            System.out.println("3 of a kind");
+            //System.out.println("3 of a kind");
             return score;
         } else if (is2Pair(copy) != 0) {
             score = is2Pair(copy);
-            System.out.println("2 pairs");
+            //System.out.println("2 pairs");
             return score;
         } else if (isPair(copy) != 0) {
             score = isPair(copy);
-            System.out.println("Pair");
+            //System.out.println("Pair");
             return score;
         } else if (highCard(copy) != 0) {
             score = highCard(copy);
-            System.out.println("High Card");
+            //System.out.println("High Card");
             return score;
         }
 
