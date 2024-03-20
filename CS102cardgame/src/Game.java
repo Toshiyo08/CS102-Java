@@ -50,7 +50,7 @@ public class Game {
 
         boolean gameContinue = true;
         int allWinning = userPlayer.getBalance() * playersList.size();
-        // startingScreen();
+        startingScreen();
         Boolean isOpenHandTime = false;
         int roundCounter = 1;
 
