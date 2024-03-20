@@ -55,6 +55,7 @@ public class Game {
         int roundCounter = 1;
 
         while (gameContinue) {
+            int numTimesBet = 0;
             System.out.println("Round " + roundCounter++ + "!");
 
             Table table1 = new Table();
@@ -84,6 +85,43 @@ public class Game {
             boolean afterRound1 = false;
             // 1st Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1); // DONT DELETE THIS LINE
+            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1, ++numTimesBet)) {
+                userPlayer.setIsPlaying(true);
+                userPlayer1.setIsPlaying(true);
+                userPlayer2.setIsPlaying(true);
+                for (Player o : playersList) {
+                    o.getHand().clear();
+                }
+                table1.getCommCards().clear();
+                for (Player p : playersList) {
+                    if (p.getBalance() == allWinning) {
+                        gameContinue = false;
+                        break;
+                    }
+                }
+                if (userPlayer.getBalance() == 0) {
+                    gameContinue = false;
+                    break;
+                }
+                Scanner scRoundEndallin = new Scanner(System.in);
+                System.out.println("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("N") || newRound.equals("n")) {
+                    gameContinue = false;
+                    scRoundEndallin.close();
+                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    // Reset everything
+                    userPlayer.setIsPlaying(true);
+                    userPlayer1.setIsPlaying(true);
+                    userPlayer2.setIsPlaying(true);
+                    for (Player o : playersList) {
+                        o.getHand().clear();
+                    }
+                    table1.getCommCards().clear();
+                }
+
+                continue;
+            }
 
             // System.out.println(table1.getPot());
             // for (Player p : playersList) {
@@ -109,7 +147,7 @@ public class Game {
 
             // 2nd Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
-            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1)) {
+            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1, ++numTimesBet)) {
                 userPlayer.setIsPlaying(true);
                 userPlayer1.setIsPlaying(true);
                 userPlayer2.setIsPlaying(true);
@@ -126,6 +164,22 @@ public class Game {
                 if (userPlayer.getBalance() == 0) {
                     gameContinue = false;
                     break;
+                }
+                Scanner scRoundEndallin = new Scanner(System.in);
+                System.out.println("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("N") || newRound.equals("n")) {
+                    gameContinue = false;
+                    scRoundEndallin.close();
+                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    // Reset everything
+                    userPlayer.setIsPlaying(true);
+                    userPlayer1.setIsPlaying(true);
+                    userPlayer2.setIsPlaying(true);
+                    for (Player o : playersList) {
+                        o.getHand().clear();
+                    }
+                    table1.getCommCards().clear();
                 }
 
                 continue;
@@ -152,6 +206,43 @@ public class Game {
 
             // 3rd Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
+            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1, ++numTimesBet)) {
+                userPlayer.setIsPlaying(true);
+                userPlayer1.setIsPlaying(true);
+                userPlayer2.setIsPlaying(true);
+                for (Player o : playersList) {
+                    o.getHand().clear();
+                }
+                table1.getCommCards().clear();
+                for (Player p : playersList) {
+                    if (p.getBalance() == allWinning) {
+                        gameContinue = false;
+                        break;
+                    }
+                }
+                if (userPlayer.getBalance() == 0) {
+                    gameContinue = false;
+                    break;
+                }
+                Scanner scRoundEndallin = new Scanner(System.in);
+                System.out.println("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("N") || newRound.equals("n")) {
+                    gameContinue = false;
+                    scRoundEndallin.close();
+                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    // Reset everything
+                    userPlayer.setIsPlaying(true);
+                    userPlayer1.setIsPlaying(true);
+                    userPlayer2.setIsPlaying(true);
+                    for (Player o : playersList) {
+                        o.getHand().clear();
+                    }
+                    table1.getCommCards().clear();
+                }
+
+                continue;
+            }
             // System.out.println(table1.getPot());
             // for (Player p : playersList) {
             // System.out.println(p.getBalance());
@@ -174,6 +265,43 @@ public class Game {
 
             // Last Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
+            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1, ++numTimesBet)) {
+                userPlayer.setIsPlaying(true);
+                userPlayer1.setIsPlaying(true);
+                userPlayer2.setIsPlaying(true);
+                for (Player o : playersList) {
+                    o.getHand().clear();
+                }
+                table1.getCommCards().clear();
+                for (Player p : playersList) {
+                    if (p.getBalance() == allWinning) {
+                        gameContinue = false;
+                        break;
+                    }
+                }
+                if (userPlayer.getBalance() == 0) {
+                    gameContinue = false;
+                    break;
+                }
+                Scanner scRoundEndallin = new Scanner(System.in);
+                System.out.println("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("N") || newRound.equals("n")) {
+                    gameContinue = false;
+                    scRoundEndallin.close();
+                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    // Reset everything
+                    userPlayer.setIsPlaying(true);
+                    userPlayer1.setIsPlaying(true);
+                    userPlayer2.setIsPlaying(true);
+                    for (Player o : playersList) {
+                        o.getHand().clear();
+                    }
+                    table1.getCommCards().clear();
+                }
+
+                continue;
+            }
 
             // for second game
             System.out.println(table1.getPot());
@@ -265,6 +393,12 @@ public class Game {
         }
 
     }
+
+
+
+
+
+
 
     public static String getInput() {
         while (true) {
@@ -439,12 +573,11 @@ public class Game {
 
                     }
                     if (action.equals("fold")) {
-
                         o.setIsPlaying(false);
                         previousAction = "Fold";
                         counter--;
-
                     }
+
                 } else if (o.getType().equals("Bot") && o.getChecked() == false && o.getIsPlaying() == true) {
                     System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
                     // botLogic(o); // void method, returns nothing
@@ -536,7 +669,7 @@ public class Game {
                         previousAction = "Fold";
                     }
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -574,7 +707,7 @@ public class Game {
     }
 
     public static Boolean timeToOpenHand(Boolean isOpenHandTime, ArrayList<Player> playersList, Table table1,
-            Deck deck1) {
+            Deck deck1, int numTimesBet) {
         int openHandCounter = 0;
         int activePlayerCounter = 0;
         for (Player g : playersList) {
@@ -596,13 +729,14 @@ public class Game {
 
         if (isOpenHandTime) {
             System.out.println("Everybody open hand!");
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4-numTimesBet; i++) {
                 deck1.burnCard();
                 table1.drawComm(deck1.dealCard());
             }
             Card.printCard(table1.getCommCards());
             for (Player h : playersList) {
                 if (h.getIsPlaying()) {
+                    System.out.println(h.getName());
                     Card.printCard(h.getHand());
                 }
             }

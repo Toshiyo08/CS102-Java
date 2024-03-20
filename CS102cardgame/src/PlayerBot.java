@@ -27,7 +27,21 @@ public class PlayerBot extends Player {
         int tightness = 0;
         int aggression = 0;
         int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
-
+        // For a given handValue, where tightness = x, aggression = y
+        // formula (handValue, tightness, aggression) - >returns action
+        // betProb = (tightness * aggression) / 100
+        // -> T1 = (handvalue / 425 * 100) * tightness^2
+        // -> A1 = (handValue / 425 * 100) * aggression^2
+        // Double randomTight = random.nextDouble(T1)
+        // Double randomAggro = random.nextDouble(A1)
+        // if randomTight >  randomAggro -> betProb *= 0.5
+        // if randomAggro > randomTight -> betProb *= 1.5
+        // Double randDouble = random.nextDouble()
+        // if (randDouble < betProb) bet
+        // if (randDouble <0.8) check
+        // else fold
+        // Tightness 0-100, bigger number = less likely to bet
+        // botBetAmt(handValue, aggression) -> returns raise amt based on handValue, aggression, balance
         if (afterBet1) {// fold if raise too high for given hand value
             if ((handValue) <= 28 && (handValue > 0)) {
                 if (previousAction == null) {
