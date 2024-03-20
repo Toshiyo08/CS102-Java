@@ -50,7 +50,7 @@ public class Game {
 
         boolean gameContinue = true;
         int allWinning = userPlayer.getBalance() * playersList.size();
-        startingScreen();
+        // startingScreen();
         Boolean isOpenHandTime = false;
         int roundCounter = 1;
 
@@ -253,13 +253,15 @@ public class Game {
         if (originalBalance > userPlayer.getBalance() && userPlayer.getBalance() != 0) {
             System.out.println("You lost $" + (originalBalance - userPlayer.getBalance()));
             System.out.println("Better luck next time!");
-        } else if (originalBalance < userPlayer.getBalance()) {
-            System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
         } else if (userPlayer.getBalance() == originalBalance * playersList.size()) {
             System.out.println("You won everything!");
         } else if (userPlayer.getBalance() == 0) {
             System.out.println("HAHAHA HOW TF YOU LOSE EVERYTHING TO BOTS");
-        }
+        } else if (userPlayer.getBalance() == 100) {
+            System.out.println("Damn, you didn't win anything? Congrats on wasting your time!");
+        } else /*if (originalBalance < userPlayer.getBalance()) */ {
+            System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
+        } 
 
     }
 
@@ -317,11 +319,6 @@ public class Game {
 
         while (counter != getCurrentSize(current)) {
             for (Player o : current) {
-                try {
-                    Thread.sleep(700);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
                 if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
                     String action = null;
@@ -465,9 +462,11 @@ public class Game {
 
                         for (Player f : playersList) {
                             if (!(f.getType().equals("Player")) && !(f.equals(o))) {
-                                Random random = new Random();
-                                int randomreply = random.nextInt(5) + 1;
-                                PlayerBot.randomangryreply(f.getName(), o.getName(), randomreply);
+                                if (f.getIsPlaying()){
+                                    Random random = new Random();
+                                    int randomreply = random.nextInt(5) + 1;
+                                    PlayerBot.randomangryreply(f.getName(), o.getName(), randomreply);
+                                }
                             }
                         }
 
@@ -506,6 +505,11 @@ public class Game {
                         // current.remove(o);
                         previousAction = "Fold";
                     }
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 try {
@@ -540,20 +544,23 @@ public class Game {
     }
 
     public static Boolean timeToOpenHand(Boolean isOpenHandTime, ArrayList<Player> playersList, Table table1, Deck deck1) {
+        int openHandCounter = 0;
+        int activePlayerCounter = 0;
         for (Player g : playersList) {
-            int openHandCounter = 0;
-            int activePlayerCounter = 0;
+            
             if (g.getIsPlaying()) {
                 activePlayerCounter++;
                 if (g.getBalance() == 0) {
                     openHandCounter++;
                 }
             }
-            if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
-                isOpenHandTime = true;
-            } else {
-                return false;
-            }
+            
+        }
+        if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
+            isOpenHandTime = true;
+            System.out.println("OPENHAND");
+        } else {
+            return false;
         }
 
         if (isOpenHandTime) {
