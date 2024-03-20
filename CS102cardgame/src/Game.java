@@ -50,79 +50,13 @@ public class Game {
 
         boolean gameContinue = true;
         int allWinning = userPlayer.getBalance() * playersList.size();
-
-        System.out.println("                                                                       Welcome to");
-        System.out.println("                                                        .------..------..------..------..------.          ");
-        System.out.println("                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |          ");
-        System.out.println("                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |          ");
-        System.out.println("                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |          ");
-        System.out.println("                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|          ");
-        System.out.println("                                                        `------'`------'`------'`------'`------'          ");
-        System.out.println("                                                .------..------..------..------..------..------..------.");
-        System.out.println("                                                |H.--. ||O.--. ||L.--. ||D.--. ||'.--. ||E.--. ||M.--. |");
-        System.out.println("                                                | :/\\: || :/\\: || :/\\: || :/\\: || :/\\: || (\\/) || (\\/) |");
-        System.out.println("                                                | (__) || :\\/: || (__) || (__) || :\\/: || :\\/: || :\\/: |");
-        System.out.println("                                                | '--'H|| '--'O|| '--'L|| '--'D|| '--''|| '--'E|| '--'M|");
-        System.out.println("                                                `------'`------'`------'`------'`------'`------'`------'");
-        // System.out.print("Shuffling Cards ");
-        // for (int i = 0; i < 3; i++) {
-        //     try {
-        //         Thread.sleep(700);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
-        //     System.out.print(". ");
-        // }
-        
-        // try {
-        //     Thread.sleep(800);
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
-        // System.out.println();
-        // System.out.print("Stacking Chips ");
-        // for (int i = 0; i < 3; i++) {
-        //     try {
-        //         Thread.sleep(700);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
-        //     System.out.print(". ");
-        // }
-        
-        // try {
-        //     Thread.sleep(800);
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
-        // System.out.println();
-        // System.out.print("Loading ");
-        // for (int i = 0; i < 3; i++) {
-        //     try {
-        //         Thread.sleep(1000);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
-        //     System.out.print(". ");
-        // }
-        // try {
-        //     Thread.sleep(800);
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
-        // System.out.print("100%");
-        // try {
-        //     Thread.sleep(1500);
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
-        // System.out.println();
-        // System.out.println();
-
-
-
+        startingScreen();
+        Boolean isOpenHandTime = false;
+        int roundCounter = 1;
 
         while (gameContinue) {
+            System.out.println("Round " + roundCounter++ + "!");
+
             Table table1 = new Table();
             // Create Deck
             Deck deck1 = new Deck();
@@ -149,9 +83,10 @@ public class Game {
             boolean afterRound1 = false;
             // 1st Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1); // DONT DELETE THIS LINE
+
             // System.out.println(table1.getPot());
             // for (Player p : playersList) {
-            //     System.out.println(p.getBalance());
+            // System.out.println(p.getBalance());
             // }
 
             // Deal Flop (3 cards)
@@ -173,9 +108,21 @@ public class Game {
 
             // 2nd Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
+            if (timeToOpenHand(isOpenHandTime, playersList, table1, deck1)){
+                userPlayer.setIsPlaying(true);
+                userPlayer1.setIsPlaying(true);
+                userPlayer2.setIsPlaying(true);
+                for (Player o : playersList) {
+                    o.getHand().clear();
+                }
+                table1.getCommCards().clear();
+                
+                continue;
+            }
+            
             // System.out.println(table1.getPot());
             // for (Player p : playersList) {
-            //     System.out.println(p.getBalance());
+            // System.out.println(p.getBalance());
             // }
             // Deal Turn------------------------------
             deck1.burnCard();
@@ -196,7 +143,7 @@ public class Game {
             bettingRound(playersList, table1, afterRound1);
             // System.out.println(table1.getPot());
             // for (Player p : playersList) {
-            //     System.out.println(p.getBalance());
+            // System.out.println(p.getBalance());
             // }
             // Deal River
             deck1.burnCard();
@@ -205,7 +152,7 @@ public class Game {
             // for (Card c : table1.getCommCards()) {
             // System.out.println(c);
             // }
-            
+
             Card.printCard(table1.getCommCards());
 
             // userPlayer.setChecked(false);
@@ -298,7 +245,6 @@ public class Game {
         } else if (userPlayer.getBalance() == 0) {
             System.out.println("HAHAHA HOW TF YOU LOSE EVERYTHING TO BOTS");
         }
-    
 
     }
 
@@ -361,9 +307,9 @@ public class Game {
                     String action = null;
                     System.out.println("Your hand: ");
                     Card.printCard(o.getHand());
-                    System.out.println("Your balance: "+ o.getBalance());
+                    System.out.println("Your balance: " + o.getBalance());
                     System.out.println("Your current bet " + o.getBet());
-                    System.out.println("Table's pot "+ table1.getPot());
+                    System.out.println("Table's pot " + table1.getPot());
 
                     if (o.getBet() < table1.getCurrentBetAmt()) {
                         System.out.println("Call / Raise / Fold");
@@ -383,14 +329,13 @@ public class Game {
                         o.setChecked(true);
                         counter++;
                         previousAction = "Check";
-
                     } else {
                         System.out.println("Check / Bet / Fold");
                         System.out.print("Action> ");
                         action = getInput();
                         o.setChecked(true);
                         o.setBet(table1.getCurrentBetAmt());
-                        o.setBalance(o.getBet());
+                        // o.setBalance(o.getBet());
                         counter++;
                         previousAction = "Check";
                     }
@@ -402,12 +347,12 @@ public class Game {
                         // o.setBalance(newBet);
                         o.raiseBet(newBet);
                         System.out.println("Your new balance: " + o.getBalance());
-                        System.out.println("Your new Bet "+ o.getBet());
-                        
+                        System.out.println("Your new Bet " + o.getBet());
+
                         // table1.setCurrentBet(newBet);
                         table1.raiseCurrentBet(newBet);
                         table1.raisePot(newBet);
-                        System.out.println("Table's new pot "+table1.getPot());
+                        System.out.println("Table's new pot " + table1.getPot());
                         o.setChecked(true);
                         counter = 1;
                         for (Player e : current) {
@@ -458,7 +403,7 @@ public class Game {
 
                     if (botAction == 1) {
                         if (o.getBet() < table1.getCurrentBetAmt()) {
-                            
+
                             o.setChecked(true);
                             int callAmt = table1.getCurrentBetAmt() - o.getBet();
                             o.raiseBet(callAmt);
@@ -466,13 +411,15 @@ public class Game {
                             // o.setBet(table1.getCurrentBetAmt());
                             // o.setBalance(o.getBet());
                             if (o.getBalance() == 0) {
-                                System.out.println(o.getName() + ": " + "ALL IN BABY. I got $" + o.getBalance() + " left and my bet is $" + o.getBet());
+                                System.out.println(o.getName() + ": " + "ALL IN BABY. I got $" + o.getBalance()
+                                        + " left and my bet is $" + o.getBet());
                             } else {
                                 System.out.println(o.getName() + ": Call");
-                                System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
+                                System.out.println(
+                                        o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
                             }
-                            
-                            System.out.println("The table's pot is "+ table1.getPot());
+
+                            System.out.println("The table's pot is " + table1.getPot());
                             counter++;
                             previousAction = "Call";
                         } else if (o.getBalance() == 0) {
@@ -480,7 +427,7 @@ public class Game {
                             o.setChecked(true);
                             counter++;
                             previousAction = "Check";
-    
+
                         } else {
                             System.out.println(o.getName() + ": Check");
                             o.setChecked(true);
@@ -505,10 +452,10 @@ public class Game {
                         // System.out.println("Before Bet " + o.getBet());
                         // System.out.println("Before Balance " + o.getBalance());
                         // System.out.println("Before Table Bet " + table1.getCurrentBetAmt());
-                        
+
                         // o.setBet(newBet);
                         // o.setBalance(newBet);
-                        
+
                         o.raiseBet(newBet);
                         System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
                         // table1.setCurrentBet(newBet);
@@ -516,7 +463,7 @@ public class Game {
                         table1.raisePot(newBet);
                         System.out.println("The current table bet amount is " + table1.getCurrentBetAmt());
                         System.out.println("The Table's Pot is " + table1.getPot());
-                        
+
                         o.setChecked(true);
                         counter = 1;
                         for (Player e : current) {
@@ -552,7 +499,7 @@ public class Game {
         for (Player o : playersList) {
             o.setChecked(false);
             // if (o.getType().equals("Player")) {
-            //     o.setBet(0);
+            // o.setBet(0);
             // }
         }
         // table1.setCurrentBet(0);
@@ -567,6 +514,165 @@ public class Game {
             }
         }
         return counter;
+    }
+
+    public static Boolean timeToOpenHand(Boolean isOpenHandTime, ArrayList<Player> playersList, Table table1, Deck deck1) {
+        for (Player g : playersList) {
+            int openHandCounter = 0;
+            int activePlayerCounter = 0;
+            if (g.getIsPlaying()) {
+                activePlayerCounter++;
+                if (g.getBalance() == 0) {
+                    openHandCounter++;
+                }
+            }
+            if (openHandCounter == activePlayerCounter) {
+                isOpenHandTime = true;
+            }
+        }
+
+        if (isOpenHandTime) {
+            System.out.println("Everybody open hand!");
+            for (int i = 0; i < 3; i++) {
+                deck1.burnCard();
+                table1.drawComm(deck1.dealCard());
+            }
+            Card.printCard(table1.getCommCards());
+            for (Player h : playersList) {
+                if (h.getIsPlaying()){
+                    Card.printCard(h.getHand());
+                }
+            }
+
+            Map<Player, Integer> winner = new HashMap<>();
+
+            for (Player o : playersList) {
+                if (o.getIsPlaying()) {
+                    System.out.println("Player " + o.getName() + " hand:");
+                    // for (Card c : o.getHand()) {
+                    // System.out.println(c);
+                    // }
+                    Card.printCard(o.getHand());
+                    winner.put(o, Hand2.getHandValue(o.getHand(), table1.getCommCards()));
+                    System.out.println();
+                }
+
+            }
+            int highest = 0;
+
+            for (Player p : winner.keySet()) {
+                if (winner.get(p) > highest) {
+                    highest = winner.get(p);
+                }
+            }
+
+            ArrayList<Player> winnerList = new ArrayList<Player>();
+            System.out.println(highest);
+            for (Player player : winner.keySet()) {
+                if (winner.get(player) == highest) {
+                    winnerList.add(player);
+                }
+            }
+            if (winnerList.size() > 1) {
+                for (Player o : winnerList) {
+                    o.setEndBalance(table1.getPot() / winnerList.size());
+                }
+            } else {
+                winnerList.get(0).setEndBalance(table1.getPot());
+            }
+            for (Player o : winnerList) {
+                System.out.println("Winner is " + o.getName());
+
+            }
+
+            System.out.println("Round over");
+
+            return true;
+        }
+        return false;
+    }
+
+    public static void startingScreen() {
+
+        System.out.println("                                                                       Welcome to");
+        System.out.println(
+                "                                                        .------..------..------..------..------.          ");
+        System.out.println(
+                "                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |          ");
+        System.out.println(
+                "                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |          ");
+        System.out.println(
+                "                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |          ");
+        System.out.println(
+                "                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|          ");
+        System.out.println(
+                "                                                        `------'`------'`------'`------'`------'          ");
+        System.out.println(
+                "                                                .------..------..------..------..------..------..------.");
+        System.out.println(
+                "                                                |H.--. ||O.--. ||L.--. ||D.--. ||'.--. ||E.--. ||M.--. |");
+        System.out.println(
+                "                                                | :/\\: || :/\\: || :/\\: || :/\\: || :/\\: || (\\/) || (\\/) |");
+        System.out.println(
+                "                                                | (__) || :\\/: || (__) || (__) || :\\/: || :\\/: || :\\/: |");
+        System.out.println(
+                "                                                | '--'H|| '--'O|| '--'L|| '--'D|| '--''|| '--'E|| '--'M|");
+        System.out.println(
+                "                                                `------'`------'`------'`------'`------'`------'`------'");
+        // System.out.print("Shuffling Cards ");
+        // for (int i = 0; i < 3; i++) {
+        // try {
+        // Thread.sleep(700);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.print(". ");
+        // }
+
+        // try {
+        // Thread.sleep(800);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.println();
+        // System.out.print("Stacking Chips ");
+        // for (int i = 0; i < 3; i++) {
+        // try {
+        // Thread.sleep(700);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.print(". ");
+        // }
+
+        // try {
+        // Thread.sleep(800);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.println();
+        System.out.print("Loading ");
+        for (int i = 0; i < 10; i++) {
+        try {
+        Thread.sleep(700);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.print(Character.toChars(0x2593));
+        }
+        try {
+        Thread.sleep(800);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.print(" 100%");
+        try {
+        Thread.sleep(1500);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.println();
+        // System.out.println();
     }
 
 }

@@ -24,6 +24,8 @@ public class PlayerBot extends Player {
 
     public static int getBotAction (Player o, String previousAction, Boolean afterBet1, Table table1) {
         botThinking(o.getName());
+        int tightness = 0;
+        int aggression = 0;
 
         if (afterBet1) {// fold if raise too high for given hand value
             if ((Hand2.getHandValue(o.getHand(), table1.getCommCards())) <= 28
@@ -51,6 +53,7 @@ public class PlayerBot extends Player {
                 }
             }
         }
+        // Chen score if not afterbet1
         return 1;
     }
 
