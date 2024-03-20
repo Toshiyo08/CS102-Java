@@ -22,6 +22,10 @@ public class Table {
         this.currentBetAmt = raisedValue;
     }
 
+    public void raiseCurrentBet (int raisedAmt) {
+        this.currentBetAmt += raisedAmt;
+    }
+
     public int getCurrentBetAmt () {
         return currentBetAmt;
     }
@@ -37,6 +41,10 @@ public class Table {
 
     public void setPot(int amount) {
         pot += amount;
+    }
+
+    public void raisePot(int raisedAmt) {
+        this.pot += raisedAmt;
     }
     
 }

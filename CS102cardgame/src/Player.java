@@ -62,6 +62,11 @@ public class Player {
         this.betAmt = newBet;
     }
 
+    public void raiseBet(int raisedamt) {
+        this.betAmt += raisedamt;
+        this.balance -= raisedamt;
+    }
+
     public int getBalance(){
         return this.balance;
     }

@@ -24,6 +24,7 @@ public class PlayerBot extends Player {
 
     public static int getBotAction (Player o, String previousAction, Boolean afterBet1, Table table1) {
         botThinking(o.getName());
+
         if (afterBet1) {// fold if raise too high for given hand value
             if ((Hand2.getHandValue(o.getHand(), table1.getCommCards())) <= 28
                     && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)) {
@@ -40,6 +41,10 @@ public class PlayerBot extends Player {
                     previousAction = "Check";
                 }
                 if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    if (o.getBalance() == 0) {
+                        System.out.println("I've all in-ed");
+                        return 1;
+                    }
                     return 2;
                 } else {
                     return 1;
