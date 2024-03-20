@@ -116,6 +116,16 @@ public class Game {
                     o.getHand().clear();
                 }
                 table1.getCommCards().clear();
+                for (Player p : playersList) {
+                    if (p.getBalance() == allWinning) {
+                        gameContinue = false;
+                        break;
+                    }
+                }
+                if (userPlayer.getBalance() == 0) {
+                    gameContinue = false;
+                    break;
+                }
                 
                 continue;
             }
@@ -214,7 +224,12 @@ public class Game {
             for (Player p : playersList) {
                 if (p.getBalance() == allWinning) {
                     gameContinue = false;
+                    break;
                 }
+            }
+            if (userPlayer.getBalance() == 0) {
+                gameContinue = false;
+                break;
             }
             Scanner scRoundEnd = new Scanner(System.in);
             System.out.println("Start new round?(Y / N)> ");
@@ -302,14 +317,47 @@ public class Game {
 
         while (counter != getCurrentSize(current)) {
             for (Player o : current) {
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
                     String action = null;
                     System.out.println("Your hand: ");
                     Card.printCard(o.getHand());
-                    System.out.println("Your balance: " + o.getBalance());
-                    System.out.println("Your current bet " + o.getBet());
-                    System.out.println("Table's pot " + table1.getPot());
+                    System.out.println("┌───────────────┐────┐");
+                    System.out.print(  "| Your balance  | " + o.getBalance());
+                    if (o.getBalance() >= 100) {
+                        System.out.println("|");
+                    } else if (o.getBalance() >= 10) {
+                        System.out.println(" |");
+                    } else {
+                        System.out.println("  |");
+                    }
+                    // System.out.println("└───────────────┘────┘");
+                    // System.out.println("┌───────────────┐────┐");
+                    System.out.print(  "| Your bet      | " + o.getBet());
+                    if (o.getBet() >= 100) {
+                        System.out.println("|");
+                    } else if (o.getBet() >= 10) {
+                        System.out.println(" |");
+                    } else {
+                        System.out.println("  |");
+                    }
+                    // System.out.println("└───────────────┘────┘");
+                    // System.out.println("┌───────────────┐────┐");
+                    System.out.print(    "| Table's pot   | " + table1.getPot());
+                    if (table1.getPot() >= 100) {
+                        System.out.println("|");
+                    } else if (table1.getPot() >= 10) {
+                        System.out.println(" |");
+                    } else {
+                        System.out.println("  |");
+                    }
+                    System.out.println("└───────────────┘────┘");
+
 
                     if (o.getBet() < table1.getCurrentBetAmt()) {
                         System.out.println("Call / Raise / Fold");
@@ -375,31 +423,6 @@ public class Game {
                     // botLogic(o); // void method, returns nothing
                     // promtBotLogic(o) -> checks their hand+commCard points -> returns action int
                     int botAction = PlayerBot.getBotAction(o, previousAction, afterRound1, table1);
-                    // int botAction = 1;
-                    // if (afterRound1) {// fold if raise too high for given hand value
-                    // if ((Hand2.getHandValue(o.getHand(), table1.getCommCards())) <= 28
-                    // && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)) {
-                    // if (previousAction == null) {
-                    // previousAction = "Check";
-                    // }
-                    // if (previousAction.equals("Check") || previousAction.equals("Fold")) {
-
-                    // botAction = 1;
-                    // } else {
-                    // botAction = 3;
-                    // System.out.println("Bot " + o.getName() + " has folded");
-                    // }
-                    // } else {
-                    // if (previousAction == null) {
-                    // previousAction = "Check";
-                    // }
-                    // if (previousAction.equals("Check") || previousAction.equals("Fold")) {
-                    // botAction = 2;
-                    // } else {
-                    // botAction = 1;
-                    // }
-                    // }
-                    // }
 
                     if (botAction == 1) {
                         if (o.getBet() < table1.getCurrentBetAmt()) {
@@ -526,8 +549,10 @@ public class Game {
                     openHandCounter++;
                 }
             }
-            if (openHandCounter == activePlayerCounter) {
+            if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
                 isOpenHandTime = true;
+            } else {
+                return false;
             }
         }
 
@@ -619,38 +644,38 @@ public class Game {
                 "                                                | '--'H|| '--'O|| '--'L|| '--'D|| '--''|| '--'E|| '--'M|");
         System.out.println(
                 "                                                `------'`------'`------'`------'`------'`------'`------'");
-        // System.out.print("Shuffling Cards ");
-        // for (int i = 0; i < 3; i++) {
-        // try {
-        // Thread.sleep(700);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-        // System.out.print(". ");
-        // }
+        System.out.print("Shuffling Cards ");
+        for (int i = 0; i < 3; i++) {
+        try {
+        Thread.sleep(700);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.print(". ");
+        }
 
-        // try {
-        // Thread.sleep(800);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-        // System.out.println();
-        // System.out.print("Stacking Chips ");
-        // for (int i = 0; i < 3; i++) {
-        // try {
-        // Thread.sleep(700);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-        // System.out.print(". ");
-        // }
+        try {
+        Thread.sleep(800);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.println();
+        System.out.print("Stacking Chips ");
+        for (int i = 0; i < 3; i++) {
+        try {
+        Thread.sleep(700);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.print(". ");
+        }
 
-        // try {
-        // Thread.sleep(800);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-        // System.out.println();
+        try {
+        Thread.sleep(800);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        System.out.println();
         System.out.print("Loading ");
         for (int i = 0; i < 10; i++) {
         try {
@@ -672,7 +697,7 @@ public class Game {
         e.printStackTrace();
         }
         System.out.println();
-        // System.out.println();
+        System.out.println();
     }
 
 }
