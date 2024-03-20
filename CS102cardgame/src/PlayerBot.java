@@ -26,10 +26,10 @@ public class PlayerBot extends Player {
         botThinking(o.getName());
         int tightness = 0;
         int aggression = 0;
+        int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
 
         if (afterBet1) {// fold if raise too high for given hand value
-            if ((Hand2.getHandValue(o.getHand(), table1.getCommCards())) <= 28
-                    && (Hand2.getHandValue(o.getHand(), table1.getCommCards()) > 0)) {
+            if ((handValue) <= 28 && (handValue > 0)) {
                 if (previousAction == null) {
                     previousAction = "Check";
                 }

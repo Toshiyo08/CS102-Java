@@ -82,6 +82,21 @@ public class Player {
     public ArrayList<Card> getHand(){
         return (ArrayList<Card>) this.hand;
     }
+
+    public void setBigBlind (Boolean status) {
+        this.bigBlind = status;
+    }
+    
+    public Boolean getBigBlind() {
+        return this.bigBlind;
+    }
+    public void setSmallgBlind (Boolean status) {
+        this.smallBlind = status;
+    }
+    
+    public Boolean getSmallBlind () {
+        return this.smallBlind;
+    }
     
     
     
