@@ -40,7 +40,7 @@ public class Game {
         playersList.add(userPlayer2);
 
         int originalBalance = userPlayer.getBalance();
-        Player[] turnOrder = {userPlayer, userPlayer1, userPlayer2};
+        Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
 
         // Initialise number of bots and add them into list of players
         // for (int i = 0; i < 3; i++) {
@@ -54,7 +54,6 @@ public class Game {
         int bigBlind = 10;
         int smallBlind = 5;
         userPlayer.setBigBlind(true);
-
 
         while (gameContinue) {
             int numTimesBet = 0;
@@ -88,7 +87,7 @@ public class Game {
                     gameContinue = false;
                     break;
                 }
-                
+
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -105,7 +104,6 @@ public class Game {
             afterRound1 = true;
             moveBlind(turnOrder); // moves big blind small blind, moves order of players
 
-
             // Deal Flop (3 cards)
             for (int i = 0; i < 3; i++) {
                 deck1.burnCard();
@@ -119,17 +117,16 @@ public class Game {
             // userPlayer.setBet(0);
             // table1.setCurrentBet(0);
 
-
             // 2nd Betting Round
             bettingRound(playersList, table1, afterRound1);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
-                resetRound(playersList, table1); 
+                resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
-                
+
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -175,7 +172,7 @@ public class Game {
 
                 continue;
             }
-         
+
             // Deal River
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
@@ -344,61 +341,7 @@ public class Game {
                 System.out.println("afterRound1 " + afterRound1);
                 if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
                     String action = null;
-                    System.out.println("Your hand: ");
-                    Card.printCard(o.getHand());
-                    System.out.println("┌───────────────┐─────┐");
-                    System.out.print("| Your balance  | ");
-                    if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) { //Not chen round, big blind, and not blinded yet
-                        o.raiseBet(10);
-                        table1.raiseCurrentBet(10);
-                        table1.raisePot(10);
-                        System.out.print(o.getBalance());
-
-                    } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-                        o.raiseBet(5);
-                        table1.raisePot(5);
-                        System.out.print(o.getBalance());
-                        
-                    } else {
-                        System.out.print(o.getBalance());
-                    }
-                    if (o.getBalance() >= 100) {
-                        System.out.println(" |");
-                    } else if (o.getBalance() >= 10) {
-                        System.out.println("  |");
-                    } else {
-                        System.out.println("   |");
-                    }
-                    System.out.print("| Your bet      | " + o.getBet());
-                    if (o.getBet() >= 100) {
-                        System.out.println(" |");
-                    } else if (o.getBet() >= 10) {
-                        System.out.println("  |");
-                    } else {
-                        System.out.println("   |");
-                    }
-                    if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
-                        System.out.println("| Big Blind     | 10  |");
-                    } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-                        System.out.println("| Small Blind   | 5   |");
-                    }
-                    System.out.print("| Table's pot   | " + table1.getPot());
-                    if (table1.getPot() >= 100) {
-                        System.out.println(" |");
-                    } else if (table1.getPot() >= 10) {
-                        System.out.println("  |");
-                    } else {
-                        System.out.println("   |");
-                    }
-                    System.out.print("| Table's Bet   | " + table1.getCurrentBetAmt());
-                    if (table1.getCurrentBetAmt() >= 100) {
-                        System.out.println(" |");
-                    } else if (table1.getCurrentBetAmt() >= 10) {
-                        System.out.println("  |");
-                    } else {
-                        System.out.println("   |");
-                    }
-                    System.out.println("└───────────────┘─────┘");
+                    showPlayerAttributes(o, table1, afterRound1);
 
                     if (o.getBet() < table1.getCurrentBetAmt()) {
                         System.out.println("Call / Raise / Fold");
@@ -490,12 +433,14 @@ public class Game {
                         // table1.setCurrentBet(newBet);
                         int newBet = getBetInput(o); // Amt X player increases by
 
-                        // if (table1.getCurrentBetAmt() > o.getBet()) { // Player needs to call or raise
-                        //     if (newBet < table1.getCurrentBetAmt() - o.getBet()){ // If raised X < need to call amt
-                        //         // TRY AGAIN
-                        //     }
+                        // if (table1.getCurrentBetAmt() > o.getBet()) { // Player needs to call or
+                        // raise
+                        // if (newBet < table1.getCurrentBetAmt() - o.getBet()){ // If raised X < need
+                        // to call amt
+                        // // TRY AGAIN
                         // }
-                        
+                        // }
+
                         o.raiseBet(newBet); // Bet increased by X and Balance decreased by X
                         table1.raiseCurrentBet(newBet); // TableBet increased by X
                         table1.raisePot(newBet); // Pot increased by X
@@ -520,9 +465,10 @@ public class Game {
                     }
 
                 } else if (o.getType().equals("Bot") && o.getChecked() == false && o.getIsPlaying() == true) {
-                    System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
-                    System.out.println("Pot: $" + table1.getPot() + " Table Bet: $" + table1.getCurrentBetAmt());
-                    Card.printCard(o.getHand());
+                    // System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
+                    // System.out.println("Pot: $" + table1.getPot() + " Table Bet: $" + table1.getCurrentBetAmt());
+                    // Card.printCard(o.getHand());
+                    showPlayerAttributes(o, table1, afterRound1);
                     // botLogic(o); // void method, returns nothing
                     // promtBotLogic(o) -> checks their hand+commCard points -> returns action int
                     int botAction = PlayerBot.getBotAction(o, previousAction, afterRound1, table1);
@@ -645,6 +591,64 @@ public class Game {
         }
         // table1.setCurrentBet(0);
         // Move BIG BLIND SMALL BLIND
+    }
+
+    public static void showPlayerAttributes(Player o, Table table1, Boolean afterRound1) {
+        System.out.println(o.getName() + " hand: ");
+        Card.printCard(o.getHand());
+        System.out.println("┌───────────────┐─────┐");
+        System.out.print("|  " + o.getName() + " balance  | ");
+        if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) { // Not chen round, big blind, and not blinded yet
+            o.raiseBet(10);
+            table1.raiseCurrentBet(10);
+            table1.raisePot(10);
+            System.out.print(o.getBalance());
+
+        } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
+            o.raiseBet(5);
+            table1.raisePot(5);
+            System.out.print(o.getBalance());
+
+        } else {
+            System.out.print(o.getBalance());
+        }
+        if (o.getBalance() >= 100) {
+            System.out.println(" |");
+        } else if (o.getBalance() >= 10) {
+            System.out.println("  |");
+        } else {
+            System.out.println("   |");
+        }
+        System.out.print("| Your bet      | " + o.getBet());
+        if (o.getBet() >= 100) {
+            System.out.println(" |");
+        } else if (o.getBet() >= 10) {
+            System.out.println("  |");
+        } else {
+            System.out.println("   |");
+        }
+        if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
+            System.out.println("| Big Blind     | 10  |");
+        } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
+            System.out.println("| Small Blind   | 5   |");
+        }
+        System.out.print("| Table's pot   | " + table1.getPot());
+        if (table1.getPot() >= 100) {
+            System.out.println(" |");
+        } else if (table1.getPot() >= 10) {
+            System.out.println("  |");
+        } else {
+            System.out.println("   |");
+        }
+        System.out.print("| Table's Bet   | " + table1.getCurrentBetAmt());
+        if (table1.getCurrentBetAmt() >= 100) {
+            System.out.println(" |");
+        } else if (table1.getCurrentBetAmt() >= 10) {
+            System.out.println("  |");
+        } else {
+            System.out.println("   |");
+        }
+        System.out.println("└───────────────┘─────┘");
     }
 
     public static int getCurrentSize(ArrayList<Player> current) {
@@ -771,13 +775,13 @@ public class Game {
     public static void moveBlind(Player[] turnOrder) {
         Player temp = turnOrder[0];
         for (int i = 1; i < turnOrder.length; i++) {
-            turnOrder[i-1] = turnOrder[i];
+            turnOrder[i - 1] = turnOrder[i];
             turnOrder[i].setBlinded(false);
             turnOrder[i].setBigBlind(false);
             turnOrder[i].setSmallgBlind(false);
         }
 
-        turnOrder[turnOrder.length-1] = temp;
+        turnOrder[turnOrder.length - 1] = temp;
         turnOrder[0].setBigBlind(true);
         turnOrder[1].setSmallgBlind(true);
     }
