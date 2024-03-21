@@ -79,16 +79,16 @@ public class Game {
                 e.draw(deck1.dealCard());
             }
 
-            // 1st Betting Round------------------------------
-            bettingRound(playersList, table1, afterRound1); // DONT DELETE THIS LINE
+            // 1st Betting Round
+            bettingRound(playersList, table1, afterRound1);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
-                resetRound(playersList, table1); // -> reset
+                resetRound(playersList, table1); // Resets player and table attributes
 
-                if (isWinLose(playersList)) {
+                if (isWinLose(playersList)) { // If you win all or lost all, game ends.
                     gameContinue = false;
                     break;
                 }
-                //
+                
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -103,7 +103,7 @@ public class Game {
                 continue;
             }
             afterRound1 = true;
-            moveBlind(turnOrder);
+            moveBlind(turnOrder); // moves big blind small blind, moves order of players
 
 
             // Deal Flop (3 cards)
@@ -120,16 +120,16 @@ public class Game {
             // table1.setCurrentBet(0);
 
 
-            // 2nd Betting Round------------------------------
+            // 2nd Betting Round
             bettingRound(playersList, table1, afterRound1);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
-                resetRound(playersList, table1); // -> reset
+                resetRound(playersList, table1); 
 
                 if (isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
-                //
+                
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -137,7 +137,6 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
                     continue;
                 }
 
@@ -158,13 +157,12 @@ public class Game {
             // 3rd Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
-                resetRound(playersList, table1); // -> reset
+                resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
-                //
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -172,7 +170,6 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
                     continue;
                 }
 
@@ -193,13 +190,12 @@ public class Game {
             // Last Betting Round------------------------------
             bettingRound(playersList, table1, afterRound1);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
-                resetRound(playersList, table1); // -> reset
+                resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
-                //
                 Scanner scRoundEndallin = new Scanner(System.in);
                 System.out.println("Start new round?(Y / N)> ");
                 String newRound = scRoundEndallin.nextLine();
@@ -207,7 +203,6 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
                     continue;
                 }
 
@@ -302,7 +297,7 @@ public class Game {
                 if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")) {
                     return inputCommand;
                 } else if (inputCommand.contains("bet")) {
-                    System.out.println("Bet?> ");
+                    System.out.print("Bet?> ");
                     return inputCommand;
                 } else {
                     throw new InputMismatchException("Invalid input");
@@ -321,14 +316,14 @@ public class Game {
                 if (sc.hasNextInt()) {
                     inputBet = sc.nextInt();
                     if (inputBet > p.getBalance()) {
-                        throw new InputMismatchException("Insufficient Balance, Enter new bet");
+                        throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
                     }
                     return inputBet;
                 } else {
                     throw new InputMismatchException("Invalid input");
                 }
             } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
+                System.out.print(e.getMessage());
             }
         }
     }
@@ -433,18 +428,18 @@ public class Game {
                         // counter++;
                         // previousAction = "Check";
                     } else if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
-                        System.out.println("Big Blind! That's $10 thanks");
+                        System.out.println("Pot: Big Blind! That's $10 thanks");
                         System.out.println("Check / Bet / Fold");
-                        System.out.println("Action> ");
+                        System.out.print("Action> ");
                         action = getInput();
                         o.setBlinded(true);
                         // o.setChecked(true);
                         // counter++;
                         // previousAction = "Check";
                     } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-                        System.out.println("Small Blind! That's $5 thanks");
+                        System.out.println("Pot: Small Blind! That's $5 thanks");
                         System.out.println("Call / Bet / Fold");
-                        System.out.println("Action> ");
+                        System.out.print("Action> ");
                         action = getInput();
                         o.setBlinded(true);
                         // o.setChecked(true);
