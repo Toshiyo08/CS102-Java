@@ -10,6 +10,7 @@ public class Player {
     private boolean checked;
     private boolean bigBlind;
     private boolean smallBlind;
+    private boolean blinded;
     private int betAmt;
     private int balance;
     private int finalScore = 0;
@@ -96,6 +97,14 @@ public class Player {
     
     public Boolean getSmallBlind () {
         return this.smallBlind;
+    }
+
+    public void setBlinded(Boolean status) {
+        this.blinded = status;
+    }
+
+    public Boolean getBlinded() {
+        return this.blinded;
     }
     
     
