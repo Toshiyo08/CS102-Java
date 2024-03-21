@@ -96,6 +96,15 @@ public class PlayerBot extends Player {
 }
     
 
+    public static int getBotRaiseAmt (Player o, Table table1) { //If betting, minimally a pair
+        int tightness = 0; // 20-100
+        int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
+        Double percentage = ((double)handValue/425) * 100 + (double)tightness;
+        // int betAmt = (int)percentage * o.getBalance();
+
+        return 0;
+    }
+
     public static void botThinking(String name) {
         System.out.print(name + ": ");
         Random random = new Random();
@@ -225,6 +234,7 @@ public class PlayerBot extends Player {
         System.out.println(score);
         return score;
     }
+
 }
 
     

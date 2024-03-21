@@ -37,45 +37,35 @@ public class Hand2 { /* If no Turn or River, value taken in parameter is 0 or B 
             copy[o.getRank()]++;
         }
 
-        int score = isRSF(handTable, copy);
+        int score = isRSF(handTable, copy); 
         if (score != 0) {
-            //System.out.println("Royal Straight Flush");
-            return score;
+            return score;                           // 422-425
         } else if (isSF(handTable, copy) != 0) {
             score = isSF(handTable, copy);
-            //System.out.println("Straight Flush");
-            return score;
+            return score;                           // 386-421
         } else if (is4Kind(copy) != 0) {
             score = is4Kind(copy);
-            //System.out.println("4 of a kind");
-            return score;
+            return score;                           // 318-366
         } else if (isFH(copy) != 0) {
             score = isFH(copy);
-            //System.out.println("Full House");
-            return score;
+            return score;                           // 254-310
         } else if (isF(handTable, copy) != 0) {
             score = isF(handTable, copy);
-            //System.out.println("Flush");
-            return score;
+            return score;                           // 202-236
         } else if (str8(copy) != 0) {
             score = str8(copy);
-            //System.out.println("Straight");
-            return score;
+            return score;                           // 160-200
         } else if (is3Kind(copy) != 0) {
             score = is3Kind(copy);
-            //System.out.println("3 of a kind");
-            return score;
+            return score;                           // 104-140
         } else if (is2Pair(copy) != 0) {
             score = is2Pair(copy);
-            //System.out.println("2 pairs");
-            return score;
+            return score;                           // 52-98
         } else if (isPair(copy) != 0) {
             score = isPair(copy);
-            //System.out.println("Pair");
-            return score;
+            return score;                           // 18-42
         } else if (highCard(copy) != 0) {
-            score = highCard(copy);
-            //System.out.println("High Card");
+            score = highCard(copy);                 // 2-14
             return score;
         }
 

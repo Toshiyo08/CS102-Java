@@ -79,7 +79,7 @@ public class Game {
             }
 
             // 1st Betting Round
-            bettingRound(playersList, table1, afterRound1);
+            bettingRound(playersList, table1, afterRound1, turnOrder);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
                 resetRound(playersList, table1); // Resets player and table attributes
 
@@ -96,13 +96,14 @@ public class Game {
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
                     // Reset everything
+                    moveBlind(turnOrder);
                     continue;
                 }
 
                 continue;
             }
             afterRound1 = true;
-            moveBlind(turnOrder); // moves big blind small blind, moves order of players
+            
 
             // Deal Flop (3 cards)
             for (int i = 0; i < 3; i++) {
@@ -118,7 +119,7 @@ public class Game {
             // table1.setCurrentBet(0);
 
             // 2nd Betting Round
-            bettingRound(playersList, table1, afterRound1);
+            bettingRound(playersList, table1, afterRound1, turnOrder);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
                 resetRound(playersList, table1);
 
@@ -134,6 +135,7 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    moveBlind(turnOrder);
                     continue;
                 }
 
@@ -152,7 +154,7 @@ public class Game {
             // table1.setCurrentBet(0);
 
             // 3rd Betting Round------------------------------
-            bettingRound(playersList, table1, afterRound1);
+            bettingRound(playersList, table1, afterRound1, turnOrder);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
                 resetRound(playersList, table1);
 
@@ -167,6 +169,7 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    moveBlind(turnOrder);
                     continue;
                 }
 
@@ -184,8 +187,8 @@ public class Game {
             // userPlayer.setBet(0);
             // table1.setCurrentBet(0);
 
-            // Last Betting Round------------------------------
-            bettingRound(playersList, table1, afterRound1);
+            // Last Betting Round
+            bettingRound(playersList, table1, afterRound1, turnOrder);
             if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
                 resetRound(playersList, table1);
 
@@ -200,6 +203,7 @@ public class Game {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    moveBlind(turnOrder);
                     continue;
                 }
 
@@ -208,46 +212,9 @@ public class Game {
 
             // for second game
             System.out.println(table1.getPot());
-            Map<Player, Integer> winner = new HashMap<>();
 
-            for (Player o : playersList) {
-                if (o.getIsPlaying()) {
-                    System.out.println("Player " + o.getName() + " hand:");
-                    Card.printCard(o.getHand());
-                    winner.put(o, Hand2.getHandValue(o.getHand(), table1.getCommCards()));
-                    System.out.println();
-                }
-
-            }
-            int highest = 0;
-
-            for (Player p : winner.keySet()) {
-                if (winner.get(p) > highest) {
-                    highest = winner.get(p);
-                }
-            }
-
-            ArrayList<Player> winnerList = new ArrayList<Player>();
-            System.out.println(highest);
-            for (Player player : winner.keySet()) {
-                if (winner.get(player) == highest) {
-                    winnerList.add(player);
-                }
-            }
-            if (winnerList.size() > 1) {
-                for (Player o : winnerList) {
-                    o.setEndBalance(table1.getPot() / winnerList.size());
-                }
-            } else {
-                winnerList.get(0).setEndBalance(table1.getPot());
-            }
-            for (Player o : winnerList) {
-                System.out.println("Winner is " + o.getName());
-
-            }
-
-            // Last Betting
-            // Round---------------------------------------------------------------------------
+            getWinner(playersList, table1);
+            
             System.out.println("Round over");
 
             if (isWinLose(playersList)) {
@@ -262,6 +229,7 @@ public class Game {
                 scRoundEndallin.close();
             } else if (newRound.equals("Y") || newRound.equals("y")) {
                 resetRound(playersList, table1);
+                moveBlind(turnOrder); // moves big blind small blind, moves order of players
                 continue;
             }
 
@@ -282,6 +250,45 @@ public class Game {
             System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
         }
 
+    }
+
+    public static void getWinner(ArrayList<Player> playersList, Table table1) {
+        Map<Player, Integer> winner = new HashMap<>();
+
+        for (Player o : playersList) {
+            if (o.getIsPlaying()) {
+                System.out.println("Player " + o.getName() + " hand:");
+                Card.printCard(o.getHand());
+                winner.put(o, Hand2.getHandValue(o.getHand(), table1.getCommCards()));
+                System.out.println();
+            }
+
+        }
+        int highest = 0;
+
+        for (Player p : winner.keySet()) {
+            if (winner.get(p) > highest) {
+                highest = winner.get(p);
+            }
+        }
+
+        ArrayList<Player> winnerList = new ArrayList<Player>();
+        System.out.println(highest);
+        for (Player player : winner.keySet()) {
+            if (winner.get(player) == highest) {
+                winnerList.add(player);
+            }
+        }
+        if (winnerList.size() > 1) {
+            for (Player o : winnerList) {
+                o.setEndBalance(table1.getPot() / winnerList.size());
+            }
+        } else {
+            winnerList.get(0).setEndBalance(table1.getPot());
+        }
+        for (Player o : winnerList) {
+            System.out.println("Winner is " + o.getName());
+        }
     }
 
     public static String getInput() {
@@ -325,20 +332,21 @@ public class Game {
         }
     }
 
-    public static void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1) {
+    public static void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1,
+            Player[] turnOrder) {
         ArrayList<Player> current = new ArrayList<Player>();
-        for (Player o : playersList) {
+        for (Player o : turnOrder) {
             if (o.getIsPlaying() == true) {
                 current.add(o);
             }
         }
+        System.out.println(current);
         // BIG BLIND SMALL BLIND SORTING ORDER
         int counter = 0;
         String previousAction = null;
 
         while (counter != getCurrentSize(current)) {
             for (Player o : current) {
-                System.out.println("afterRound1 " + afterRound1);
                 if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
                     String action = null;
                     showPlayerAttributes(o, table1, afterRound1);
@@ -465,12 +473,9 @@ public class Game {
                     }
 
                 } else if (o.getType().equals("Bot") && o.getChecked() == false && o.getIsPlaying() == true) {
-                    // System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
-                    // System.out.println("Pot: $" + table1.getPot() + " Table Bet: $" + table1.getCurrentBetAmt());
+                    // table1.getCurrentBetAmt());
                     // Card.printCard(o.getHand());
                     showPlayerAttributes(o, table1, afterRound1);
-                    // botLogic(o); // void method, returns nothing
-                    // promtBotLogic(o) -> checks their hand+commCard points -> returns action int
                     int botAction = PlayerBot.getBotAction(o, previousAction, afterRound1, table1);
 
                     if (botAction == 1) {
@@ -565,15 +570,11 @@ public class Game {
                         // current.remove(o);
                         previousAction = "Fold";
                     }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
                 }
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -672,7 +673,6 @@ public class Game {
                     openHandCounter++;
                 }
             }
-
         }
         if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
             isOpenHandTime = true;
@@ -694,47 +694,7 @@ public class Game {
                     Card.printCard(h.getHand());
                 }
             }
-
-            Map<Player, Integer> winner = new HashMap<>();
-
-            for (Player o : playersList) {
-                if (o.getIsPlaying()) {
-                    System.out.println("Player " + o.getName() + " hand:");
-                    // for (Card c : o.getHand()) {
-                    // System.out.println(c);
-                    // }
-                    Card.printCard(o.getHand());
-                    winner.put(o, Hand2.getHandValue(o.getHand(), table1.getCommCards()));
-                    System.out.println();
-                }
-
-            }
-            int highest = 0;
-
-            for (Player p : winner.keySet()) {
-                if (winner.get(p) > highest) {
-                    highest = winner.get(p);
-                }
-            }
-
-            ArrayList<Player> winnerList = new ArrayList<Player>();
-            System.out.println(highest);
-            for (Player player : winner.keySet()) {
-                if (winner.get(player) == highest) {
-                    winnerList.add(player);
-                }
-            }
-            if (winnerList.size() > 1) {
-                for (Player o : winnerList) {
-                    o.setEndBalance(table1.getPot() / winnerList.size());
-                }
-            } else {
-                winnerList.get(0).setEndBalance(table1.getPot());
-            }
-            for (Player o : winnerList) {
-                System.out.println("Winner is " + o.getName());
-
-            }
+            getWinner(playersList, table1);
 
             System.out.println("Round over");
 
