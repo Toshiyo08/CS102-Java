@@ -9,14 +9,13 @@ public class PlayerBot extends Player {
     // /** Betting aggression (0 = safe, 100 = aggressive). */
     // private int aggression;
 
-
     public PlayerBot(String name, String type) {
         super(name, type);
         // this.tightness = tightness;
         // this.aggression = aggression;
     }
 
-    public static int getBotAction (Player o, String previousAction, Boolean afterBet1, Table table1) {
+    public static int getBotAction(Player o, String previousAction, Boolean afterBet1, Table table1) {
         botThinking(o.getName());
         int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
         double chenScore = calculateChenScore(o.getHand());
@@ -31,20 +30,47 @@ public class PlayerBot extends Player {
         // -> A1 = (handValue / 425 * 100) * aggression^2
         // Double randomTight = random.nextDouble(T1)
         // Double randomAggro = random.nextDouble(A1)
-        // if randomTight >  randomAggro -> betProb *= 0.5
+        // if randomTight > randomAggro -> betProb *= 0.5
         // if randomAggro > randomTight -> betProb *= 1.5
         // Double randDouble = random.nextDouble()
         // if (randDouble < betProb) bet
         // if (randDouble <0.8) check
         // else fold
         // Tightness 0-100, bigger number = less likely to bet
-        // botBetAmt(handValue, aggression) -> returns raise amt based on handValue, aggression, balance
+        // botBetAmt(handValue, aggression) -> returns raise amt based on handValue,
+        // aggression, balance
         if (afterBet1) {// fold if raise too high for given hand value
             if ((handValue) <= 28 && (handValue > 0)) {
                 if (previousAction == null) {
                     previousAction = "Check";
                 }
                 if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    return 1;
+                } else {
+                    return 3;
+                }
+            } else {// if handValue > 28 = if better than a pair of 2
+                if (previousAction == null) {
+                    previousAction = "Check";
+                }
+                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    if (o.getBalance() == 0) {
+                        System.out.println("I've all in-ed");
+                        return 1;
+                    }
+                    return 2; // Raising if someone else check/fold AND better than pair of 2
+                } else {
+                    return 1;
+                }
+            }
+        } else {
+            if (chenScore < 3.0) {
+                return 3;
+            } else if (chenScore >= 3.0 && chenScore < 6.0) {
+                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    if (o.getBalance() == 0) {
+                        System.out.println("I've all in-ed");
+                    }
                     return 1;
                 } else {
                     return 3;
@@ -63,43 +89,15 @@ public class PlayerBot extends Player {
                     return 1;
                 }
             }
-        } 
-        else {
-            if (chenScore < 3.0) {
-                    return 3;
-            }  else if (chenScore >= 3.0 && chenScore < 6.0) {
-                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
-                    if (o.getBalance() == 0) {
-                        System.out.println("I've all in-ed");
-                    }
-                    return 1;
-                } else {
-                    return 3;
-                }
-        } else {
-                if (previousAction == null) {
-                    previousAction = "Check";
-                }
-                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
-                    if (o.getBalance() == 0) {
-                        System.out.println("I've all in-ed");
-                        return 1;
-                    }
-                    return 2;
-                } else {
-                    return 1;
-                }
-        }
-        // Chen score if not afterbet1
-        
-    }
-}
-    
+            // Chen score if not afterbet1
 
-    public static int getBotRaiseAmt (Player o, Table table1) { //If betting, minimally a pair
+        }
+    }
+
+    public static int getBotRaiseAmt(Player o, Table table1) { // If betting, minimally a pair
         int tightness = 0; // 20-100
         int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
-        Double percentage = ((double)handValue/425) * 100 + (double)tightness;
+        Double percentage = ((double) handValue / 425) * 100 + (double) tightness;
         // int betAmt = (int)percentage * o.getBalance();
 
         return 0;
@@ -149,7 +147,7 @@ public class PlayerBot extends Player {
         }
 
         System.out.print(talkerName + ": ");
-        for (int i = 0 ; i < angryreply.length(); i++) {
+        for (int i = 0; i < angryreply.length(); i++) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
@@ -237,76 +235,76 @@ public class PlayerBot extends Player {
 
 }
 
-    
+// public Action botAction (int currentBetAmt, int minBet, ArrayList<Card>
+// playerHand,
+// ArrayList<Action> availableActions){
 
-//     public Action botAction (int currentBetAmt, int minBet, ArrayList<Card> playerHand, 
-//     ArrayList<Action> availableActions){
+// Action action = null;
+// int bettingAmount = 0;
+// double chenScore = calculateChenScore(playerHand);
+// double chenScoreToPlay = tightness / 5.0;
 
-//         Action action = null;
-//         int bettingAmount = 0;
-//         double chenScore = calculateChenScore(playerHand);
-//         double chenScoreToPlay = tightness / 5.0;
+// if (chenScore < chenScoreToPlay){ // bad hand
+// if (!hasChecked){
+// action = Action.Check;
+// } else {
+// action = Action.Fold;
+// }
+// } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0){
+// //hand is good
+// if (aggression == 0){
+// if (availableActions.contains(Action.Call)){
+// action = Action.Call;
+// } else {
+// action = Action.Check;
+// }
+// } else if (aggression == 100){
+// bettingAmount = super.getChips();
+// if (availableActions.contains(Action.Bet)){
+// action = new BetAction(bettingAmount);
+// } else if (availableActions.contains(Action.Raise)){
+// action = new RaiseAction(bettingAmount);
+// } else if (availableActions.contains(Action.Call)){
+// action = Action.Call;
+// } else {
+// action = Action.Check;
+// }
 
-//         if (chenScore < chenScoreToPlay){ // bad hand
-//             if (!hasChecked){
-//                 action = Action.Check;
-//             } else {
-//                 action = Action.Fold;
-//             }
-//         } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0){ //hand is good 
-//             if (aggression == 0){
-//                 if (availableActions.contains(Action.Call)){
-//                     action = Action.Call;
-//                 } else {
-//                     action = Action.Check;
-//                 }
-//             } else if (aggression == 100){
-//                 bettingAmount = super.getChips();
-//                 if (availableActions.contains(Action.Bet)){
-//                     action = new BetAction(bettingAmount);
-//                 } else if (availableActions.contains(Action.Raise)){
-//                     action = new RaiseAction(bettingAmount);
-//                 } else if (availableActions.contains(Action.Call)){
-//                     action = Action.Call;
-//                 } else {
-//                     action = Action.Check;
-//                 }
-                
-//             } else {
-//                 bettingAmount = minBet;
-//                 int increments = aggression / 20;
-//                 for (int i = 1; i < increments; i++){
-//                     bettingAmount += minBet;
-//                 }
-//                 if (bettingAmount > super.getChips()){
-//                     bettingAmount = super.getChips();
-//                 }
-//                 if (bettingAmount > currentBetAmt) {
-//                     if (availableActions.contains(Action.Bet)) {
-//                         action = new BetAction(bettingAmount);
-//                     } else if (availableActions.contains(Action.Raise)){
-//                         action = new RaiseAction(bettingAmount);
-//                     } else if (availableActions.contains(Action.Call)){
-//                         action = Action.Call;
-//                     } else {
-//                         action = Action.Check;
-//                     }
-                
-//                 } else {
-//                     if (availableActions.contains(Action.Call)){
-//                         action = Action.Call;
-//                     } else {
-//                         action = Action.Check;
-//                     }
-//                 }
-//             }
-//         } else { //if ok hand 
-//             if (availableActions.contains(Action.Call)){
-//                 action = Action.Call;
-//             } else {
-//                 action = Action.Check;
-//             }
-//         }
-//         return action;
-//     }
+// } else {
+// bettingAmount = minBet;
+// int increments = aggression / 20;
+// for (int i = 1; i < increments; i++){
+// bettingAmount += minBet;
+// }
+// if (bettingAmount > super.getChips()){
+// bettingAmount = super.getChips();
+// }
+// if (bettingAmount > currentBetAmt) {
+// if (availableActions.contains(Action.Bet)) {
+// action = new BetAction(bettingAmount);
+// } else if (availableActions.contains(Action.Raise)){
+// action = new RaiseAction(bettingAmount);
+// } else if (availableActions.contains(Action.Call)){
+// action = Action.Call;
+// } else {
+// action = Action.Check;
+// }
+
+// } else {
+// if (availableActions.contains(Action.Call)){
+// action = Action.Call;
+// } else {
+// action = Action.Check;
+// }
+// }
+// }
+// } else { //if ok hand
+// if (availableActions.contains(Action.Call)){
+// action = Action.Call;
+// } else {
+// action = Action.Check;
+// }
+// }
+// return action;
+// }
 // }
