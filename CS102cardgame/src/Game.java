@@ -16,42 +16,42 @@ public class Game {
 
         int numberOfPlayers = 0;
 
-        Scanner playerNumbers = new Scanner(System.in);
+        // Scanner playerNumbers = new Scanner(System.in);
         // Keeps prompting for number of players to start game
-        while (true) {
-            try {
-                if (playerNumbers.hasNextInt()) {
-                    numberOfPlayers = playerNumbers.nextInt();
-                    if (numberOfPlayers < 0) {
-                        throw new InputMismatchException("");
-                    }
-                }
-                System.out.print("Enter number of bots> ");
-                numberOfPlayers = playerNumbers.nextInt();
-                break;
-            } catch (InputMismatchException ime) {
-                System.out.println("Please enter a valid number");
-            } finally {
-                playerNumbers.nextLine();
-            }
-        }
+        // while (true) {
+        //     try {
+        //         if (playerNumbers.hasNextInt()) {
+        //             numberOfPlayers = playerNumbers.nextInt();
+        //             if (numberOfPlayers < 0) {
+        //                 throw new InputMismatchException("");
+        //             }
+        //         }
+        //         System.out.print("Enter number of bots> ");
+        //         numberOfPlayers = playerNumbers.nextInt();
+        //         break;
+        //     } catch (InputMismatchException ime) {
+        //         System.out.println("Please enter a valid number");
+        //     } finally {
+        //         playerNumbers.nextLine();
+        //     }
+        // }
 
-        while (true) {
-            try {
-                Scanner sc = new Scanner(System.in);
-                if (sc.hasNextInt()) {
-                    inputBet = sc.nextInt();
-                    if (inputBet > p.getBalance()) {
-                        throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
-                    }
-                    return inputBet;
-                } else {
-                    throw new InputMismatchException("Invalid input");
-                }
-            } catch (InputMismatchException e) {
-                System.out.print(e.getMessage());
-            }
-        }
+        // while (true) {
+        //     try {
+        //         Scanner sc = new Scanner(System.in);
+        //         if (sc.hasNextInt()) {
+        //             inputBet = sc.nextInt();
+        //             if (inputBet > p.getBalance()) {
+        //                 throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
+        //             }
+        //             return inputBet;
+        //         } else {
+        //             throw new InputMismatchException("Invalid input");
+        //         }
+        //     } catch (InputMismatchException e) {
+        //         System.out.print(e.getMessage());
+        //     }
+        // }
         // playerNumbers.close();
 
         // Initialise a player that user controls and add into list of players
