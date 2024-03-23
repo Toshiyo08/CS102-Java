@@ -17,6 +17,7 @@ public class Game {
         int numberOfPlayers = 0;
 
         // Scanner playerNumbers = new Scanner(System.in);
+<<<<<<< Updated upstream
         // Keeps prompting for number of players to start game
         // while (true) {
         //     try {
@@ -51,15 +52,51 @@ public class Game {
         //     } catch (InputMismatchException e) {
         //         System.out.print(e.getMessage());
         //     }
+=======
+        // // Keeps prompting for number of players to start game
+        // while (true) {
+        // try {
+        // if (playerNumbers.hasNextInt()) {
+        // numberOfPlayers = playerNumbers.nextInt();
+        // if (numberOfPlayers < 0) {
+        // throw new InputMismatchException("");
+        // }
+        // }
+        // System.out.print("Enter number of bots> ");
+        // numberOfPlayers = playerNumbers.nextInt();
+        // break;
+        // } catch (InputMismatchException ime) {
+        // System.out.println("Please enter a valid number");
+        // } finally {
+        // playerNumbers.nextLine();
+        // }
+        // }
+
+        // while (true) {
+        // try {
+        // Scanner sc = new Scanner(System.in);
+        // if (sc.hasNextInt()) {
+        // inputBet = sc.nextInt();
+        // if (inputBet > p.getBalance()) {
+        // throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
+        // }
+        // return inputBet;
+        // } else {
+        // throw new InputMismatchException("Invalid input");
+        // }
+        // } catch (InputMismatchException e) {
+        // System.out.print(e.getMessage());
+        // }
+>>>>>>> Stashed changes
         // }
         // playerNumbers.close();
 
         // Initialise a player that user controls and add into list of players
         Player userPlayer = new Player("Tom", "Player");
         playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Nic", "Bot");
+        Player userPlayer1 = new PlayerBot("Nic", "Bot", 10);
         playersList.add(userPlayer1);
-        Player userPlayer2 = new PlayerBot("Ken", "Bot");
+        Player userPlayer2 = new PlayerBot("Ken", "Bot", 70);
         playersList.add(userPlayer2);
 
         int originalBalance = userPlayer.getBalance();
@@ -96,10 +133,16 @@ public class Game {
             // deck1.cutDeck();
 
             // deal cards
-            for (Player e : playersList) {
-                e.draw(deck1.dealCard());
-                e.draw(deck1.dealCard());
-            }
+            // for (Player e : playersList) {
+            // e.draw(deck1.dealCard());
+            // e.draw(deck1.dealCard());
+            // }
+            userPlayer.draw(new Card("Clubs", 9)); // Tom
+            userPlayer.draw(new Card("Hearts", 5));
+            userPlayer2.draw(new Card("Clubs", 14));
+            userPlayer2.draw(new Card("Hearts", 14));
+            userPlayer1.draw(new Card("Diamonds", 14));
+            userPlayer1.draw(new Card("Spades", 14));
 
             // 1st Betting Round
             bettingRound(playersList, table1, afterRound1, turnOrder);
@@ -126,7 +169,6 @@ public class Game {
                 continue;
             }
             afterRound1 = true;
-            
 
             // Deal Flop (3 cards)
             for (int i = 0; i < 3; i++) {
@@ -237,7 +279,7 @@ public class Game {
             System.out.println(table1.getPot());
 
             getWinner(playersList, table1);
-            
+
             System.out.println("Round over");
 
             if (isWinLose(playersList)) {
@@ -406,9 +448,9 @@ public class Game {
                         // previousAction = "Check";
                     } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
                         System.out.println("Pot: Small Blind! That's $5 thanks");
-                        if (o.getBet() < table1.getCurrentBetAmt()) {       // Someone raised
+                        if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
                             System.out.println("Check / Raise / Fold");
-                        } else {                                            // No one raised yet
+                        } else { // No one raised yet
                             System.out.println("Check / Bet / Fold");
                         }
                         System.out.print("Action> ");
@@ -454,15 +496,16 @@ public class Game {
                         System.out.println("Table's new pot " + table1.getPot());
                         previousAction = "Check";
                     }
-                    if (action.equals("bet")) {
+                    if (action.equals("bet") || action.equals("raise")) {
                         // COLLAPSED
                         // int raisedAmt = newBet - o.getBet();
                         // o.setBet(newBet);
                         // o.setBalance(newBet);
                         // table1.setCurrentBet(newBet);
                         int newBet = getBetInput(o); // Amt X player increases by
-                        while (newBet <= table1.getCurrentBetAmt() - o.getBet()){
-                            System.out.println("Not enough! You need to raise at least $" + (table1.getCurrentBetAmt() - o.getBet()));
+                        while (newBet <= table1.getCurrentBetAmt() - o.getBet()) {
+                            System.out.println("Not enough! You need to raise at least $"
+                                    + (table1.getCurrentBetAmt() - o.getBet()));
                             newBet = getBetInput(o);
                         }
 
@@ -498,15 +541,15 @@ public class Game {
                     // AND add small and big blind changer for bot
                     showPlayerAttributes(o, table1, afterRound1);
                     // UNCOMMENT THESE WHEN LIVE -> should make bots pay the big/small blind
-                    // if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) { 
-                    //     o.raiseBet(10);
-                    //     table1.raiseCurrentBet(10);
-                    //     table1.raisePot(10);
+                    // if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
+                    // o.raiseBet(10);
+                    // table1.raiseCurrentBet(10);
+                    // table1.raisePot(10);
                     // } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-                    //     o.raiseBet(5);
-                    //     table1.raisePot(5);
+                    // o.raiseBet(5);
+                    // table1.raisePot(5);
                     // }
-                    
+
                     int botAction = PlayerBot.getBotAction(o, previousAction, afterRound1, table1);
 
                     if (botAction == 1) {
@@ -547,7 +590,7 @@ public class Game {
                             } else {
                                 System.out.println(o.getName() + ": Check");
                             }
-                            
+
                             o.setChecked(true);
                             if (o.getBet() != table1.getCurrentBetAmt()) {
                                 System.out.println("CUSTOM ERROR: Bot bet != table bet");
@@ -559,40 +602,59 @@ public class Game {
                         }
 
                     } else if (botAction == 2) {
-                        
 
-                        for (Player f : playersList) {
-                            if (!(f.getType().equals("Player")) && !(f.equals(o))) {
-                                if (f.getIsPlaying()) {
-                                    Random random = new Random();
-                                    int randomreply = random.nextInt(5) + 1;
-                                    PlayerBot.randomangryreply(f.getName(), o.getName(), randomreply);
-                                }
+                        // for (Player f : playersList) {
+                        //     if (!(f.getType().equals("Player")) && !(f.equals(o))) {
+                        //         if (f.getIsPlaying()) {
+                        //             Random random = new Random();
+                        //             int randomreply = random.nextInt(5) + 1;
+                        //             PlayerBot.randomangryreply(f.getName(), o.getName(), randomreply);
+                        //         }
+                        //     }
+                        // }
+                        //bettingAmount -> how much bot wants to increase by
+                        int bettingAmount = PlayerBot.getBotRaiseAmt(o, table1);
+                        bettingAmount -= table1.getCurrentBetAmt();
+                        PlayerBot pb = (PlayerBot)o;
+                        
+                         
+                        if (pb.getBet() < table1.getCurrentBetAmt()) {
+                            
+                            if (bettingAmount <= table1.getCurrentBetAmt() - pb.getBet()) {
+                                bettingAmount = table1.getCurrentBetAmt() + 10;
                             }
                         }
 
-                        int newBet = 20; // Bot always adds $20 when betting
-                        if (newBet >= o.getBalance()) {
-                            newBet = o.getBalance();
+                        if (bettingAmount > pb.getBalance()){
+                            bettingAmount = pb.getBalance();
                         }
-                        System.out.println(o.getName() + ": I'll bet " + newBet /* + (table1.getBet() +10) */); 
+                        bettingAmount = 20;
+                        System.out.println(pb.getName() + ": I'll increase the tables bet to " + bettingAmount /* + (table1.getBet() +10) */);
 
                         // int newBet = table1.getCurrentBetAmt() + 10;
 
                         // o.setBet(newBet);
                         // o.setBalance(newBet);
                         // table1.setCurrentBet(table1.getCurrentBetAmt() + newBet);
-
-                        o.raiseBet(newBet);
-                        table1.raiseCurrentBet(newBet);
-                        table1.raisePot(newBet);
+                        // if (o.getBet() == 0) {
+                        //     o.raiseBet(bettingAmount  + 10);
+                        //     table1.raiseCurrentBet(bettingAmount + 10);
+                        //     table1.raisePot(bettingAmount+ 10);
+                        // } else {
+                            o.raiseBet(bettingAmount);
+                            table1.raiseCurrentBet(bettingAmount);
+                            // table1.setCurrentBet(bettingAmount);
+                            table1.raisePot(bettingAmount);
+                        // }
+                        
                         if (o.getBalance() == 0) {
                             System.out.println(o.getName() + ": " + "ALL IN BABY. I got N" + o.getBalance()
-                            + "thing left and my bet is $" + o.getBet());
+                                    + "thing left and my bet is $" + o.getBet());
                         } else {
-                            System.out.println(o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
+                            System.out.println(
+                                    o.getName() + ": I have " + o.getBalance() + " and my bet is " + o.getBet());
                         }
-                        
+
                         System.out.println("The current table bet amount is " + table1.getCurrentBetAmt());
                         System.out.println("The Table's Pot is " + table1.getPot());
 

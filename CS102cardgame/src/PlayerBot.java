@@ -4,41 +4,31 @@ import java.util.*;
 
 public class PlayerBot extends Player {
     /** Tightness (0 = loose, 100 = tight). */
-    // private int tightness;
+    private int tightness;
+
+    private int minBet;
 
     // /** Betting aggression (0 = safe, 100 = aggressive). */
-    // private int aggression;
+    //private int aggression;
 
-    public PlayerBot(String name, String type) {
+    public PlayerBot(String name, String type, int tightness) {
         super(name, type);
-        // this.tightness = tightness;
-        // this.aggression = aggression;
+        this.tightness = tightness;
+        //this.aggression = aggression;
+    }
+
+    public int getTightness(){
+        return tightness;
     }
 
     public static int getBotAction(Player o, String previousAction, Boolean afterBet1, Table table1) {
         botThinking(o.getName());
         int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
         double chenScore = calculateChenScore(o.getHand());
-        System.out.println(o.getName() + " : " + chenScore);
+        PlayerBot pb = (PlayerBot) o;
+        double chenScoreToPlay = pb.getTightness()  / 5.0;
+     
 
-        // For a given handValue, where tightness = x, aggression = y
-        // formula (handValue, tightness, aggression) - >returns action
-        // Aggression -> likelihood to bet
-        // Tightness -> AMOUNT to bet
-        // betProb = (tightness * aggression) / 100
-        // -> T1 = (handvalue / 425 * 100) * tightness^2
-        // -> A1 = (handValue / 425 * 100) * aggression^2
-        // Double randomTight = random.nextDouble(T1)
-        // Double randomAggro = random.nextDouble(A1)
-        // if randomTight > randomAggro -> betProb *= 0.5
-        // if randomAggro > randomTight -> betProb *= 1.5
-        // Double randDouble = random.nextDouble()
-        // if (randDouble < betProb) bet
-        // if (randDouble <0.8) check
-        // else fold
-        // Tightness 0-100, bigger number = less likely to bet
-        // botBetAmt(handValue, aggression) -> returns raise amt based on handValue,
-        // aggression, balance
         if (afterBet1) {// fold if raise too high for given hand value
             if ((handValue) <= 28 && (handValue > 0)) {
                 if (previousAction == null) {
@@ -64,18 +54,13 @@ public class PlayerBot extends Player {
                 }
             }
         } else {
-            if (chenScore < 3.0) {
-                return 3;
-            } else if (chenScore >= 3.0 && chenScore < 6.0) {
-                if (previousAction.equals("Check") || previousAction.equals("Fold")) {
-                    if (o.getBalance() == 0) {
-                        System.out.println("I've all in-ed");
-                    }
+            if (chenScore < chenScoreToPlay) {
+                if (previousAction.equals("Check") || previousAction.equals("Fold")){
                     return 1;
                 } else {
                     return 3;
                 }
-            } else {
+            } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0) { // Bot has good hadn enuf to bet
                 if (previousAction == null) {
                     previousAction = "Check";
                 }
@@ -86,21 +71,37 @@ public class PlayerBot extends Player {
                     }
                     return 2;
                 } else {
-                    return 1;
+                    // previousAction == "Raise"
+                    if ((o.getBet() + pb.getBotRaiseAmt(pb, table1)) < table1.getCurrentBetAmt()) {
+                        return 1;
+                    }
+                    // double diff = chenScore / chenScoreToPlay
+                    // if(diff > 0.5){
+
+                    // }
+                    return 2;
                 }
-            }
+            } 
+            
+            else {
+                //average hand
+                return 1;
+            } 
+            
             // Chen score if not afterbet1
 
         }
     }
 
     public static int getBotRaiseAmt(Player o, Table table1) { // If betting, minimally a pair
-        int tightness = 0; // 20-100
-        int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
-        Double percentage = ((double) handValue / 425) * 100 + (double) tightness;
-        // int betAmt = (int)percentage * o.getBalance();
-
-        return 0;
+        int minBet = 10;
+        int bettingAmount = minBet;
+        PlayerBot pb = (PlayerBot) o;
+        int increments =  pb.getTightness() / 10;
+        for (int i = 1; i < increments; i++){
+            bettingAmount += minBet;
+        }
+        return bettingAmount;
     }
 
     public static void botThinking(String name) {
@@ -229,7 +230,6 @@ public class PlayerBot extends Player {
         }
 
         // 6. Round half point scores up.
-        System.out.println(score);
         return score;
     }
 

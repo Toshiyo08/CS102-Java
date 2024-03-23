@@ -25,7 +25,7 @@ public class Player {
         // this.status = true/false -> playing/folded
         // this.check = true/false -> check/called already
         this.hand = new ArrayList<Card>();
-        this.balance = 100;
+        this.balance = 300;
         this.betAmt = 0;
         this.bigBlind = false;
         this.smallBlind = false;
