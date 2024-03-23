@@ -122,6 +122,11 @@ public class PlayerBot extends Player {
             }
             System.out.print("m");
         }
+        try {
+            Thread.sleep(1000); // Wait for 0.1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println();
     }
 
@@ -159,7 +164,7 @@ public class PlayerBot extends Player {
 
         System.out.println();
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
