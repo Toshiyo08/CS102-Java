@@ -17,7 +17,6 @@ public class Game {
         int numberOfPlayers = 0;
 
         // Scanner playerNumbers = new Scanner(System.in);
-<<<<<<< Updated upstream
         // Keeps prompting for number of players to start game
         // while (true) {
         //     try {
@@ -52,42 +51,6 @@ public class Game {
         //     } catch (InputMismatchException e) {
         //         System.out.print(e.getMessage());
         //     }
-=======
-        // // Keeps prompting for number of players to start game
-        // while (true) {
-        // try {
-        // if (playerNumbers.hasNextInt()) {
-        // numberOfPlayers = playerNumbers.nextInt();
-        // if (numberOfPlayers < 0) {
-        // throw new InputMismatchException("");
-        // }
-        // }
-        // System.out.print("Enter number of bots> ");
-        // numberOfPlayers = playerNumbers.nextInt();
-        // break;
-        // } catch (InputMismatchException ime) {
-        // System.out.println("Please enter a valid number");
-        // } finally {
-        // playerNumbers.nextLine();
-        // }
-        // }
-
-        // while (true) {
-        // try {
-        // Scanner sc = new Scanner(System.in);
-        // if (sc.hasNextInt()) {
-        // inputBet = sc.nextInt();
-        // if (inputBet > p.getBalance()) {
-        // throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
-        // }
-        // return inputBet;
-        // } else {
-        // throw new InputMismatchException("Invalid input");
-        // }
-        // } catch (InputMismatchException e) {
-        // System.out.print(e.getMessage());
-        // }
->>>>>>> Stashed changes
         // }
         // playerNumbers.close();
 
@@ -614,7 +577,7 @@ public class Game {
                         // }
                         //bettingAmount -> how much bot wants to increase by
                         int bettingAmount = PlayerBot.getBotRaiseAmt(o, table1);
-                        bettingAmount -= table1.getCurrentBetAmt();
+                        
                         PlayerBot pb = (PlayerBot)o;
                         
                          
@@ -628,9 +591,9 @@ public class Game {
                         if (bettingAmount > pb.getBalance()){
                             bettingAmount = pb.getBalance();
                         }
-                        bettingAmount = 20;
+                        // bettingAmount = 20;
                         System.out.println(pb.getName() + ": I'll increase the tables bet to " + bettingAmount /* + (table1.getBet() +10) */);
-
+                        int increasedBettingAmount = bettingAmount- o.getBet();
                         // int newBet = table1.getCurrentBetAmt() + 10;
 
                         // o.setBet(newBet);
@@ -641,10 +604,10 @@ public class Game {
                         //     table1.raiseCurrentBet(bettingAmount + 10);
                         //     table1.raisePot(bettingAmount+ 10);
                         // } else {
-                            o.raiseBet(bettingAmount);
-                            table1.raiseCurrentBet(bettingAmount);
+                            o.raiseBet(increasedBettingAmount);
+                            table1.setCurrentBet(bettingAmount);
                             // table1.setCurrentBet(bettingAmount);
-                            table1.raisePot(bettingAmount);
+                            table1.raisePot(increasedBettingAmount);
                         // }
                         
                         if (o.getBalance() == 0) {
