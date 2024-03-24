@@ -108,8 +108,8 @@ public class Game {
             userPlayer1.draw(new Card("Spades", 14));
 
             // 1st Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder);
-            if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
+            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 resetRound(playersList, table1); // Resets player and table attributes
 
                 if (isWinLose(playersList)) { // If you win all or lost all, game ends.
@@ -147,8 +147,8 @@ public class Game {
             // table1.setCurrentBet(0);
 
             // 2nd Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder);
-            if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
+            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
@@ -182,8 +182,8 @@ public class Game {
             // table1.setCurrentBet(0);
 
             // 3rd Betting Round------------------------------
-            bettingRound(playersList, table1, afterRound1, turnOrder);
-            if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
+            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
@@ -216,8 +216,8 @@ public class Game {
             // table1.setCurrentBet(0);
 
             // Last Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder);
-            if (timeToOpenHand(playersList, table1, deck1, ++numTimesBet)) {
+            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 resetRound(playersList, table1);
 
                 if (isWinLose(playersList)) {
@@ -362,21 +362,38 @@ public class Game {
     }
 
     public static void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1,
-            Player[] turnOrder) {
+            Player[] turnOrder, int numTimesBet) {
         ArrayList<Player> current = new ArrayList<Player>();
         for (Player o : turnOrder) {
             if (o.getIsPlaying() == true) {
                 current.add(o);
             }
         }
-        System.out.println(current);
-        // BIG BLIND SMALL BLIND SORTING ORDER
+        
         int counter = 0;
         String previousAction = null;
+        String bettingRoundName = null;
+        switch (numTimesBet) {
+            case 1:
+                bettingRoundName = "Pre-Flop";
+                break;
+            case 2:
+                bettingRoundName = "Flop";
+                break;
+            case 3:
+                bettingRoundName = "Turn";
+                break;
+            case 4:
+                bettingRoundName = "River";
+            default:
+                bettingRoundName = "Showdown";
+                break;
+        }
 
         while (counter != getCurrentSize(current)) {
             for (Player o : current) {
                 if (o.getType().equals("Player") && o.getChecked() == false && o.getIsPlaying() == true) {
+                    System.out.println("Betting Phase: " + bettingRoundName);
                     String action = null;
                     showPlayerAttributes(o, table1, afterRound1);
 
@@ -602,18 +619,19 @@ public class Game {
                         int bettingAmount = PlayerBot.getBotRaiseAmt(o, table1); //-> how much bot wants to increase TO
                         PlayerBot pb = (PlayerBot)o;
                         
-                        
-                        
-                        // if (pb.getBet() < table1.getCurrentBetAmt()) { // If call / raise / fold
-                            if (bettingAmount <= table1.getCurrentBetAmt()) { // if raise TO < table bet, adjust accordingly
-                                bettingAmount = table1.getCurrentBetAmt() + 10;
-                            }
-                        // }
+                        if (bettingAmount <= table1.getCurrentBetAmt()) { // if raise TO < table bet, adjust accordingly
+                            bettingAmount = table1.getCurrentBetAmt() + 10;
+                        }
 
                         if (bettingAmount > pb.getBalance()){ // If balance not enough to raise TO
                             bettingAmount = pb.getBalance(); // Commit the rest of balance
                         }
+                        
                         int increasedBettingAmount = bettingAmount - o.getBet();
+                        if (bettingAmount == pb.getBalance()) {
+                            increasedBettingAmount = 0;
+                        }
+                        
                         if (bettingAmount == pb.getBalance()) {
                             System.out.println(pb.getName() + ": I'll increase the table's bet BY " + increasedBettingAmount);
                         } else {
