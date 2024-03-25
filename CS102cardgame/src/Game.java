@@ -375,6 +375,9 @@ public class Game {
                     if (numberOfPlayers <= 0) {
                         throw new InputMismatchException("There must be at least 1 bot!");
                     }
+                    if (numberOfPlayers >= 9) {
+                        throw new InputMismatchException("Too many! You can have at most 8 bots");
+                    }
                     return numberOfPlayers;
                 } else {
                     throw new InputMismatchException("Invalid input");

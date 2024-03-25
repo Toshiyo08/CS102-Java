@@ -11,16 +11,18 @@ public class mainGame {
         // Scanner playerNumbers = new Scanner(System.in);
         // Keeps prompting for number of players to start game
         numberOfPlayers = Game.getNumBot();
-        // for (int i = 0; i < numberOfPlayers; i++) {
-        //     for (Player o : playersList) {
-        //         if (playersList.contains(o)) {
-
-        //         } else {
-
-        //         }
-        //     }
+        for (int i = 0; i < numberOfPlayers; i++) {
+            for (Player o : playersList) { //
+                if (playersList.contains(o)) {
+                    break;
+                } else {
+                    // Add
+                    
+                    playersList.add(new PlayerBot(randomName, "Bot", ranTight));
+                }
+            }
             
-        // }
+        }
 
         // Initialise a player that user controls and add into list of players
         Player userPlayer = new Player("Tom", "Player");
