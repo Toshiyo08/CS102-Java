@@ -330,7 +330,10 @@ public class Game {
                 if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")) {
                     return inputCommand;
                 } else if (inputCommand.contains("bet")) {
-                    System.out.print("Bet?> ");
+                    System.out.print("Bet to?> ");
+                    return inputCommand;
+                } else if (inputCommand.contains("raise")) {
+                    System.out.println("Raise to?> ");
                     return inputCommand;
                 } else {
                     throw new InputMismatchException("Invalid input");
@@ -419,9 +422,16 @@ public class Game {
                     showPlayerAttributes(o, table1, afterRound1);
 
                     if (o.getBet() < table1.getCurrentBetAmt()) {
-                        System.out.println("Call / Raise / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
+                        if (o.getBalance() <= table1.getCurrentBetAmt()) {
+                            System.out.println("Call /       / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        } else {
+                            System.out.println("Call / Raise / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        
                         // o.setChecked(true);
                         // o.setBet(table1.getCurrentBetAmt());
                         // o.setBalance(o.getBet());
@@ -490,10 +500,17 @@ public class Game {
                         System.out.print("Action> ");
                         action = getInput();
                     }
+                    // NOTE: bet but no raise, raise but no bet
                     // If user try to bet or raise when broke
                     if ((action.equals("raise") || action.equals("bet")) && o.getBalance() == 0) { 
                         System.out.println("You cannot " + action + "!");
                         System.out.println("Check /       / Fold");
+                        System.out.print("Action> ");
+                        action = getInput();
+                    }
+                    if ((action.equals("raise") || action.equals("bet")) && o.getBalance() <= table1.getCurrentBetAmt()) {
+                        System.out.println("You cannot " + action + "!");
+                        System.out.println("Call /       / Fold");
                         System.out.print("Action> ");
                         action = getInput();
                     }
@@ -527,14 +544,26 @@ public class Game {
                         // o.setBalance(newBet);
                         // table1.setCurrentBet(newBet);
                         int newBet = getBetInput(o); // Amt X player increases by
-                        while (newBet <= table1.getCurrentBetAmt() - o.getBet()) {
-                            System.out.println("Not enough! You need to raise at least $"
-                                    + (table1.getCurrentBetAmt() - o.getBet()));
+                        
+                        while (newBet <= table1.getCurrentBetAmt()) {
+                            if (newBet >= o.getBalance()) {
+                                System.out.println("All in!");
+                                newBet = o.getBalance();
+                                break;
+                            }
+                            System.out.println("Not enough! You need to raise to more than $"
+                                    + (table1.getCurrentBetAmt()));
                             newBet = getBetInput(o);
                         }
+                        if (newBet > table1.getCurrentBetAmt()) {
+                            // table1.raiseCurrentBet(newBet - table1.getCurrentBetAmt()); // TableBet increased by X
+                            table1.setCurrentBet(newBet);
+                        }
 
+                        if (o.getBet() != 0) {
+                            newBet = newBet - o.getBet();
+                        }
                         o.raiseBet(newBet); // Bet increased by X and Balance decreased by X
-                        table1.raiseCurrentBet(newBet); // TableBet increased by X
                         table1.raisePot(newBet); // Pot increased by X
 
                         o.setChecked(true);
@@ -637,9 +666,11 @@ public class Game {
                         //     }
                         // }
 
-                        int bettingAmount = PlayerBot.getBotRaiseAmt(o, table1); //-> how much bot wants to increase TO
-                        PlayerBot pb = (PlayerBot)o;
                         
+                        PlayerBot pb = (PlayerBot)o;
+                        int bettingAmount = PlayerBot.getBotRaiseAmt(pb.getTightness(), Hand2.getHandValue(pb.getHand(), table1.getCommCards()), o); //-> how much bot wants to increase TO
+                        System.out.println("Game bettingAmount: " + bettingAmount); // REMOVE
+                        System.out.println("HandValue: " + Hand2.getHandValue(pb.getHand(), table1.getCommCards()));// REMOVE
                         if (bettingAmount <= table1.getCurrentBetAmt()) { // if raise TO < table bet, adjust accordingly
                             bettingAmount = table1.getCurrentBetAmt() + 10;
                         }

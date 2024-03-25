@@ -78,6 +78,10 @@ public class mainGame {
 
             // 1st Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBet(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1); // Resets player and table attributes
 
@@ -103,10 +107,13 @@ public class mainGame {
             afterRound1 = true;
 
             // Deal Flop (3 cards)
-            for (int i = 0; i < 3; i++) {
-                deck1.burnCard();
-                table1.drawComm(deck1.dealCard());
-            }
+            // for (int i = 0; i < 3; i++) {
+            //     deck1.burnCard();
+            //     table1.drawComm(deck1.dealCard());
+            // }
+            table1.drawComm(new Card("Diamonds", 9));
+            table1.drawComm(new Card("Diamonds", 8));
+            table1.drawComm(new Card("Spades", 14));
             Card.printCard(table1.getCommCards());
 
             // userPlayer.setChecked(false);
@@ -117,6 +124,10 @@ public class mainGame {
 
             // 2nd Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBet(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -152,6 +163,10 @@ public class mainGame {
 
             // 3rd Betting Round------------------------------
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBet(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -186,6 +201,10 @@ public class mainGame {
 
             // Last Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBet(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
