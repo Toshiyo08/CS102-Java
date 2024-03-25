@@ -361,6 +361,27 @@ public class Game {
         }
     }
 
+    public static int getNumBot() {
+        int numberOfPlayers = 0;
+        while (true) {
+            try {
+                System.out.println("Please enter the number of desired bots> ");
+                Scanner playerNumbers = new Scanner(System.in);
+                if (playerNumbers.hasNextInt()) {
+                    numberOfPlayers = playerNumbers.nextInt();
+                    if (numberOfPlayers <= 0) {
+                        throw new InputMismatchException("There must be at least 1 bot!");
+                    }
+                    return numberOfPlayers;
+                } else {
+                    throw new InputMismatchException("Invalid input");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            } 
+        }
+    }
+
     public static void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1,
             Player[] turnOrder, int numTimesBet) {
         ArrayList<Player> current = new ArrayList<Player>();
