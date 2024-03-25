@@ -1,30 +1,33 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class mainGame {
     public static void main(String[] args) {
+        // Game.startingScreen(); // AESTHETICS
         ArrayList<Player> playersList = new ArrayList<Player>();
-
-        int numberOfPlayers = 0;
-
-        // Scanner playerNumbers = new Scanner(System.in);
-        // Keeps prompting for number of players to start game
-        numberOfPlayers = Game.getNumBot();
-        for (int i = 0; i < numberOfPlayers; i++) {
-            for (Player o : playersList) { //
-                if (playersList.contains(o)) {
-                    break;
-                } else {
-                    // Add
-                    
-                    playersList.add(new PlayerBot(randomName, "Bot", ranTight));
-                }
-            }
-            
-        }
-
+        // String userName = "";
+        // System.out.println("Please enter a name between 3 and 6 characters"); 
+        // while (true) {
+        //     try {
+        //         System.out.print("Name> ");
+        //         Scanner sc = new Scanner(System.in);
+        //         userName = sc.nextLine();
+        //         userName = userName.trim();
+        //         if (userName == "") {
+        //             throw new InputMismatchException("No name was entered!");
+        //         } 
+        //         if (userName.length() >= 7) {
+        //             throw new InputMismatchException("Please enter a name of not more than 6 characters!");
+        //         }
+        //         if (userName.length() <= 2) {
+        //             throw new InputMismatchException("Please enter a name of at least 3 characters!");
+        //         }
+        //         break;
+        //     } catch (InputMismatchException e) {
+        //         System.out.println(e.getMessage());
+        //     }
+        // }
         // Initialise a player that user controls and add into list of players
+        // Player userPlayer = new Player(userName, "Player");
         Player userPlayer = new Player("Tom", "Player");
         playersList.add(userPlayer);
         Player userPlayer1 = new PlayerBot("Nic", "Bot", 10);
@@ -32,22 +35,70 @@ public class mainGame {
         Player userPlayer2 = new PlayerBot("Ken", "Bot", 70);
         playersList.add(userPlayer2);
 
-        int originalBalance = userPlayer.getBalance();
-        Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
+        
 
-        // Initialise number of bots and add them into list of players
-        // for (int i = 0; i < 3; i++) {
-        // playersList.add(new PlayerBot("Bot", "Bot"));
+        // Keeps prompting for number of players to start game
+        int numberOfPlayers = 0;
+        numberOfPlayers = Game.getNumBot();
+        // Map<String, PlayerBot> botMap = new HashMap<String, PlayerBot>();
+        // botMap.put("Arthur", new PlayerBot("Arthur", "Bot", 75));
+        // botMap.put("Paul", new PlayerBot("Paul", "Bot", 65));
+        // botMap.put("Ken", new PlayerBot("Ken", "Bot", 15));
+        // botMap.put("Nic ", new PlayerBot("Nic", "Bot", 10));
+        // botMap.put("Juan", new PlayerBot("Juan", "Bot", 20));
+        // botMap.put("Anna", new PlayerBot("Abigail", "Bot", 50));
+        // botMap.put("José", new PlayerBot("José", "Bot", 35));
+        // botMap.put("Sally", new PlayerBot("Sally", "Bot", 45));
+        // botMap.put("Helen", new PlayerBot("Helen", "Bot", 75));
+        // for (String key : botMap.keySet()) {
+        //     if (!(playersList.contains(botMap.get(key)))) {
+        //         playersList.add(botMap.get(key));
+        //     }
+        //     if (playersList.size() == numberOfPlayers + 1) {
+        //         break;
+        //     }
         // }
 
+        // DON'T USE BELOW DON'T DELETE
+        // for (int i = 0; i < numberOfPlayers; i++) {
+        // Convert HashMap entries to a List
+        // List<Map.Entry<String, PlayerBot>> entryList = new ArrayList<>(botMap.entrySet());
+
+        // // Shuffle the List
+        // Collections.shuffle(entryList);
+
+        // // Create a new HashMap to store shuffled entries
+        // HashMap<String, PlayerBot> shuffledMap = new HashMap<>();
+
+        // // Populate the shuffled HashMap with shuffled entries
+        // for (Map.Entry<String, PlayerBot> entry : entryList) {
+        //     shuffledMap.put(entry.getKey(), entry.getValue());
+        // }
+        //     // Get the entry at the first index (index 0)
+        //     Map.Entry<String, PlayerBot> firstEntry = shuffledMap.entrySet().iterator().next();
+
+        //     if (!(playersList.contains(firstEntry.getValue()))) {
+        //         playersList.add(firstEntry.getValue());
+        //     }
+        //     System.out.println(firstEntry.getValue().getName());
+        // }
+        // DON'T USE ABOVE DON'T DELETE
+
+        
+        // Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
+        Player[] turnOrder = new Player[playersList.size()];
+        for (int i = 0; i < playersList.size(); i++) {
+            turnOrder[i] = playersList.get(i);
+        }
+        turnOrder[0].setBigBlind(true);
+        // turnOrder[1].setSmallgBlind(true);
+
         boolean gameContinue = true;
-
-
-        // Game.startingScreen();
+        int originalBalance = userPlayer.getBalance();
         int gameCounter = 1;
         int bigBlind = 10;
         int smallBlind = 5;
-        userPlayer.setBigBlind(true);
+
 
         while (gameContinue) {
             int numTimesBet = 0;
@@ -118,12 +169,6 @@ public class mainGame {
             table1.drawComm(new Card("Spades", 14));
             Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
-
             // 2nd Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             table1.setCurrentBet(0);
@@ -157,13 +202,7 @@ public class mainGame {
             table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
-
-            // 3rd Betting Round------------------------------
+            // 3rd Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             table1.setCurrentBet(0);
             for (Player t : playersList) {
@@ -194,12 +233,6 @@ public class mainGame {
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
-
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
 
             // Last Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);

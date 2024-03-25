@@ -368,15 +368,15 @@ public class Game {
         int numberOfPlayers = 0;
         while (true) {
             try {
-                System.out.println("Please enter the number of desired bots> ");
+                System.out.print("Please enter the number of desired bots> ");
                 Scanner playerNumbers = new Scanner(System.in);
                 if (playerNumbers.hasNextInt()) {
                     numberOfPlayers = playerNumbers.nextInt();
                     if (numberOfPlayers <= 0) {
                         throw new InputMismatchException("There must be at least 1 bot!");
                     }
-                    if (numberOfPlayers >= 9) {
-                        throw new InputMismatchException("Too many! You can have at most 8 bots");
+                    if (numberOfPlayers >= 10) {
+                        throw new InputMismatchException("Too many! You can have at most 9 bots");
                     }
                     return numberOfPlayers;
                 } else {
@@ -425,8 +425,8 @@ public class Game {
                     showPlayerAttributes(o, table1, afterRound1);
 
                     if (o.getBet() < table1.getCurrentBetAmt()) {
-                        if (o.getBalance() <= table1.getCurrentBetAmt()) {
-                            System.out.println("Call /       / Fold");
+                        if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                            System.out.println("Call (All in) /       / Fold");
                             System.out.print("Action> ");
                             action = getInput();
                         } else {
@@ -511,9 +511,9 @@ public class Game {
                         System.out.print("Action> ");
                         action = getInput();
                     }
-                    if ((action.equals("raise") || action.equals("bet")) && o.getBalance() <= table1.getCurrentBetAmt()) {
+                    if ((action.equals("raise") || action.equals("bet")) && o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
                         System.out.println("You cannot " + action + "!");
-                        System.out.println("Call /       / Fold");
+                        System.out.println("Call (All in) /       / Fold");
                         System.out.print("Action> ");
                         action = getInput();
                     }
@@ -596,7 +596,7 @@ public class Game {
                     // Once game is live, remove showPlayerAttributes for bots
                     // AND add small and big blind changer for bot
                     showPlayerAttributes(o, table1, afterRound1);
-                    // UNCOMMENT THESE WHEN LIVE DO NOT DELETE OR CLEAN -> should make bots pay the big/small blind
+                    // UNCOMMENT THESE WHEN LIVE DO NOT DELETE OR CLEAN -> hopefully makes bots pay the big/small blind
                     // if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
                     // o.raiseBet(10);
                     // table1.raiseCurrentBet(10);
@@ -768,10 +768,24 @@ public class Game {
     }
 
     public static void showPlayerAttributes(Player o, Table table1, Boolean afterRound1) {
-        System.out.println(o.getName() + " hand: ");
+        String playerName = o.getName();
+        System.out.println(playerName + " hand: ");
         Card.printCard(o.getHand());
-        System.out.println("┌───────────────┐─────┐");
-        System.out.print("|  " + o.getName() + " balance  | ");
+        System.out.println("┌────────────────┐──────┐");
+        switch (playerName.length()) {
+            case 6:
+                System.out.print("| " + playerName + " balance | ");
+                break;
+            case 5:
+                System.out.print("| " + playerName + " balance  | ");
+                break;
+            case 4:
+                System.out.print("| " + playerName + " balance   | ");
+                break;
+            default:
+                System.out.print("| " + playerName + " balance    | ");
+                break;
+        }
         if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) { // Not chen round, big blind, and not blinded yet
             o.raiseBet(10);
             table1.raiseCurrentBet(10);
@@ -786,43 +800,51 @@ public class Game {
         } else {
             System.out.print(o.getBalance());
         }
-        if (o.getBalance() >= 100) {
+        if (o.getBalance() >= 1000) {
             System.out.println(" |");
+        } else if (o.getBalance() >= 100) {
+            System.out.println("  |");
         } else if (o.getBalance() >= 10) {
-            System.out.println("  |");
-        } else {
             System.out.println("   |");
+        } else {
+            System.out.println("    |");
         }
-        System.out.print("| Your bet      | " + o.getBet());
-        if (o.getBet() >= 100) {
+        System.out.print("| Your bet       | " + o.getBet());
+        if (o.getBet() >= 1000) {
             System.out.println(" |");
-        } else if (o.getBet() >= 10) {
+        } else if (o.getBet() >= 100) {
             System.out.println("  |");
-        } else {
+        } else if (o.getBet() >= 10) {
             System.out.println("   |");
+        } else {
+            System.out.println("    |");
         }
         if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
-            System.out.println("| Big Blind     | 10  |");
+            System.out.println("| Big Blind      | 10   |");
         } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-            System.out.println("| Small Blind   | 5   |");
+            System.out.println("| Small Blind    | 5    |");
         }
-        System.out.print("| Table's pot   | " + table1.getPot());
-        if (table1.getPot() >= 100) {
+        System.out.print("| Table's pot    | " + table1.getPot());
+        if (table1.getPot() >= 1000) {
             System.out.println(" |");
+        } else if (table1.getPot() >= 100) {
+            System.out.println("  |");
         } else if (table1.getPot() >= 10) {
-            System.out.println("  |");
-        } else {
             System.out.println("   |");
+        } else {
+            System.out.println("    |");
         }
-        System.out.print("| Table's Bet   | " + table1.getCurrentBetAmt());
-        if (table1.getCurrentBetAmt() >= 100) {
+        System.out.print("| Table's Bet    | " + table1.getCurrentBetAmt());
+        if (table1.getCurrentBetAmt() >= 1000) {
             System.out.println(" |");
-        } else if (table1.getCurrentBetAmt() >= 10) {
+        } else if (table1.getCurrentBetAmt() >= 100) {
             System.out.println("  |");
-        } else {
+        } else if (table1.getCurrentBetAmt() >= 10) {
             System.out.println("   |");
+        } else {
+            System.out.println("    |");
         }
-        System.out.println("└───────────────┘─────┘");
+        System.out.println("└────────────────┘──────┘");
     }
 
     public static int getCurrentSize(ArrayList<Player> current) {
