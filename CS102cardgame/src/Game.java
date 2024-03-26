@@ -424,43 +424,16 @@ public class Game {
                     String action = null;
                     showPlayerAttributes(o, table1, afterRound1);
 
-                    if (o.getBet() < table1.getCurrentBetAmt()) {
-                        if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
-                            System.out.println("Call (All in) /       / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        } else {
-                            System.out.println("Call / Raise / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        
-                        // o.setChecked(true);
-                        // o.setBet(table1.getCurrentBetAmt());
-                        // o.setBalance(o.getBet());
-
-                        // int raiseAmt = table1.getCurrentBetAmt() - o.getBet();
-                        // o.raiseBet(raiseAmt);
-                        // table1.raisePot(raiseAmt);
-                        // counter++;
-                        // previousAction = "Check";
-                    } else if (o.getBalance() == 0) {
-                        System.out.println("Check /       / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                        // o.setChecked(true);
-                        // counter++;
-                        // previousAction = "Check";
-                    } else if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
+                    // If Big Blind
+                    if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
                         System.out.println("Pot: Big Blind! That's $10 thanks");
                         System.out.println("Check / Bet / Fold");
-
                         System.out.print("Action> ");
+
                         action = getInput();
                         o.setBlinded(true);
-                        // o.setChecked(true);
-                        // counter++;
-                        // previousAction = "Check";
+
+                    // If Small Blind
                     } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
                         System.out.println("Pot: Small Blind! That's $5 thanks");
                         if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
@@ -469,29 +442,94 @@ public class Game {
                             System.out.println("Check / Bet / Fold");
                         }
                         System.out.print("Action> ");
+
                         action = getInput();
                         o.setBlinded(true);
-                        // o.setChecked(true);
-                        // counter++;
-                        // previousAction = "Check";
-                    } else { // o.getBet() == table1.getCurrentBetAmt()
-                        System.out.println("Check / Bet / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
 
-                        if (o.getBet() < table1.getCurrentBetAmt()) {
-                            // o.setBet(table1.getCurrentBetAmt());
-                            System.out.println("Something's wrong!!");
+                    // Normal betting round
+                    } else {
+
+                        // If broke
+                        if (o.getBalance() == 0) {
+                            System.out.println("Check /       / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+
+                        // If not broke
+                        } else {
+                            // Someone raised
+                            if (o.getBet() < table1.getCurrentBetAmt()) {
+
+                                // Not enough to raise beyond
+                                if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                                    System.out.println("Call (All in) /       / Fold");
+                                    System.out.print("Action> ");
+                                    action = getInput();
+
+                                // Enough to call OR raise beyond
+                                } else {
+                                    System.out.println("Call / Raise / Fold");
+                                    System.out.print("Action> ");
+                                    action = getInput();
+                                }
+
+                            // No one raised
+                            } else {
+                                System.out.println("Check / Bet / Fold");
+                                System.out.print("Action> ");
+                                action = getInput();
+                            }
                         }
-                        // o.setBalance(o.getBet());
-                        // o.setChecked(true);
-                        // counter++;
-                        // previousAction = "Check";
                     }
+
+                    // if (o.getBet() < table1.getCurrentBetAmt()) {
+                    //     if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                    //         System.out.println("Call (All in) /       / Fold");
+                    //         System.out.print("Action> ");
+                    //         action = getInput();
+                    //     } else {
+                    //         System.out.println("Call / Raise / Fold");
+                    //         System.out.print("Action> ");
+                    //         action = getInput();
+                    //     }
+                    // } else if (o.getBalance() == 0) {
+                    //     System.out.println("Check /       / Fold");
+                    //     System.out.print("Action> ");
+                    //     action = getInput();
+                    // } else if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
+                    //     System.out.println("Pot: Big Blind! That's $10 thanks");
+                    //     System.out.println("Check / Bet / Fold");
+
+                    //     System.out.print("Action> ");
+                    //     action = getInput();
+                    //     o.setBlinded(true);
+                    // } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
+                    //     System.out.println("Pot: Small Blind! That's $5 thanks");
+                    //     if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
+                    //         System.out.println("Call / Raise / Fold");
+                    //     } else { // No one raised yet
+                    //         System.out.println("Check / Bet / Fold");
+                    //     }
+                    //     System.out.print("Action> ");
+                    //     action = getInput();
+                    //     o.setBlinded(true);
+                    // } else { // o.getBet() == table1.getCurrentBetAmt()
+                    //     System.out.println("Check / Bet / Fold");
+                    //     System.out.print("Action> ");
+                    //     action = getInput();
+                    // }
 
                     // If user accidentally check when must call
                     if (action.equals("check") && o.getBet() < table1.getCurrentBetAmt()){ 
                         System.out.println("You cannot check!");
+                        System.out.println();
+                        System.out.println("Call / Raise / Fold");
+                        System.out.print("Action> ");
+                        action = getInput();
+                    }
+                    if (action.equals("bet") && table1.getCurrentBetAmt() > 0) {
+                        System.out.println("You cannot bet!");
+                        System.out.println();
                         System.out.println("Call / Raise / Fold");
                         System.out.print("Action> ");
                         action = getInput();
@@ -499,14 +537,23 @@ public class Game {
                     // If user accidentally call when must check
                     if (action.equals("call") && o.getBet() == table1.getCurrentBetAmt()) { 
                         System.out.println("You cannot call!");
+                        System.out.println();
                         System.out.println("Check / Bet / Fold");
                         System.out.print("Action> ");
                         action = getInput();
                     }
-                    // NOTE: bet but no raise, raise but no bet
+                    // If user raise when can only bet
+                    if (action.equals("raise") && table1.getCurrentBetAmt() == 0) {
+                        System.out.println("You cannot raise!");
+                        System.out.println();
+                        System.out.println("Check / Bet / Fold");
+                        System.out.print("Action> ");
+                        action = getInput();
+                    }
                     // If user try to bet or raise, but insufficient to increase the table bet
                     if ((action.equals("raise") || action.equals("bet")) && o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
                         System.out.println("You cannot " + action + "!");
+                        System.out.println();
                         System.out.println("Call (All in) /       / Fold");
                         System.out.print("Action> ");
                         action = getInput();
@@ -514,6 +561,7 @@ public class Game {
                     // If user try to bet or raise when broke
                     if ((action.equals("raise") || action.equals("bet")) && o.getBalance() == 0) { 
                         System.out.println("You cannot " + action + "!");
+                        System.out.println();
                         System.out.println("Check /       / Fold");
                         System.out.print("Action> ");
                         action = getInput();
@@ -526,7 +574,6 @@ public class Game {
                         previousAction = "Check";
                     }
                     if (action.equals("call")) {
-                        
                         int raiseAmt = table1.getCurrentBetAmt() - o.getBet();
                         if (raiseAmt > o.getBalance()) {
                             raiseAmt = o.getBalance();
