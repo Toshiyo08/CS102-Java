@@ -91,7 +91,7 @@ public class mainGame {
             turnOrder[i] = playersList.get(i);
         }
         turnOrder[0].setBigBlind(true);
-        // turnOrder[1].setSmallgBlind(true);
+        turnOrder[1].setSmallgBlind(true);
 
         boolean gameContinue = true;
         int originalBalance = userPlayer.getBalance();
