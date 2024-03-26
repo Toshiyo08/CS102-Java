@@ -33,7 +33,7 @@ public class PlayerBot extends Player {
             previousAction = "Check";
         }
         int increaseBetTO = pb.getBotRaiseAmt(botTightness, handValue, o);
-        System.out.println("increaseBetTO: " + increaseBetTO);
+        
             // 2-14 HC
             // 18-42 pair
             //52-98 2pair
@@ -53,7 +53,9 @@ public class PlayerBot extends Player {
                 if (increaseBetTO > table1.getCurrentBetAmt() && o.getBalance() != 0) { // Only cheeky bet if prospective bet does increase table bet
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
-                    if (ranInt == pb.getTightness()%10) {
+                    if (ranInt >= pb.getTightness()/10) {
+                        System.out.println("increaseBetTO: " + increaseBetTO);
+                        System.out.println("Cheeky bet");
                         return 2;
                     }
                 }
@@ -77,6 +79,10 @@ public class PlayerBot extends Player {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
+                    if (o.getBalance() + increaseBetTO - o.getBet() < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                        return 1;
+                    }
+                    System.out.println("increaseBetTO: " + increaseBetTO);
                     return 2;
                 }
                 if (increaseBetTO < table1.getCurrentBetAmt()) { // Can be combined with increaseBetTO == table1.getCurrentBetAmt()
@@ -126,6 +132,10 @@ public class PlayerBot extends Player {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
+                    if (o.getBalance() + increaseBetTO - o.getBet() < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                        return 1;
+                    }
+                    System.out.println("increaseBetTO: " + increaseBetTO);
                     return 2;
                 }
                 if (increaseBetTO < table1.getCurrentBetAmt()) {
@@ -140,9 +150,12 @@ public class PlayerBot extends Player {
                     return 1;
                 }
                 if (increaseBetTO > table1.getCurrentBetAmt() && o.getBalance() != 0) {
+                    
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
-                    if (ranInt == pb.getTightness()%10) {
+                    if (ranInt >= pb.getTightness()%10) {
+                        System.out.println("increaseBetTO: " + increaseBetTO);
+                        System.out.println("Cheeky bet");
                         return 2;
                     }
                 }

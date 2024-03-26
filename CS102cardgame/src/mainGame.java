@@ -39,7 +39,7 @@ public class mainGame {
 
         // Keeps prompting for number of players to start game
         int numberOfPlayers = 0;
-        numberOfPlayers = Game.getNumBot();
+        // numberOfPlayers = Game.getNumBot();
         // Map<String, PlayerBot> botMap = new HashMap<String, PlayerBot>();
         // botMap.put("Arthur", new PlayerBot("Arthur", "Bot", 75));
         // botMap.put("Paul", new PlayerBot("Paul", "Bot", 65));

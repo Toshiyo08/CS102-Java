@@ -271,8 +271,8 @@ public class Game {
         } else if (userPlayer.getBalance() == originalBalance * playersList.size()) {
             System.out.println("You won everything!");
         } else if (userPlayer.getBalance() == 0) {
-            System.out.println("HAHAHA HOW TF YOU LOSE EVERYTHING TO BOTS");
-        } else if (userPlayer.getBalance() == 100) {
+            System.out.println("You lost everything!");
+        } else if (userPlayer.getBalance() == 300) {
             System.out.println("Damn, you didn't win anything? Congrats on wasting your time!");
         } else /* if (originalBalance < userPlayer.getBalance()) */ {
             System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
@@ -330,10 +330,10 @@ public class Game {
                 if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")) {
                     return inputCommand;
                 } else if (inputCommand.contains("bet")) {
-                    System.out.print("Bet to?> ");
+                    // System.out.print("Bet to?> ");
                     return inputCommand;
                 } else if (inputCommand.contains("raise")) {
-                    System.out.println("Raise to?> ");
+                    // System.out.println("Raise to?> ");
                     return inputCommand;
                 } else {
                     throw new InputMismatchException("Invalid input");
@@ -351,7 +351,7 @@ public class Game {
                 Scanner sc = new Scanner(System.in);
                 if (sc.hasNextInt()) {
                     inputBet = sc.nextInt();
-                    if (inputBet > p.getBalance()) {
+                    if (inputBet - p.getBet() > p.getBalance()) {
                         throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
                     }
                     return inputBet;
@@ -518,54 +518,69 @@ public class Game {
                     //     System.out.print("Action> ");
                     //     action = getInput();
                     // }
-
-                    // If user accidentally check when must call
-                    if (action.equals("check") && o.getBet() < table1.getCurrentBetAmt()){ 
-                        System.out.println("You cannot check!");
-                        System.out.println();
-                        System.out.println("Call / Raise / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
+                    
+                    if (!afterRound1) {
+                        // If user raise when can only bet
+                        if (action.equals("raise") && table1.getCurrentBetAmt() == 10) {
+                            System.out.println("You cannot raise!");
+                            System.out.println();
+                            System.out.println("Check / Bet / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                    } else {
+                        // If user accidentally check when must call
+                        if (action.equals("check") && o.getBet() < table1.getCurrentBetAmt()){ 
+                            System.out.println("You cannot check!");
+                            System.out.println();
+                            System.out.println("Call / Raise / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        // If user can only raise
+                        if (action.equals("bet") && table1.getCurrentBetAmt() > 0 /*&& previousAction != null*/){
+                            System.out.println("You cannot bet!");
+                            System.out.println();
+                            System.out.println("Call / Raise / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        // If user raise when can only bet
+                        if (action.equals("raise") && table1.getCurrentBetAmt() == 0) {
+                            System.out.println("You cannot raise!");
+                            System.out.println();
+                            System.out.println("Check / Bet / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        // If user accidentally call when must check
+                        if (action.equals("call") && o.getBet() == table1.getCurrentBetAmt()) { 
+                            System.out.println("You cannot call!");
+                            System.out.println();
+                            System.out.println("Check / Bet / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        
+                        // If user try to bet or raise, but insufficient to increase the table bet
+                        if ((action.equals("raise") || action.equals("bet")) && o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                            System.out.println("You cannot " + action + "!");
+                            System.out.println();
+                            System.out.println("Call (All in) /       / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
+                        // If user try to bet or raise when broke
+                        if ((action.equals("raise") || action.equals("bet")) && o.getBalance() == 0) { 
+                            System.out.println("You cannot " + action + "!");
+                            System.out.println();
+                            System.out.println("Check /       / Fold");
+                            System.out.print("Action> ");
+                            action = getInput();
+                        }
                     }
-                    if (action.equals("bet") && table1.getCurrentBetAmt() > 0 && previousAction != null){
-                        System.out.println("You cannot bet!");
-                        System.out.println();
-                        System.out.println("Call / Raise / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                    }
-                    // If user accidentally call when must check
-                    if (action.equals("call") && o.getBet() == table1.getCurrentBetAmt()) { 
-                        System.out.println("You cannot call!");
-                        System.out.println();
-                        System.out.println("Check / Bet / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                    }
-                    // If user raise when can only bet
-                    if (action.equals("raise") && table1.getCurrentBetAmt() == 0) {
-                        System.out.println("You cannot raise!");
-                        System.out.println();
-                        System.out.println("Check / Bet / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                    }
-                    // If user try to bet or raise, but insufficient to increase the table bet
-                    if ((action.equals("raise") || action.equals("bet")) && o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
-                        System.out.println("You cannot " + action + "!");
-                        System.out.println();
-                        System.out.println("Call (All in) /       / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                    }
-                    // If user try to bet or raise when broke
-                    if ((action.equals("raise") || action.equals("bet")) && o.getBalance() == 0) { 
-                        System.out.println("You cannot " + action + "!");
-                        System.out.println();
-                        System.out.println("Check /       / Fold");
-                        System.out.print("Action> ");
-                        action = getInput();
-                    }
+                    
+                    
                     
 
                     if (action.equals("check")) { // Can only check if bet matches table bet
@@ -592,11 +607,11 @@ public class Game {
                         previousAction = "Check";
                     }
                     if (action.equals("bet") || action.equals("raise")) {
-                        // COLLAPSED
-                        // int raisedAmt = newBet - o.getBet();
-                        // o.setBet(newBet);
-                        // o.setBalance(newBet);
-                        // table1.setCurrentBet(newBet);
+                        if (action.equals("bet")) {
+                            System.out.print("Bet to?> ");
+                        } else {
+                            System.out.print("Raise to?> ");
+                        }
                         int newBet = getBetInput(o); // Amt X player increases by
                         
                         while (newBet <= table1.getCurrentBetAmt()) {
@@ -917,7 +932,7 @@ public class Game {
                 }
             }
         }
-        if (openHandCounter == activePlayerCounter - 1 || activePlayerCounter == 1) {
+        if (openHandCounter >= activePlayerCounter - 1 || activePlayerCounter == 1) {
             isOpenHandTime = true;
             System.out.println("OPENHAND");
         } else {
@@ -926,10 +941,18 @@ public class Game {
 
         if (isOpenHandTime) {
             System.out.println("Everybody open hand!");
-            for (int i = 0; i < 4 - numTimesBet; i++) {
-                deck1.burnCard();
-                table1.drawComm(deck1.dealCard());
+            if (numTimesBet == 1) { // Pre-Flop
+                for (int i = 0; i < 5; i++) {
+                    deck1.burnCard();
+                    table1.drawComm(deck1.dealCard());
+                }
+            } else {// Post-Flop, 3 cards already there
+                for (int i = 0; i < 4 - numTimesBet; i++) {
+                    deck1.burnCard();
+                    table1.drawComm(deck1.dealCard());
+                }
             }
+            
             Card.printCard(table1.getCommCards());
             for (Player h : playersList) {
                 if (h.getIsPlaying()) {
