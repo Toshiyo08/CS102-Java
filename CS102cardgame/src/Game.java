@@ -917,7 +917,7 @@ public class Game {
                 }
             }
         }
-        if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
+        if (openHandCounter == activePlayerCounter -1 || activePlayerCounter == 1) {
             isOpenHandTime = true;
             System.out.println("OPENHAND");
         } else {
