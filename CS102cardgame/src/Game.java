@@ -527,7 +527,7 @@ public class Game {
                         System.out.print("Action> ");
                         action = getInput();
                     }
-                    if (action.equals("bet") && table1.getCurrentBetAmt() > 0) {
+                    if (action.equals("bet") && table1.getCurrentBetAmt() > 0 && previousAction != null){
                         System.out.println("You cannot bet!");
                         System.out.println();
                         System.out.println("Call / Raise / Fold");
@@ -917,7 +917,7 @@ public class Game {
                 }
             }
         }
-        if (openHandCounter == activePlayerCounter || activePlayerCounter == 1) {
+        if (openHandCounter == activePlayerCounter - 1 || activePlayerCounter == 1) {
             isOpenHandTime = true;
             System.out.println("OPENHAND");
         } else {

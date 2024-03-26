@@ -117,17 +117,18 @@ public class mainGame {
             // Scanner getCutNum = new Scanner (System.in);
             // deck1.cutDeck();
 
-            // deal cards
-            // for (Player e : playersList) {
-            // e.draw(deck1.dealCard());
-            // e.draw(deck1.dealCard());
-            // }
-            userPlayer.draw(new Card("Clubs", 9)); // Tom
-            userPlayer.draw(new Card("Hearts", 5));
-            userPlayer2.draw(new Card("Clubs", 14));
-            userPlayer2.draw(new Card("Hearts", 14));
-            userPlayer1.draw(new Card("Diamonds", 14));
-            userPlayer1.draw(new Card("Spades", 14));
+            //deal cards
+            for (Player e : playersList) {
+            e.draw(deck1.dealCard());
+            e.draw(deck1.dealCard());
+            }
+
+            // userPlayer.draw(new Card("Clubs", 9)); // Tom
+            // userPlayer.draw(new Card("Hearts", 5));
+            // userPlayer2.draw(new Card("Clubs", 14));
+            // userPlayer2.draw(new Card("Hearts", 14));
+            // userPlayer1.draw(new Card("Diamonds", 14));
+            // userPlayer1.draw(new Card("Spades", 14));
 
             // 1st Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
