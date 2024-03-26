@@ -79,7 +79,7 @@ public class PlayerBot extends Player {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
-                    if (o.getBalance() + increaseBetTO - o.getBet() < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                    if (o.getBalance() - (increaseBetTO - o.getBet()) < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
                     System.out.println("increaseBetTO: " + increaseBetTO);
@@ -132,7 +132,7 @@ public class PlayerBot extends Player {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
-                    if (o.getBalance() + increaseBetTO - o.getBet() < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                    if (o.getBalance() - (increaseBetTO - o.getBet()) < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
                     System.out.println("increaseBetTO: " + increaseBetTO);
