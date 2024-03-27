@@ -11,274 +11,274 @@ public class Game {
     public Game() {
     }
 
-    public static void main(String[] args) {
-        ArrayList<Player> playersList = new ArrayList<Player>();
+    // public static void main(String[] args) {
+    //     ArrayList<Player> playersList = new ArrayList<Player>();
 
-        int numberOfPlayers = 0;
+    //     int numberOfPlayers = 0;
 
-        // Scanner playerNumbers = new Scanner(System.in);
-        // Keeps prompting for number of players to start game
-        // while (true) {
-        //     try {
-        //         if (playerNumbers.hasNextInt()) {
-        //             numberOfPlayers = playerNumbers.nextInt();
-        //             if (numberOfPlayers < 0) {
-        //                 throw new InputMismatchException("");
-        //             }
-        //         }
-        //         System.out.print("Enter number of bots> ");
-        //         numberOfPlayers = playerNumbers.nextInt();
-        //         break;
-        //     } catch (InputMismatchException ime) {
-        //         System.out.println("Please enter a valid number");
-        //     } finally {
-        //         playerNumbers.nextLine();
-        //     }
-        // }
+    //     // Scanner playerNumbers = new Scanner(System.in);
+    //     // Keeps prompting for number of players to start game
+    //     // while (true) {
+    //     //     try {
+    //     //         if (playerNumbers.hasNextInt()) {
+    //     //             numberOfPlayers = playerNumbers.nextInt();
+    //     //             if (numberOfPlayers < 0) {
+    //     //                 throw new InputMismatchException("");
+    //     //             }
+    //     //         }
+    //     //         System.out.print("Enter number of bots> ");
+    //     //         numberOfPlayers = playerNumbers.nextInt();
+    //     //         break;
+    //     //     } catch (InputMismatchException ime) {
+    //     //         System.out.println("Please enter a valid number");
+    //     //     } finally {
+    //     //         playerNumbers.nextLine();
+    //     //     }
+    //     // }
 
-        // while (true) {
-        //     try {
-        //         Scanner sc = new Scanner(System.in);
-        //         if (sc.hasNextInt()) {
-        //             inputBet = sc.nextInt();
-        //             if (inputBet > p.getBalance()) {
-        //                 throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
-        //             }
-        //             return inputBet;
-        //         } else {
-        //             throw new InputMismatchException("Invalid input");
-        //         }
-        //     } catch (InputMismatchException e) {
-        //         System.out.print(e.getMessage());
-        //     }
-        // }
-        // playerNumbers.close();
+    //     // while (true) {
+    //     //     try {
+    //     //         Scanner sc = new Scanner(System.in);
+    //     //         if (sc.hasNextInt()) {
+    //     //             inputBet = sc.nextInt();
+    //     //             if (inputBet > p.getBalance()) {
+    //     //                 throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
+    //     //             }
+    //     //             return inputBet;
+    //     //         } else {
+    //     //             throw new InputMismatchException("Invalid input");
+    //     //         }
+    //     //     } catch (InputMismatchException e) {
+    //     //         System.out.print(e.getMessage());
+    //     //     }
+    //     // }
+    //     // playerNumbers.close();
 
-        // Initialise a player that user controls and add into list of players
-        Player userPlayer = new Player("Tom", "Player");
-        playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Nic", "Bot", 10);
-        playersList.add(userPlayer1);
-        Player userPlayer2 = new PlayerBot("Ken", "Bot", 70);
-        playersList.add(userPlayer2);
+    //     // Initialise a player that user controls and add into list of players
+    //     Player userPlayer = new Player("Tom", "Player");
+    //     playersList.add(userPlayer);
+    //     Player userPlayer1 = new PlayerBot("Nic", "Bot", 10);
+    //     playersList.add(userPlayer1);
+    //     Player userPlayer2 = new PlayerBot("Ken", "Bot", 70);
+    //     playersList.add(userPlayer2);
 
-        int originalBalance = userPlayer.getBalance();
-        Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
+    //     int originalBalance = userPlayer.getBalance();
+    //     Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
 
-        // Initialise number of bots and add them into list of players
-        // for (int i = 0; i < 3; i++) {
-        // playersList.add(new PlayerBot("Bot", "Bot"));
-        // }
+    //     // Initialise number of bots and add them into list of players
+    //     // for (int i = 0; i < 3; i++) {
+    //     // playersList.add(new PlayerBot("Bot", "Bot"));
+    //     // }
 
-        boolean gameContinue = true;
+    //     boolean gameContinue = true;
 
-        // startingScreen();
-        int gameCounter = 1;
-        int bigBlind = 10;
-        int smallBlind = 5;
-        userPlayer.setBigBlind(true);
+    //     // startingScreen();
+    //     int gameCounter = 1;
+    //     int bigBlind = 10;
+    //     int smallBlind = 5;
+    //     userPlayer.setBigBlind(true);
 
-        while (gameContinue) {
-            int numTimesBet = 0;
-            boolean afterRound1 = false;
-            System.out.println("Game " + gameCounter++ + "!");
+    //     while (gameContinue) {
+    //         int numTimesBet = 0;
+    //         boolean afterRound1 = false;
+    //         System.out.println("Game " + gameCounter++ + "!");
 
-            Table table1 = new Table();
-            Deck deck1 = new Deck();
+    //         Table table1 = new Table();
+    //         Deck deck1 = new Deck();
 
-            Game game = new Game();
+    //         Game game = new Game();
 
-            // Shuffle Deck
-            Collections.shuffle(deck1.getCards());
+    //         // Shuffle Deck
+    //         Collections.shuffle(deck1.getCards());
 
-            // Cut Deck
-            // Scanner getCutNum = new Scanner (System.in);
-            // deck1.cutDeck();
+    //         // Cut Deck
+    //         // Scanner getCutNum = new Scanner (System.in);
+    //         // deck1.cutDeck();
 
-            // deal cards
-            // for (Player e : playersList) {
-            // e.draw(deck1.dealCard());
-            // e.draw(deck1.dealCard());
-            // }
-            userPlayer.draw(new Card("Clubs", 9)); // Tom
-            userPlayer.draw(new Card("Hearts", 5));
-            userPlayer2.draw(new Card("Clubs", 14));
-            userPlayer2.draw(new Card("Hearts", 14));
-            userPlayer1.draw(new Card("Diamonds", 14));
-            userPlayer1.draw(new Card("Spades", 14));
+    //         // deal cards
+    //         // for (Player e : playersList) {
+    //         // e.draw(deck1.dealCard());
+    //         // e.draw(deck1.dealCard());
+    //         // }
+    //         userPlayer.draw(new Card("Clubs", 9)); // Tom
+    //         userPlayer.draw(new Card("Hearts", 5));
+    //         userPlayer2.draw(new Card("Clubs", 14));
+    //         userPlayer2.draw(new Card("Hearts", 14));
+    //         userPlayer1.draw(new Card("Diamonds", 14));
+    //         userPlayer1.draw(new Card("Spades", 14));
 
-            // 1st Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                resetRound(playersList, table1); // Resets player and table attributes
+    //         // 1st Betting Round
+    //         bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+    //         if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
+    //             resetRound(playersList, table1); // Resets player and table attributes
 
-                if (isWinLose(playersList)) { // If you win all or lost all, game ends.
-                    gameContinue = false;
-                    break;
-                }
+    //             if (isWinLose(playersList)) { // If you win all or lost all, game ends.
+    //                 gameContinue = false;
+    //                 break;
+    //             }
 
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
-                    moveBlind(turnOrder);
-                    continue;
-                }
+    //             Scanner scRoundEndallin = new Scanner(System.in);
+    //             System.out.println("Start new round?(Y / N)> ");
+    //             String newRound = scRoundEndallin.nextLine();
+    //             if (newRound.equals("N") || newRound.equals("n")) {
+    //                 gameContinue = false;
+    //                 scRoundEndallin.close();
+    //             } else if (newRound.equals("Y") || newRound.equals("y")) {
+    //                 // Reset everything
+    //                 moveBlind(turnOrder);
+    //                 continue;
+    //             }
 
-                continue;
-            }
-            afterRound1 = true;
+    //             continue;
+    //         }
+    //         afterRound1 = true;
 
-            // Deal Flop (3 cards)
-            for (int i = 0; i < 3; i++) {
-                deck1.burnCard();
-                table1.drawComm(deck1.dealCard());
-            }
-            Card.printCard(table1.getCommCards());
+    //         // Deal Flop (3 cards)
+    //         for (int i = 0; i < 3; i++) {
+    //             deck1.burnCard();
+    //             table1.drawComm(deck1.dealCard());
+    //         }
+    //         Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
+    //         // userPlayer.setChecked(false);
+    //         // userPlayer1.setChecked(false);
+    //         // userPlayer2.setChecked(false);
+    //         // userPlayer.setBet(0);
+    //         // table1.setCurrentBet(0);
 
-            // 2nd Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                resetRound(playersList, table1);
+    //         // 2nd Betting Round
+    //         bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+    //         if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
+    //             resetRound(playersList, table1);
 
-                if (isWinLose(playersList)) {
-                    gameContinue = false;
-                    break;
-                }
+    //             if (isWinLose(playersList)) {
+    //                 gameContinue = false;
+    //                 break;
+    //             }
 
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    moveBlind(turnOrder);
-                    continue;
-                }
+    //             Scanner scRoundEndallin = new Scanner(System.in);
+    //             System.out.println("Start new round?(Y / N)> ");
+    //             String newRound = scRoundEndallin.nextLine();
+    //             if (newRound.equals("N") || newRound.equals("n")) {
+    //                 gameContinue = false;
+    //                 scRoundEndallin.close();
+    //             } else if (newRound.equals("Y") || newRound.equals("y")) {
+    //                 moveBlind(turnOrder);
+    //                 continue;
+    //             }
 
-                continue;
-            }
+    //             continue;
+    //         }
 
-            // Deal Turn
-            deck1.burnCard();
-            table1.drawComm(deck1.dealCard());
-            Card.printCard(table1.getCommCards());
+    //         // Deal Turn
+    //         deck1.burnCard();
+    //         table1.drawComm(deck1.dealCard());
+    //         Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
+    //         // userPlayer.setChecked(false);
+    //         // userPlayer1.setChecked(false);
+    //         // userPlayer2.setChecked(false);
+    //         // userPlayer.setBet(0);
+    //         // table1.setCurrentBet(0);
 
-            // 3rd Betting Round------------------------------
-            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                resetRound(playersList, table1);
+    //         // 3rd Betting Round------------------------------
+    //         bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+    //         if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
+    //             resetRound(playersList, table1);
 
-                if (isWinLose(playersList)) {
-                    gameContinue = false;
-                    break;
-                }
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    moveBlind(turnOrder);
-                    continue;
-                }
+    //             if (isWinLose(playersList)) {
+    //                 gameContinue = false;
+    //                 break;
+    //             }
+    //             Scanner scRoundEndallin = new Scanner(System.in);
+    //             System.out.println("Start new round?(Y / N)> ");
+    //             String newRound = scRoundEndallin.nextLine();
+    //             if (newRound.equals("N") || newRound.equals("n")) {
+    //                 gameContinue = false;
+    //                 scRoundEndallin.close();
+    //             } else if (newRound.equals("Y") || newRound.equals("y")) {
+    //                 moveBlind(turnOrder);
+    //                 continue;
+    //             }
 
-                continue;
-            }
+    //             continue;
+    //         }
 
-            // Deal River
-            deck1.burnCard();
-            table1.drawComm(deck1.dealCard());
-            Card.printCard(table1.getCommCards());
+    //         // Deal River
+    //         deck1.burnCard();
+    //         table1.drawComm(deck1.dealCard());
+    //         Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
+    //         // userPlayer.setChecked(false);
+    //         // userPlayer1.setChecked(false);
+    //         // userPlayer2.setChecked(false);
+    //         // userPlayer.setBet(0);
+    //         // table1.setCurrentBet(0);
 
-            // Last Betting Round
-            bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                resetRound(playersList, table1);
+    //         // Last Betting Round
+    //         bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+    //         if (timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
+    //             resetRound(playersList, table1);
 
-                if (isWinLose(playersList)) {
-                    gameContinue = false;
-                    break;
-                }
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    moveBlind(turnOrder);
-                    continue;
-                }
+    //             if (isWinLose(playersList)) {
+    //                 gameContinue = false;
+    //                 break;
+    //             }
+    //             Scanner scRoundEndallin = new Scanner(System.in);
+    //             System.out.println("Start new round?(Y / N)> ");
+    //             String newRound = scRoundEndallin.nextLine();
+    //             if (newRound.equals("N") || newRound.equals("n")) {
+    //                 gameContinue = false;
+    //                 scRoundEndallin.close();
+    //             } else if (newRound.equals("Y") || newRound.equals("y")) {
+    //                 moveBlind(turnOrder);
+    //                 continue;
+    //             }
 
-                continue;
-            }
+    //             continue;
+    //         }
 
-            // for second game
-            System.out.println(table1.getPot());
+    //         // for second game
+    //         System.out.println(table1.getPot());
 
-            getWinner(playersList, table1);
+    //         getWinner(playersList, table1);
 
-            System.out.println("Round over");
+    //         System.out.println("Round over");
 
-            if (isWinLose(playersList)) {
-                gameContinue = false;
-                break;
-            }
-            Scanner scRoundEndallin = new Scanner(System.in);
-            System.out.println("Start new round?(Y / N)> ");
-            String newRound = scRoundEndallin.nextLine();
-            if (newRound.equals("N") || newRound.equals("n")) {
-                gameContinue = false;
-                scRoundEndallin.close();
-            } else if (newRound.equals("Y") || newRound.equals("y")) {
-                resetRound(playersList, table1);
-                moveBlind(turnOrder); // moves big blind small blind, moves order of players
-                continue;
-            }
+    //         if (isWinLose(playersList)) {
+    //             gameContinue = false;
+    //             break;
+    //         }
+    //         Scanner scRoundEndallin = new Scanner(System.in);
+    //         System.out.println("Start new round?(Y / N)> ");
+    //         String newRound = scRoundEndallin.nextLine();
+    //         if (newRound.equals("N") || newRound.equals("n")) {
+    //             gameContinue = false;
+    //             scRoundEndallin.close();
+    //         } else if (newRound.equals("Y") || newRound.equals("y")) {
+    //             resetRound(playersList, table1);
+    //             moveBlind(turnOrder); // moves big blind small blind, moves order of players
+    //             continue;
+    //         }
 
-            continue;
-        }
-        System.out.println("Thanks for playing Texas Hold'em!");
-        System.out.println("See you next time!");
-        if (originalBalance > userPlayer.getBalance() && userPlayer.getBalance() != 0) {
-            System.out.println("You lost $" + (originalBalance - userPlayer.getBalance()));
-            System.out.println("Better luck next time!");
-        } else if (userPlayer.getBalance() == originalBalance * playersList.size()) {
-            System.out.println("You won everything!");
-        } else if (userPlayer.getBalance() == 0) {
-            System.out.println("You lost everything!");
-        } else if (userPlayer.getBalance() == 300) {
-            System.out.println("Damn, you didn't win anything? Congrats on wasting your time!");
-        } else /* if (originalBalance < userPlayer.getBalance()) */ {
-            System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
-        }
+    //         continue;
+    //     }
+    //     System.out.println("Thanks for playing Texas Hold'em!");
+    //     System.out.println("See you next time!");
+    //     if (originalBalance > userPlayer.getBalance() && userPlayer.getBalance() != 0) {
+    //         System.out.println("You lost $" + (originalBalance - userPlayer.getBalance()));
+    //         System.out.println("Better luck next time!");
+    //     } else if (userPlayer.getBalance() == originalBalance * playersList.size()) {
+    //         System.out.println("You won everything!");
+    //     } else if (userPlayer.getBalance() == 0) {
+    //         System.out.println("You lost everything!");
+    //     } else if (userPlayer.getBalance() == 300) {
+    //         System.out.println("Damn, you didn't win anything? Congrats on wasting your time!");
+    //     } else /* if (originalBalance < userPlayer.getBalance()) */ {
+    //         System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
+    //     }
 
-    }
+    // }
 
     public static void getWinner(ArrayList<Player> playersList, Table table1) {
         Map<Player, Integer> winner = new HashMap<>();
@@ -427,161 +427,134 @@ public class Game {
                     // If Big Blind
                     if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
                         System.out.println("Pot: Big Blind! That's $10 thanks");
-                        System.out.println("Check / Bet / Fold");
-                        System.out.print("Action> ");
 
-                        action = getInput();
-                        o.setBlinded(true);
+                        while (true) {
+                            try {
+                                System.out.println("Check / Bet / Fold");
+                                System.out.print("Action> ");
+                                action = getInput();
+                                if (action.equals("call") || action.equals("raise")) {
+                                    throw new InputMismatchException("You cannot " + action + "!");
+                                }
+                                o.setBlinded(true);
+                                break;
+                            } catch (InputMismatchException e) {
+                                // TODO: handle exception
+                                System.out.println(e.getMessage());
+                            }
+                        }
 
                     // If Small Blind
                     } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
                         System.out.println("Pot: Small Blind! That's $5 thanks");
-                        if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
-                            System.out.println("Call / Raise / Fold");
-                        } else { // No one raised yet
-                            System.out.println("Check / Bet / Fold");
+                        while (true) {
+                            try {
+                                if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
+                                    if (table1.getCurrentBetAmt() == 10) {
+                                        System.out.println("Call / Bet / Fold");
+                                        System.out.print("Action> ");
+                                        action = getInput();
+                                        if (action.equals("check") || action.equals("raise")) {
+                                            throw new InputMismatchException("You cannot " + action + "!");
+                                        }
+                                    } else {
+                                        System.out.println("Call / Raise / Fold");
+                                        System.out.print("Action> ");
+                                        action = getInput();
+                                        if (action.equals("check") || action.equals("bet")) {
+                                            throw new InputMismatchException("You cannot " + action + "!");
+                                        }
+                                    }
+                                    
+                                } else { // No one raised yet
+                                    System.out.println("Check / Bet / Fold");
+                                    System.out.print("Action> ");
+                                    action = getInput();
+                                    if (action.equals("call") || action.equals("raise")) {
+                                        throw new InputMismatchException("You cannot " + action + "!");
+                                    }
+                                }
+                                o.setBlinded(true);
+                                break;
+                            } catch (InputMismatchException e) {
+                                // TODO: handle exception
+                                System.out.println(e.getMessage());
+                            }
                         }
-                        System.out.print("Action> ");
-
-                        action = getInput();
-                        o.setBlinded(true);
-
                     // Normal betting round
                     } else {
 
                         // If broke
                         if (o.getBalance() == 0) {
-                            System.out.println("Check /       / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
+                            // System.out.println("Check /       / Fold");
+                            // System.out.print("Action> ");
+                            // action = getInput();
+                            while (true) {
+                                try {
+                                    System.out.println("Check /       / Fold");
+                                    System.out.print("Action> ");
+                                    action = getInput();
+                                    if (action.equals("call") || action.equals("raise") || action.equals("bet")) {
+                                        throw new InputMismatchException("You cannot " + action + "!");
+                                    }
+                                    break;
+                                } catch (InputMismatchException e) {
+                                    // TODO: handle exception
+                                    System.out.println(e.getMessage());
+
+                                }
+                            }
 
                         // If not broke
                         } else {
-                            // Someone raised
-                            if (o.getBet() < table1.getCurrentBetAmt()) {
+                            while (true) {
+                                try {
+                                    // Someone raised
+                                    if (o.getBet() < table1.getCurrentBetAmt()) {
 
-                                // Not enough to raise beyond
-                                if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
-                                    System.out.println("Call (All in) /       / Fold");
-                                    System.out.print("Action> ");
-                                    action = getInput();
+                                        // Not enough to raise beyond
+                                        if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                                            System.out.println("Call (All in) /       / Fold");
+                                            System.out.print("Action> ");
+                                            action = getInput();
 
-                                // Enough to call OR raise beyond
-                                } else {
-                                    System.out.println("Call / Raise / Fold");
-                                    System.out.print("Action> ");
-                                    action = getInput();
+                                            if (action.equals("check") || action.equals("raise") || action.equals("bet")) {
+                                                throw new InputMismatchException("You cannot " + action + "!");
+                                            }
+                                            break;
+        
+                                        // Enough to call OR raise beyond
+                                        } else {
+                                            System.out.println("Call / Raise / Fold");
+                                            System.out.print("Action> ");
+                                            action = getInput();
+
+                                            if (action.equals("check") ||  action.equals("bet")) {
+                                                throw new InputMismatchException("You cannot " + action + "!");
+                                            }
+                                            break;
+                                        }
+        
+                                    // No one raised
+                                    } else {
+                                        System.out.println("Check / Bet / Fold");
+                                        System.out.print("Action> ");
+                                        action = getInput();
+
+                                        if (action.equals("call") || action.equals("raise")) {
+                                            throw new InputMismatchException("You cannot " + action + "!");
+                                        }
+                                        break;
+                                    }
+                                } catch (InputMismatchException e) {
+                                    // TODO: handle exception
+                                    System.out.println(e.getMessage());
                                 }
-
-                            // No one raised
-                            } else {
-                                System.out.println("Check / Bet / Fold");
-                                System.out.print("Action> ");
-                                action = getInput();
                             }
+                            
+                            
                         }
                     }
-
-                    // if (o.getBet() < table1.getCurrentBetAmt()) {
-                    //     if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
-                    //         System.out.println("Call (All in) /       / Fold");
-                    //         System.out.print("Action> ");
-                    //         action = getInput();
-                    //     } else {
-                    //         System.out.println("Call / Raise / Fold");
-                    //         System.out.print("Action> ");
-                    //         action = getInput();
-                    //     }
-                    // } else if (o.getBalance() == 0) {
-                    //     System.out.println("Check /       / Fold");
-                    //     System.out.print("Action> ");
-                    //     action = getInput();
-                    // } else if (!afterRound1 && o.getBigBlind() && !o.getBlinded()) {
-                    //     System.out.println("Pot: Big Blind! That's $10 thanks");
-                    //     System.out.println("Check / Bet / Fold");
-
-                    //     System.out.print("Action> ");
-                    //     action = getInput();
-                    //     o.setBlinded(true);
-                    // } else if (!afterRound1 && o.getSmallBlind() && !o.getBlinded()) {
-                    //     System.out.println("Pot: Small Blind! That's $5 thanks");
-                    //     if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
-                    //         System.out.println("Call / Raise / Fold");
-                    //     } else { // No one raised yet
-                    //         System.out.println("Check / Bet / Fold");
-                    //     }
-                    //     System.out.print("Action> ");
-                    //     action = getInput();
-                    //     o.setBlinded(true);
-                    // } else { // o.getBet() == table1.getCurrentBetAmt()
-                    //     System.out.println("Check / Bet / Fold");
-                    //     System.out.print("Action> ");
-                    //     action = getInput();
-                    // }
-                    
-                    if (!afterRound1) {
-                        // If user raise when can only bet
-                        if (action.equals("raise") && table1.getCurrentBetAmt() == 10) {
-                            System.out.println("You cannot raise!");
-                            System.out.println();
-                            System.out.println("Check / Bet / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                    } else {
-                        // If user accidentally check when must call
-                        if (action.equals("check") && o.getBet() < table1.getCurrentBetAmt()){ 
-                            System.out.println("You cannot check!");
-                            System.out.println();
-                            System.out.println("Call / Raise / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        // If user can only raise
-                        if (action.equals("bet") && table1.getCurrentBetAmt() > 0 /*&& previousAction != null*/){
-                            System.out.println("You cannot bet!");
-                            System.out.println();
-                            System.out.println("Call / Raise / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        // If user raise when can only bet
-                        if (action.equals("raise") && table1.getCurrentBetAmt() == 0) {
-                            System.out.println("You cannot raise!");
-                            System.out.println();
-                            System.out.println("Check / Bet / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        // If user accidentally call when must check
-                        if (action.equals("call") && o.getBet() == table1.getCurrentBetAmt()) { 
-                            System.out.println("You cannot call!");
-                            System.out.println();
-                            System.out.println("Check / Bet / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        
-                        // If user try to bet or raise, but insufficient to increase the table bet
-                        if ((action.equals("raise") || action.equals("bet")) && o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
-                            System.out.println("You cannot " + action + "!");
-                            System.out.println();
-                            System.out.println("Call (All in) /       / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                        // If user try to bet or raise when broke
-                        if ((action.equals("raise") || action.equals("bet")) && o.getBalance() == 0) { 
-                            System.out.println("You cannot " + action + "!");
-                            System.out.println();
-                            System.out.println("Check /       / Fold");
-                            System.out.print("Action> ");
-                            action = getInput();
-                        }
-                    }
-                    
-                    
-                    
 
                     if (action.equals("check")) { // Can only check if bet matches table bet
                         o.setChecked(true);
@@ -702,7 +675,7 @@ public class Game {
                                         +"thing left and my bet is $"+o.getBet());
                             } else {
                                 System.out.println(o.getName() + ": Call");
-                                System.out.println(o.getName() + ": My bet increases TO $" + o.getBet() + " cause I increased BY"+ callAmt);
+                                System.out.println(o.getName() + ": My bet increases TO $" + o.getBet() + " cause I called, increasing BY $"+ callAmt);
                             }
                             
                             System.out.println(o.getName() + ": The table's pot is now $" + table1.getPot() + " after I added $" + callAmt);
@@ -954,12 +927,29 @@ public class Game {
             }
             
             Card.printCard(table1.getCommCards());
+            ArrayList<Card> showDownCards = new ArrayList<Card>();
             for (Player h : playersList) {
                 if (h.getIsPlaying()) {
-                    System.out.println(h.getName());
-                    Card.printCard(h.getHand());
+                    switch (h.getName().length()) {
+                        case 6:
+                            System.out.print(" " + h.getName()+ "                   ");
+                            break;
+                        case 5:
+                            System.out.print(" " + h.getName()+ "                    ");
+                            break;
+                        case 4:
+                            System.out.print(" " + h.getName()+ "                     ");
+                            break;
+                        default:
+                            System.out.print(" " + h.getName()+ "                      ");
+                            break;
+                    }
+                    showDownCards.addAll(h.getHand());
+
                 }
             }
+            System.out.println();
+            Card.printCard(showDownCards);
             getWinner(playersList, table1);
 
             System.out.println("Round over");

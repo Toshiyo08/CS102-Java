@@ -118,17 +118,17 @@ public class mainGame {
             // deck1.cutDeck();
 
             //deal cards
-            for (Player e : playersList) {
-            e.draw(deck1.dealCard());
-            e.draw(deck1.dealCard());
-            }
+            // for (Player e : playersList) {
+            // e.draw(deck1.dealCard());
+            // e.draw(deck1.dealCard());
+            // }
 
-            // userPlayer.draw(new Card("Clubs", 9)); // Tom
-            // userPlayer.draw(new Card("Hearts", 5));
-            // userPlayer2.draw(new Card("Clubs", 14));
-            // userPlayer2.draw(new Card("Hearts", 14));
-            // userPlayer1.draw(new Card("Diamonds", 14));
-            // userPlayer1.draw(new Card("Spades", 14));
+            userPlayer.draw(new Card("Clubs", 3)); // Tom
+            userPlayer.draw(new Card("Hearts", 11));
+            userPlayer2.draw(new Card("Clubs", 12));
+            userPlayer2.draw(new Card("Hearts", 14));
+            userPlayer1.draw(new Card("Diamonds", 2));
+            userPlayer1.draw(new Card("Spades", 3));
 
             // 1st Betting Round
             Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -166,7 +166,9 @@ public class mainGame {
             //     table1.drawComm(deck1.dealCard());
             // }
             table1.drawComm(new Card("Diamonds", 9));
-            table1.drawComm(new Card("Diamonds", 8));
+            table1.drawComm(new Card("Spades", 8));
+            table1.drawComm(new Card("Clubs", 9));
+            table1.drawComm(new Card("Hearts", 8));
             table1.drawComm(new Card("Spades", 14));
             Card.printCard(table1.getCommCards());
 
@@ -200,7 +202,7 @@ public class mainGame {
 
             // Deal Turn
             deck1.burnCard();
-            table1.drawComm(deck1.dealCard());
+            // table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
 
             // 3rd Betting Round
@@ -232,7 +234,7 @@ public class mainGame {
 
             // Deal River
             deck1.burnCard();
-            table1.drawComm(deck1.dealCard());
+            // table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
 
             // Last Betting Round
