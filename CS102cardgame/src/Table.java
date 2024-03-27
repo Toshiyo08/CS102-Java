@@ -18,11 +18,11 @@ public class Table {
         return commCards;
     }
     
-    public void setCurrentBet (int raisedValue) {
+    public void setCurrentBetAmt (int raisedValue) {
         this.currentBetAmt = raisedValue;
     }
 
-    public void raiseCurrentBet (int raisedAmt) {
+    public void raiseCurrentBetAmt (int raisedAmt) {
         this.currentBetAmt += raisedAmt;
     }
 

@@ -16,13 +16,11 @@ public class ConsoleInputHandler implements InputHandler {
                 String inputCommand = sc.nextLine();
                 inputCommand = inputCommand.trim().toLowerCase();
                 // inputCommand = inputCommand.replaceAll("\\s", "");
-                if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")) {
+                if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")  
+                || inputCommand.equals("bet")|| inputCommand.equals("raise")){
                     return inputCommand;
-                } else if (inputCommand.contains("bet")) {
-                    return inputCommand;
-                } else if (inputCommand.contains("raise")) {
-                    return inputCommand;
-                } else {
+                } 
+                else {
                     throw new InputMismatchException("Invalid input");
                 }
             } catch (InputMismatchException e) {
@@ -51,4 +49,30 @@ public class ConsoleInputHandler implements InputHandler {
             }
         }
     }
+
+    public static int getNumBot() {
+        int numberOfPlayers = 0;
+        while (true) {
+            try {
+                System.out.print("Please enter the number of desired bots> ");
+                Scanner playerNumbers = new Scanner(System.in);
+                if (playerNumbers.hasNextInt()) {
+                    numberOfPlayers = playerNumbers.nextInt();
+                    if (numberOfPlayers <= 0) {
+                        throw new InputMismatchException("There must be at least 1 bot!");
+                    }
+                    if (numberOfPlayers >= 10) {
+                        throw new InputMismatchException("Too many! You can have at most 9 bots");
+                    }
+                    return numberOfPlayers;
+                } else {
+                    throw new InputMismatchException("Invalid input");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
 }

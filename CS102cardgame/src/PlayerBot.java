@@ -6,33 +6,32 @@ public class PlayerBot extends Player {
     /** Tightness (0 = loose, 100 = tight). */
     private int tightness;
 
-    private int minBet;
-
-    // /** Betting aggression (0 = safe, 100 = aggressive). */
-    //private int aggression;
-
     public PlayerBot(String name, String type, int tightness) {
         super(name, type);
         this.tightness = tightness;
-        //this.aggression = aggression;
     }
 
     public int getTightness(){
         return tightness;
     }
 
-    public static int getBotAction(Player o, String previousAction, Boolean afterBet1, Table table1) {
+    public static int getBotAction(Player o, String previousAction, boolean afterBet1, Table table1) {
         // botThinking(o.getName()); // AESTHETICS
-        int handValue = Hand2.getHandValue(o.getHand(), table1.getCommCards());
-        double chenScore = calculateChenScore(o.getHand());
+        ArrayList<Card> hand = o.getHand();
+        ArrayList<Card> commCards = table1.getCommCards();
+
+        int handValue = HandEval.getHandValue(hand, commCards);
+        double chenScore = calculateChenScore(hand);
+
         PlayerBot pb = (PlayerBot) o;
-        double chenScoreToPlay = pb.getTightness()  / 5.0;
         int botTightness = pb.getTightness();
+        double chenScoreToPlay = botTightness / 5.0;
+        
 
         if (previousAction == null) {
             previousAction = "Check";
         }
-        int increaseBetTO = pb.getBotRaiseAmt(botTightness, handValue, o);
+        int increaseBetTo = getBotRaiseAmt(botTightness, handValue, o);
         
             // 2-14 HC
             // 18-42 pair
@@ -40,22 +39,23 @@ public class PlayerBot extends Player {
             // 7 - (14+7x2)
             // <7 bad 
             // >28 good
-            int callAmt = table1.getCurrentBetAmt() - pb.getBet();
+        int callAmt = table1.getCurrentBetAmt() - pb.getBet();
         if (afterBet1) {// fold if raise too high for given hand value
             if ((handValue) <= 28 && (handValue > 7)) { // ok hand
-                
+                //consider if bot need to call
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100 - pb.getTightness())/100) * o.getBalance()) {
+                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
                 }
-                if (increaseBetTO > table1.getCurrentBetAmt() && o.getBalance() != 0) { // Only cheeky bet if prospective bet does increase table bet
+                if (increaseBetTo > table1.getCurrentBetAmt() && o.getBalance() != 0) { 
+                    // risky bet by bot determined by tightness and randomness
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
-                    if (ranInt >= pb.getTightness()/10) {
-                        System.out.println("increaseBetTO: " + increaseBetTO);
-                        System.out.println("Cheeky bet");
+                    if (ranInt >= botTightness/10) {
+                        System.out.println("increaseBetTo: " + increaseBetTo);
+                        System.out.println("Risky bet");
                         return 2;
                     }
                 }
@@ -69,23 +69,20 @@ public class PlayerBot extends Player {
                 if (callAmt > 0.9 * o.getBalance()) {
                     return 3;
                 }
-                // if (increaseBetTO >= pb.getBalance()) { //all in
-                //     return 2;
-                // }
-                if (increaseBetTO == table1.getCurrentBetAmt()) {
+                if (increaseBetTo == table1.getCurrentBetAmt()) {
                     return 1; // Call if T.Bet = what I want to raise TO
                 }
-                if (increaseBetTO > table1.getCurrentBetAmt()) {
+                if (increaseBetTo > table1.getCurrentBetAmt()) {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
-                    if (o.getBalance() - (increaseBetTO - o.getBet()) < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                    if (o.getBalance() - (increaseBetTo - o.getBet()) < botTightness/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
-                    System.out.println("increaseBetTO: " + increaseBetTO);
+                    System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
                 }
-                if (increaseBetTO < table1.getCurrentBetAmt()) { // Can be combined with increaseBetTO == table1.getCurrentBetAmt()
+                if (increaseBetTo < table1.getCurrentBetAmt()) { // Can be combined with increaseBetTo == table1.getCurrentBetAmt()
                     return 1;
                 }
             } else { // badhand
@@ -93,12 +90,9 @@ public class PlayerBot extends Player {
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100 - pb.getTightness())/100) * o.getBalance()) {
+                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
                         return 3;
                     }
-                    // if (o.getBalance() - callAmt < (100 - pb.getTightness()) * o.getInitialBalance()) {
-                    //     return 3;
-                    // }
                     return 1;
                 }
             }
@@ -109,12 +103,9 @@ public class PlayerBot extends Player {
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100 - pb.getTightness())/100) * o.getBalance()) {
+                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
                         return 3;
                     }
-                    // if (o.getBalance() - callAmt < (100 - pb.getTightness()) * o.getInitialBalance()) {
-                    //     return 3;
-                    // }
                     return 1;
                 }
             } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0) { // Bot has good hadn enuf to bet
@@ -122,39 +113,36 @@ public class PlayerBot extends Player {
                 if (callAmt > 0.9 * o.getBalance()) {
                     return 3;
                 }
-                // if (increaseBetTO >= pb.getBalance()) { //all in
-                //     return 2;
-                // }
-                if (increaseBetTO == table1.getCurrentBetAmt()) {
+                if (increaseBetTo == table1.getCurrentBetAmt()) {
                     return 1; // Call if T.Bet = what I want to raise TO
                 }
-                if (increaseBetTO > table1.getCurrentBetAmt()) {
+                if (increaseBetTo > table1.getCurrentBetAmt()) {
                     if (o.getBalance() == 0) {
                         return 1;
                     }
-                    if (o.getBalance() - (increaseBetTO - o.getBet()) < pb.getTightness()/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
+                    if (o.getBalance() - (increaseBetTo - o.getBet()) < botTightness/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
-                    System.out.println("increaseBetTO: " + increaseBetTO);
+                    System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
                 }
-                if (increaseBetTO < table1.getCurrentBetAmt()) {
+                if (increaseBetTo < table1.getCurrentBetAmt()) {
                     return 1;
                 }
             } else { // Ok hand
                 
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100 - pb.getTightness())/100) * o.getBalance()) {
+                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
                 }
-                if (increaseBetTO > table1.getCurrentBetAmt() && o.getBalance() != 0) {
+                if (increaseBetTo > table1.getCurrentBetAmt() && o.getBalance() != 0) {
                     
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
-                    if (ranInt >= pb.getTightness()%10) {
-                        System.out.println("increaseBetTO: " + increaseBetTO);
+                    if (ranInt >= botTightness%10) {
+                        System.out.println("increaseBetTo: " + increaseBetTo);
                         System.out.println("Cheeky bet");
                         return 2;
                     }
@@ -310,77 +298,3 @@ public class PlayerBot extends Player {
     }
 
 }
-
-// public Action botAction (int currentBetAmt, int minBet, ArrayList<Card>
-// playerHand,
-// ArrayList<Action> availableActions){
-
-// Action action = null;
-// int bettingAmount = 0;
-// double chenScore = calculateChenScore(playerHand);
-// double chenScoreToPlay = tightness / 5.0;
-
-// if (chenScore < chenScoreToPlay){ // bad hand
-// if (!hasChecked){
-// action = Action.Check;
-// } else {
-// action = Action.Fold;
-// }
-// } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0){
-// //hand is good
-// if (aggression == 0){
-// if (availableActions.contains(Action.Call)){
-// action = Action.Call;
-// } else {
-// action = Action.Check;
-// }
-// } else if (aggression == 100){
-// bettingAmount = super.getChips();
-// if (availableActions.contains(Action.Bet)){
-// action = new BetAction(bettingAmount);
-// } else if (availableActions.contains(Action.Raise)){
-// action = new RaiseAction(bettingAmount);
-// } else if (availableActions.contains(Action.Call)){
-// action = Action.Call;
-// } else {
-// action = Action.Check;
-// }
-
-// } else {
-// bettingAmount = minBet;
-// int increments = aggression / 20;
-// for (int i = 1; i < increments; i++){
-// bettingAmount += minBet;
-// }
-// if (bettingAmount > super.getChips()){
-// bettingAmount = super.getChips();
-// }
-// if (bettingAmount > currentBetAmt) {
-// if (availableActions.contains(Action.Bet)) {
-// action = new BetAction(bettingAmount);
-// } else if (availableActions.contains(Action.Raise)){
-// action = new RaiseAction(bettingAmount);
-// } else if (availableActions.contains(Action.Call)){
-// action = Action.Call;
-// } else {
-// action = Action.Check;
-// }
-
-// } else {
-// if (availableActions.contains(Action.Call)){
-// action = Action.Call;
-// } else {
-// action = Action.Check;
-// }
-// }
-// }
-// } else { //if ok hand
-// if (availableActions.contains(Action.Call)){
-// action = Action.Call;
-// } else {
-// action = Action.Check;
-// }
-// }
-// return action;
-// }
-// }

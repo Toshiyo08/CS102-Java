@@ -1,19 +1,17 @@
 // package CS102cardgame.src;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player {
     private String type; // Player or Bot
     private String name;
-    private boolean isPlaying;
-    private boolean checked;
-    private boolean bigBlind;
-    private boolean smallBlind;
-    private boolean blinded;
+    private boolean isPlaying; //active Player or not
+    private boolean isChecked; //checked/called or not
+    private boolean isBigBlind;
+    private boolean isSmallBlind;
+    private boolean isBlindPaid;
     private int betAmt;
     private int balance;
-    private int finalScore = 0;
     private ArrayList<Card> hand; // 10jqka|23456789 10|11|12|13|14
     
     //what is type?
@@ -21,14 +19,12 @@ public class Player {
         this.name = name;
         this.type = type;
         this.isPlaying = true;
-        this.checked = false;
-        // this.status = true/false -> playing/folded
-        // this.check = true/false -> check/called already
+        this.isChecked = false;
         this.hand = new ArrayList<Card>();
         this.balance = 300;
         this.betAmt = 0;
-        this.bigBlind = false;
-        this.smallBlind = false;
+        this.isBigBlind = false;
+        this.isSmallBlind = false;
     }
 
     public String getName() {
@@ -39,12 +35,12 @@ public class Player {
         return this.type;
     }
 
-    public Boolean getChecked () {
-        return checked;
+    public boolean getIsChecked () {
+        return isChecked;
     }
 
-    public void setChecked(Boolean isCheck) {
-        this.checked = isCheck;
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 
     public Boolean getIsPlaying() {
@@ -72,10 +68,7 @@ public class Player {
         return this.balance;
     }
 
-    public void setBalance(int raised) {
-        this.balance -= raised;
-    }
-
+    //Increment balance by amount you win
     public void setEndBalance(int raised) {
         this.balance += raised;
     }
@@ -83,63 +76,34 @@ public class Player {
     public ArrayList<Card> getHand(){
         return (ArrayList<Card>) this.hand;
     }
-
-    public void setBigBlind (Boolean status) {
-        this.bigBlind = status;
+    
+    public void setIsBigBlind (boolean status) {
+        this.isBigBlind = status;
     }
     
-    public Boolean getBigBlind() {
-        return this.bigBlind;
-    }
-    public void setSmallgBlind (Boolean status) {
-        this.smallBlind = status;
-    }
-    
-    public Boolean getSmallBlind () {
-        return this.smallBlind;
+    public boolean getIsBigBlind() {
+        return this.isBigBlind;
     }
 
-    public void setBlinded(Boolean status) {
-        this.blinded = status;
+    public void setIsSmallBlind (boolean status) {
+        this.isSmallBlind = status;
+    }
+    
+    public boolean getIsSmallBlind () {
+        return this.isSmallBlind;
     }
 
-    public Boolean getBlinded() {
-        return this.blinded;
+    public void setIsBlindPaid(boolean status) {
+        this.isBlindPaid = status;
     }
-    
-    
-    
+
+    public boolean getIsBlindPaid() {
+        return this.isBlindPaid;
+    }
+
     // Misc Actions: Draw, Buy in
     public void draw(Card newCard) {
         this.hand.add(newCard);
-    }
-
-    // Game Actions: Fold, Call, Raise, Check
-    public void fold() {
-        this.hand = null;
-        //pplayerchips will still remain
-        //playerChips = 0;
-        this.isPlaying = false;
-    }
-
-    public void setCall(int calledAmt) {
-        this.betAmt = calledAmt;
-        this.balance -= calledAmt;
-    }
-
-    public void setRaise(int raisedAmt) {
-        this.betAmt = raisedAmt;
-        this.balance -= raisedAmt;
-    }
-
-    public void setFinalScore(int finalScore){
-        this.finalScore = finalScore;
-    }
-
-    public int getFinalScore(){
-        return finalScore;
-    }
-
-   
+    }   
 
 }

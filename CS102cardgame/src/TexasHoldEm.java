@@ -35,20 +35,15 @@ public class TexasHoldEm {
         int originalBalance = userPlayer.getBalance();
 
         // keep track of player's turn
-        Player[] turnOrder = { userPlayer, userPlayer1, userPlayer2 };
-
-        // Initialise number of bots and add them into list of players
-        // for (int i = 0; i < 3; i++) {
-        // playersList.add(new PlayerBot("Bot", "Bot"));
-        // }
-
+        Player[] turnOrder = new Player[playersList.size()];
+        for (int i = 0; i < playersList.size(); i++) {
+            turnOrder[i] = playersList.get(i);
+        }
+        turnOrder[0].setIsBigBlind(true);
+        turnOrder[1].setIsSmallBlind(true);
         boolean gameContinue = true;
 
-        // startingScreen();
         int gameCounter = 1;
-
-        // user becomes the big blind first
-        userPlayer.setBigBlind(true);
 
         while (gameContinue) {
             int numTimesBet = 0;
@@ -63,25 +58,39 @@ public class TexasHoldEm {
             // Shuffle Deck
             Collections.shuffle(deck1.getCards());
 
-            // Cut Deck
-            // Scanner getCutNum = new Scanner (System.in);
-            // deck1.cutDeck();
-
-            // deal cards
-            // for (Player e : playersList) {
-            // e.draw(deck1.dealCard());
-            // e.draw(deck1.dealCard());
-            // }
-            userPlayer.draw(new Card("Clubs", 9)); // Tom
-            userPlayer.draw(new Card("Hearts", 5));
-            userPlayer2.draw(new Card("Clubs", 14));
-            userPlayer2.draw(new Card("Hearts", 14));
-            userPlayer1.draw(new Card("Clubs", 14));
-            userPlayer1.draw(new Card("Hearts", 14));
+            for (Player e : playersList) {
+                e.draw(deck1.dealCard());
+                e.draw(deck1.dealCard());
+            }
 
             // 1st Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-           
+            table1.setCurrentBetAmt(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
+            if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
+                Game.resetRound(playersList, table1); // Resets player and table attributes
+
+                if (Winner.isWinLose(playersList)) { // If you win all or lost all, game ends.
+                    gameContinue = false;
+                    break;
+                }
+
+                Scanner scRoundEndallin = new Scanner(System.in);
+                System.out.println("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("N") || newRound.equals("n")) {
+                    gameContinue = false;
+                    scRoundEndallin.close();
+                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                    // Reset everything
+                    Game.moveBlind(turnOrder);
+                    continue;
+                }
+
+                continue;
+            }
             afterRound1 = true;
 
             // Deal Flop (3 cards)
@@ -91,18 +100,16 @@ public class TexasHoldEm {
             }
             Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
-
             // 2nd Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBetAmt(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
-                if (Game.isWinLose(playersList)) {
+                if (Winner.isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
@@ -126,18 +133,16 @@ public class TexasHoldEm {
             table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
-
             // 3rd Betting Round------------------------------
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBetAmt(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
-                if (Game.isWinLose(playersList)) {
+                if (Winner.isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
@@ -160,18 +165,16 @@ public class TexasHoldEm {
             table1.drawComm(deck1.dealCard());
             Card.printCard(table1.getCommCards());
 
-            // userPlayer.setChecked(false);
-            // userPlayer1.setChecked(false);
-            // userPlayer2.setChecked(false);
-            // userPlayer.setBet(0);
-            // table1.setCurrentBet(0);
-
             // Last Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            table1.setCurrentBetAmt(0);
+            for (Player t : playersList) {
+                t.setBet(0);
+            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
-                if (Game.isWinLose(playersList)) {
+                if (Winner.isWinLose(playersList)) {
                     gameContinue = false;
                     break;
                 }
@@ -196,7 +199,7 @@ public class TexasHoldEm {
 
             System.out.println("Round over");
 
-            if (Game.isWinLose(playersList)) {
+            if (Winner.isWinLose(playersList)) {
                 gameContinue = false;
                 break;
             }

@@ -10,7 +10,7 @@ public class Winner {
             if (o.getIsPlaying()) {
                 System.out.println("Player " + o.getName() + " hand:");
                 Card.printCard(o.getHand());
-                winner.put(o, Hand2.getHandValue(o.getHand(), table1.getCommCards()));
+                winner.put(o, HandEval.getHandValue(o.getHand(), table1.getCommCards()));
                 System.out.println();
             }
 
@@ -43,7 +43,6 @@ public class Winner {
     }
 
     public static Boolean isWinLose(ArrayList<Player> playersList) {
-        // int allWinning = userPlayer.getBalance() * playersList.size();
         int loser = 0;
         for (Player p : playersList) { // Player win
             if (!p.getType().equals("Player")) {
@@ -51,7 +50,7 @@ public class Winner {
                     loser++;
                 }
             }
-            // Everyone lose to you You lost to everyone
+            // Everyone lose to you versus You lost to everyone
             if (loser == playersList.size() - 1 || (p.getType().equals("Player") && p.getBalance() == 0)) {
                 return true;
             }
