@@ -153,7 +153,7 @@ public class PlayerBot extends Player {
                     
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
-                    if (ranInt >= pb.getTightness()%10) {
+                    if (ranInt >= pb.getTightness() / 10) {
                         System.out.println("increaseBetTO: " + increaseBetTO);
                         System.out.println("Cheeky bet");
                         return 2;

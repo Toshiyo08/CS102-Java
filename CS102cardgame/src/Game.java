@@ -8,9 +8,6 @@ public class Game {
     /** The maximum number of community cards. */
     private static final int NO_OF_CARDS = 5;
 
-    public Game() {
-    }
-
     // public static void main(String[] args) {
     //     ArrayList<Player> playersList = new ArrayList<Player>();
 
@@ -329,10 +326,10 @@ public class Game {
                 // inputCommand = inputCommand.replaceAll("\\s", "");
                 if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")) {
                     return inputCommand;
-                } else if (inputCommand.contains("bet")) {
+                } else if (inputCommand.equals("bet")) {
                     // System.out.print("Bet to?> ");
                     return inputCommand;
-                } else if (inputCommand.contains("raise")) {
+                } else if (inputCommand.equals("raise")) {
                     // System.out.println("Raise to?> ");
                     return inputCommand;
                 } else {
@@ -709,6 +706,7 @@ public class Game {
                         PlayerBot pb = (PlayerBot)o;
                         int bettingAmount = PlayerBot.getBotRaiseAmt(pb.getTightness(), Hand2.getHandValue(pb.getHand(), table1.getCommCards()), o); //-> how much bot wants to increase TO
                         System.out.println(o.getName() + ": I want to bet $" + bettingAmount + " because my cards' value is " + Hand2.getHandValue(pb.getHand(), table1.getCommCards())); // REMOVE
+                        System.out.println(pb.calculateChenScore(pb.getHand()));
 
                         if (bettingAmount >= o.getBalance()) {// Not enough to bet/raise what YOU want-> All in
                             System.out.println("Oh, I don't have enough, guess I'll all in");
