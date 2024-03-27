@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class TexasHoldEm {
     private GameTextDisplay gameTextDisplay;
-    private static final String NEW_ROUND_PROMPT = "Start new round?(Y / N)> ";
 
     public TexasHoldEm(GameTextDisplay gameTextDisplay) {
         this.gameTextDisplay = gameTextDisplay;
@@ -23,43 +22,6 @@ public class TexasHoldEm {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your name: ");
         String name = sc.nextLine();
-        // Scanner playerNumbers = new Scanner(System.in);
-        // Keeps prompting for number of players to start game
-        // while (true) {
-        // try {
-        // if (playerNumbers.hasNextInt()) {
-        // numberOfPlayers = playerNumbers.nextInt();
-        // if (numberOfPlayers < 0) {
-        // throw new InputMismatchException("");
-        // }
-        // }
-        // System.out.print("Enter number of bots> ");
-        // numberOfPlayers = playerNumbers.nextInt();
-        // break;
-        // } catch (InputMismatchException ime) {
-        // System.out.println("Please enter a valid number");
-        // } finally {
-        // playerNumbers.nextLine();
-        // }
-        // }
-
-        // while (true) {
-        // try {
-        // Scanner sc = new Scanner(System.in);
-        // if (sc.hasNextInt()) {
-        // inputBet = sc.nextInt();
-        // if (inputBet > p.getBalance()) {
-        // throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
-        // }
-        // return inputBet;
-        // } else {
-        // throw new InputMismatchException("Invalid input");
-        // }
-        // } catch (InputMismatchException e) {
-        // System.out.print(e.getMessage());
-        // }
-        // }
-        // playerNumbers.close();
 
         // Initialise a player that user controls and add into list of players
         // correct to initialise here
@@ -95,8 +57,8 @@ public class TexasHoldEm {
 
             Table table1 = new Table();
             Deck deck1 = new Deck();
-
-            Game game = new Game();
+            InputHandler inputHandler = new ConsoleInputHandler();
+            Game game = new Game(inputHandler);
 
             // Shuffle Deck
             Collections.shuffle(deck1.getCards());
@@ -114,33 +76,12 @@ public class TexasHoldEm {
             userPlayer.draw(new Card("Hearts", 5));
             userPlayer2.draw(new Card("Clubs", 14));
             userPlayer2.draw(new Card("Hearts", 14));
-            userPlayer1.draw(new Card("Diamonds", 14));
-            userPlayer1.draw(new Card("Spades", 14));
+            userPlayer1.draw(new Card("Clubs", 14));
+            userPlayer1.draw(new Card("Hearts", 14));
 
             // 1st Betting Round
-            Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                Game.resetRound(playersList, table1); // Resets player and table attributes
-
-                if (Game.isWinLose(playersList)) { // If you win all or lost all, game ends.
-                    gameContinue = false;
-                    break;
-                }
-
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
-                    Game.moveBlind(turnOrder);
-                    continue;
-                }
-
-                continue;
-            }
+            game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+           
             afterRound1 = true;
 
             // Deal Flop (3 cards)
@@ -157,7 +98,7 @@ public class TexasHoldEm {
             // table1.setCurrentBet(0);
 
             // 2nd Betting Round
-            Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -192,7 +133,7 @@ public class TexasHoldEm {
             // table1.setCurrentBet(0);
 
             // 3rd Betting Round------------------------------
-            Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -226,7 +167,7 @@ public class TexasHoldEm {
             // table1.setCurrentBet(0);
 
             // Last Betting Round
-            Game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
+            game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -251,7 +192,7 @@ public class TexasHoldEm {
             // for second game
             System.out.println(table1.getPot());
 
-            Game.getWinner(playersList, table1);
+            Winner.getWinner(playersList, table1);
 
             System.out.println("Round over");
 
@@ -291,15 +232,5 @@ public class TexasHoldEm {
     }
 
     
-    private static boolean handleRoundEnd(ArrayList<Player> playersList, Table table1) {
-        Game.resetRound(playersList, table1);
-        if (Game.isWinLose(playersList)) return false;
-        Scanner sc = new Scanner(System.in);
-        System.out.println(NEW_ROUND_PROMPT);
-        String newRound = sc.nextLine();
-        sc.close();
-        if (newRound.equalsIgnoreCase("N")) return false;
-        else if (newRound.equalsIgnoreCase("Y")) return true;
-        return false;
-    }
+
 }
