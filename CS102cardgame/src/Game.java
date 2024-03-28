@@ -273,25 +273,24 @@ public class Game {
 
                     if (botAction == 1) {
                         if (o.getBet() < table1.getCurrentBetAmt()) { // Call
+                            int callAmt = table1.getCurrentBetAmt() - o.getBet();
                             if (o.getBalance() == 0) { // Already broke
                                 System.out.println("Check, I've all in-ed");
                             } else { // Not broke yet
-                                int callAmt = table1.getCurrentBetAmt() - o.getBet();
                                 if (callAmt > o.getBalance()) {
                                     callAmt = o.getBalance();
                                 }
                                 o.raiseBet(callAmt);
                                 table1.raisePot(callAmt);
                             }
+                            
+                            // if (callAmt > o.getBalance() && o.getBalance() != 0) {
+                            //     callAmt = o.getBalance();
+                            // }
+                            // o.raiseBet(callAmt);
+                            // table1.raisePot(callAmt);
 
-                            int callAmt = table1.getCurrentBetAmt() - o.getBet();
-                            if (callAmt > o.getBalance() && o.getBalance() != 0) {
-                                callAmt = o.getBalance();
-                            }
-                            o.raiseBet(callAmt);
-                            table1.raisePot(callAmt);
-
-                            if (callAmt == 5 && !afterRound1 && o.getIsSmallBlind()) {
+                            if (callAmt == 5 && !afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
                                 System.out.println(o.getName() + ": Small blind, I call the big blind");
                             }
                             if (o.getBalance() == 0) {
@@ -310,7 +309,7 @@ public class Game {
                             numPlayersChecked++;
                             previousAction = "Check";
                         } else { // Check
-                            if (o.getIsBigBlind() && !afterRound1) {
+                            if (o.getIsBigBlind() && !afterRound1 && !o.getIsBlindPaid()) {
                                 System.out.println(o.getName() + ": Check, I check the big blind");
                             } else {
                                 System.out.println(o.getName() + ": Check");
@@ -329,6 +328,11 @@ public class Game {
                         System.out.println(
                                 o.getName() + ": I want to bet $" + bettingAmount + " because my cards' value is "
                                         + HandEval.getHandValue(pb.getHand(), table1.getCommCards())); // REMOVE
+
+                        // If the amount to bet is almost the balance, might as well all in
+                        if (bettingAmount >= 0.9 * o.getBalance()) { 
+                            bettingAmount = o.getBalance();
+                        }
 
                         if (bettingAmount >= o.getBalance()) {// Not enough to bet/raise what YOU want-> All in
                             System.out.println("Oh, I don't have enough, guess I'll all in");
@@ -358,30 +362,6 @@ public class Game {
                                 + " after I added $" + bettingAmount);
                         System.out.println(o.getName() + ": The table's bet is now $" + table1.getCurrentBetAmt());
 
-                        // if (bettingAmount <= table1.getCurrentBetAmt()) { // if raise TO < table bet,
-                        // adjust accordingly
-                        // bettingAmount = table1.getCurrentBetAmt() + 10;
-                        // }
-
-                        // if (bettingAmount > pb.getBalance()){ // If balance not enough to raise TO
-                        // bettingAmount = pb.getBalance(); // Commit the rest of balance
-                        // }
-
-                        // int increasedBettingAmount = bettingAmount - o.getBet();
-                        // if (bettingAmount == pb.getBalance()) {
-                        // increasedBettingAmount = 0;
-                        // }
-
-                        // o.raiseBet(increasedBettingAmount);
-
-                        // if (bettingAmount == pb.getBalance()) {
-                        // table1.raiseCurrentBetAmt(increasedBettingAmount);
-                        // } else {
-                        // table1.setCurrentBetAmt(bettingAmount);
-                        // }
-
-                        // table1.raisePot(increasedBettingAmount);
-
                         // DON'T REMOVE BELOW
                         // o.setChecked(true);
                         // numPlayersChecked = 1;
@@ -402,6 +382,10 @@ public class Game {
                         o.setIsPlaying(false);
                         previousAction = "Fold";
                     }
+
+                    if (!afterRound1 && (o.getIsBigBlind() || o.getIsSmallBlind()) && !o.getIsBlindPaid()) {
+                        o.setIsBlindPaid(true);
+                    }
                 }
 
                 try {
@@ -420,7 +404,9 @@ public class Game {
 
         for (Player o : playersList) {
             o.setIsChecked(false);
+            o.setBet(0);
         }
+        table1.setCurrentBetAmt(0);
         System.out.println("This concludes the betting for " + bettingRoundName + " phase");
         System.out.println();
     }

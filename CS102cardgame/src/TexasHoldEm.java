@@ -17,7 +17,7 @@ public class TexasHoldEm {
         ArrayList<Player> playersList = new ArrayList<Player>();
 
         TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
-        texasHoldEm.startingScreen();
+        // texasHoldEm.startingScreen();
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your name: ");
@@ -30,6 +30,7 @@ public class TexasHoldEm {
         Player userPlayer1 = new PlayerBot("Bot1", "Bot", 10);
         playersList.add(userPlayer1);
         Player userPlayer2 = new PlayerBot("Bot2", "Bot", 70);
+
         playersList.add(userPlayer2);
 
         int originalBalance = userPlayer.getBalance();
@@ -65,10 +66,6 @@ public class TexasHoldEm {
 
             // 1st Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            table1.setCurrentBetAmt(0);
-            for (Player t : playersList) {
-                t.setBet(0);
-            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1); // Resets player and table attributes
 
@@ -102,10 +99,6 @@ public class TexasHoldEm {
 
             // 2nd Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            table1.setCurrentBetAmt(0);
-            for (Player t : playersList) {
-                t.setBet(0);
-            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -135,10 +128,6 @@ public class TexasHoldEm {
 
             // 3rd Betting Round------------------------------
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            table1.setCurrentBetAmt(0);
-            for (Player t : playersList) {
-                t.setBet(0);
-            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 
@@ -167,10 +156,6 @@ public class TexasHoldEm {
 
             // Last Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
-            table1.setCurrentBetAmt(0);
-            for (Player t : playersList) {
-                t.setBet(0);
-            }
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
                 Game.resetRound(playersList, table1);
 

@@ -69,7 +69,7 @@ public class PlayerBot extends Player {
                 if (callAmt > 0.9 * o.getBalance()) {
                     return 3;
                 }
-                if (increaseBetTo == table1.getCurrentBetAmt()) {
+                if (increaseBetTo <= table1.getCurrentBetAmt()) {
                     return 1; // Call if T.Bet = what I want to raise TO
                 }
                 if (increaseBetTo > table1.getCurrentBetAmt()) {
@@ -81,9 +81,6 @@ public class PlayerBot extends Player {
                     }
                     System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
-                }
-                if (increaseBetTo < table1.getCurrentBetAmt()) { // Can be combined with increaseBetTo == table1.getCurrentBetAmt()
-                    return 1;
                 }
             } else { // badhand
                 if (previousAction.equals("Check") || previousAction.equals("Fold")) {
@@ -113,7 +110,7 @@ public class PlayerBot extends Player {
                 if (callAmt > 0.9 * o.getBalance()) {
                     return 3;
                 }
-                if (increaseBetTo == table1.getCurrentBetAmt()) {
+                if (increaseBetTo <= table1.getCurrentBetAmt()) {
                     return 1; // Call if T.Bet = what I want to raise TO
                 }
                 if (increaseBetTo > table1.getCurrentBetAmt()) {
@@ -125,9 +122,6 @@ public class PlayerBot extends Player {
                     }
                     System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
-                }
-                if (increaseBetTo < table1.getCurrentBetAmt()) {
-                    return 1;
                 }
             } else { // Ok hand
                 
