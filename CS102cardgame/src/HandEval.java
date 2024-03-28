@@ -39,11 +39,11 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
             copy[o.getRank()]++;
         }
 
-        int score = isRSF(handTable, copy); 
+        int score = isRSF(handTable); 
         if (score != 0) {
             return score;                           // 422-425
-        } else if (isSF(handTable, copy) != 0) {
-            score = isSF(handTable, copy);
+        } else if (isSF(handTable) != 0) {
+            score = isSF(handTable);
             return score;                           // 386-421
         } else if (is4Kind(copy) != 0) {
             score = is4Kind(copy);
@@ -74,7 +74,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         return score;
     }
 
-    public static int isRSF(ArrayList<Card> handTable, int[] copy) { //Royal Straight FLush
+    public static int isRSF(ArrayList<Card> handTable) { //Royal Straight FLush
         String[] suitSample = { "Diamonds", "Clubs", "Hearts", "Spades" };
         for (int i = 0; i < 4; i++) {
             //num is ace
@@ -96,7 +96,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         return 0;
     }
 
-    public static int isSF(ArrayList<Card> handTable, int[] copy) { //Straight Flush
+    public static int isSF(ArrayList<Card> handTable) { //Straight Flush
 
         String[] suitSample = { "Diamonds", "Clubs", "Hearts", "Spades" };
         for (int i = 0; i < 4; i++) {
@@ -115,7 +115,6 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
                         }
                     }
                 }
-
             }
         }
 
