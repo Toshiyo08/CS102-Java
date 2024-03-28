@@ -26,6 +26,11 @@ public class Deck {
         return cards;
     }
 
+    // optional
+    public void cutDeck(int cutDeckNum) {
+
+    }
+
     public Card dealCard() {
         if (cards.isEmpty()) {
             // No more cards in the deck
@@ -39,4 +44,7 @@ public class Deck {
         return cards.remove(0);
     }
 
+    // public int getRemainingCards(){
+    // return cards.size();
+    // }
 }
