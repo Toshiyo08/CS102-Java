@@ -43,11 +43,11 @@ public class Player {
         this.isChecked = isChecked;
     }
 
-    public Boolean getIsPlaying() {
+    public boolean getIsPlaying() {
         return this.isPlaying;
     }
 
-    public void setIsPlaying(Boolean isPlaying) {
+    public void setIsPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
 
@@ -59,9 +59,9 @@ public class Player {
         this.betAmt = newBet;
     }
 
-    public void raiseBet(int raisedamt) {
-        this.betAmt += raisedamt;
-        this.balance -= raisedamt;
+    public void raiseBet(int raisedAmt) {
+        this.betAmt += raisedAmt;
+        this.balance -= raisedAmt;
     }
 
     public int getBalance(){
