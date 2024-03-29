@@ -1,11 +1,11 @@
-package Poker;
+package Eval;
 // package CS102cardgame.src;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import Cards.Card;
+import Base.*;
 
  // Royal Straight Flush 13 AKQJ10, same suit
         // Straight Flush 12 56789, same suit

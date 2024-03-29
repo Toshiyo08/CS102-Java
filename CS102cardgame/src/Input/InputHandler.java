@@ -2,8 +2,8 @@ package Input;
 
 import Players.Player;
 
-interface InputHandler {
+public interface InputHandler {
     String getInput();
     int getBetInput(Player p);
-    String getBigBlindInput(String action,Player o);
+    String getBigBlindInput(String action, Player o);
 }

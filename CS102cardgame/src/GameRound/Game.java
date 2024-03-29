@@ -4,13 +4,10 @@ package GameRound;
 
 import java.util.*;
 
-import Cards.Card;
-import Cards.Deck;
-import Input.InputHandler;
-import Players.Player;
-import Players.PlayerBot;
-import Poker.HandEval;
-import Poker.Table;
+import Base.*;
+import Eval.*;
+import Input.*;
+import Players.*;
 
 public class Game {
 
@@ -109,9 +106,6 @@ public class Game {
 
                         // If broke
                         if (o.getBalance() == 0) {
-                            // System.out.println("Check / / Fold");
-                            // System.out.print("Action> ");
-                            // action = getInput();
                             while (true) {
                                 try {
                                     System.out.println("Check / ??   / Fold");
@@ -328,7 +322,7 @@ public class Game {
                                         + HandEval.getHandValue(pb.getHand(), table1.getCommCards())); // REMOVE
 
                         // If the amount to bet is almost the balance, might as well all in
-                        if (bettingAmount >= 0.9 * o.getBalance()) { 
+                        if (bettingAmount >= 0.75 * o.getBalance()) { 
                             bettingAmount = o.getBalance();
                         }
 
@@ -410,7 +404,6 @@ public class Game {
     }
 
    
-
     public static int getCurrentSize(ArrayList<Player> currentPlayers) {
         int numCurrentPlayers = 0;
         for (Player o : currentPlayers) {
@@ -454,7 +447,7 @@ public class Game {
                 }
             }
 
-            Card.printCard(table1.getCommCards());
+            GameTextDisplay.printCard(table1.getCommCards());
             ArrayList<Card> showDownCards = new ArrayList<Card>();
             for (Player h : playersList) {
                 if (h.getIsPlaying()) {
@@ -477,7 +470,7 @@ public class Game {
                 }
             }
             System.out.println();
-            Card.printCard(showDownCards);
+            GameTextDisplay.printCard(showDownCards);
             Winner.getWinner(playersList, table1);
 
             System.out.println("Round over");
@@ -498,7 +491,4 @@ public class Game {
         table1.setCurrentBetAmt(0);
         table1.setPot(0);
     }
-
-  
-
 }

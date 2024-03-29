@@ -1,4 +1,5 @@
-package Cards;
+package Base;
+import Base.Card;
 
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class Deck {
     }
 
     public void burnCard() {
-        return cards.remove(0);
+        cards.remove(0);
     }
 
 }

@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Cards.Card;
-import Players.Player;
-import Poker.HandEval;
-import Poker.Table;
+import Base.*;
+import Eval.*;
+import Players.*;
 
 public class Winner {
     public static void getWinner(ArrayList<Player> playersList, Table table1) {
@@ -16,7 +15,7 @@ public class Winner {
         for (Player o : playersList) {
             if (o.getIsPlaying()) {
                 System.out.println("Player " + o.getName() + " hand:");
-                Card.printCard(o.getHand());
+                GameTextDisplay.printCard(o.getHand());
                 winner.put(o, HandEval.getHandValue(o.getHand(), table1.getCommCards()));
                 System.out.println();
             }

@@ -3,10 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import Cards.*;
+import Base.*;
 import GameRound.*;
 import Input.*;
 import Players.*;
+import Eval.*;
 
 public class TexasHoldEm {
     private GameTextDisplay gameTextDisplay;
@@ -23,7 +24,7 @@ public class TexasHoldEm {
         ArrayList<Player> playersList = new ArrayList<Player>();
 
         TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
-        // texasHoldEm.startingScreen();
+        texasHoldEm.startingScreen();
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your name: ");
@@ -97,7 +98,7 @@ public class TexasHoldEm {
                 deck1.burnCard();
                 table1.drawComm(deck1.dealCard());
             }
-            Card.printCard(table1.getCommCards());
+            GameTextDisplay.printCard(table1.getCommCards());
 
             // 2nd Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -126,7 +127,7 @@ public class TexasHoldEm {
             // Deal Turn
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
-            Card.printCard(table1.getCommCards());
+            GameTextDisplay.printCard(table1.getCommCards());
 
             // 3rd Betting Round------------------------------
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -154,7 +155,7 @@ public class TexasHoldEm {
             // Deal River
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
-            Card.printCard(table1.getCommCards());
+            GameTextDisplay.printCard(table1.getCommCards());
 
             // Last Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);

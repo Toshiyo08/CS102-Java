@@ -3,7 +3,7 @@ package Players;
 
 import java.util.ArrayList;
 
-import Cards.*;
+import Base.*;
 
 public class Player {
     private String type; // Player or Bot
