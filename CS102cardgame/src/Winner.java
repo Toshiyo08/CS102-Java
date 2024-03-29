@@ -42,7 +42,7 @@ public class Winner {
         }
     }
 
-    public static Boolean isWinLose(ArrayList<Player> playersList) {
+    public static boolean isWinLose(ArrayList<Player> playersList) {
         int loser = 0;
         for (Player p : playersList) { // Player win
             if (!p.getType().equals("Player")) {

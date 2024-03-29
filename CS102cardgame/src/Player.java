@@ -12,7 +12,7 @@ public class Player {
     private boolean isBlindPaid;
     private int betAmt;
     private int balance;
-    private ArrayList<Card> hand; // 10jqka|23456789 10|11|12|13|14
+    private ArrayList<Card> hand; 
     
     //what is type?
     public Player(String name, String type) {
