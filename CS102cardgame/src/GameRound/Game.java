@@ -241,7 +241,7 @@ public class Game {
                         o.setIsPlaying(false);
                         previousAction = "Fold";
                     }
-
+                    System.out.println("-------------------------------------------------------------------------------");
                 } else if (o.getType().equals("Bot") && o.getIsChecked() == false && o.getIsPlaying() == true) {
                     // table1.getCurrentBetAmt());
                     // Card.printCard(o.getHand());
@@ -268,6 +268,7 @@ public class Game {
                             int callAmt = table1.getCurrentBetAmt() - o.getBet();
                             if (o.getBalance() == 0) { // Already broke
                                 System.out.println("Check, I've all in-ed");
+                                wait(2000);
                             } else { // Not broke yet
                                 if (callAmt > o.getBalance()) {
                                     callAmt = o.getBalance();
@@ -282,44 +283,45 @@ public class Game {
                             // o.raiseBet(callAmt);
                             // table1.raisePot(callAmt);
 
-                            if (callAmt == 5 && !afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
-                                System.out.println(o.getName() + ": Small blind, I call the big blind");
-                            }
+                            // if (callAmt == 5 && !afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
+                            //     System.out.println(o.getName() + ": I call");
+                            //     wait(2000);
+                            // }
                             if (o.getBalance() == 0) {
                                 System.out.println(o.getName() + ": " + "ALL IN BABY. I got N" + o.getBalance()
                                         + "thing left and my bet is $" + o.getBet());
+                                wait(2000);
                             } else {
-                                System.out.println(o.getName() + ": Call");
-                                System.out.println(o.getName() + ": My bet increases TO $" + o.getBet()
-                                        + " cause I called, increasing BY $" + callAmt);
+                                PlayerBot.botThinking(o.getName());
+                                System.out.println(o.getName() + ": $" + table1.getCurrentBetAmt() + "? I call");
+                                wait(2000);
                             }
 
-                            System.out.println(o.getName() + ": The table's pot is now $" + table1.getPot()
-                                    + " after I added $" + callAmt);
-                            System.out.println(o.getName() + ": The table's bet is now $" + table1.getCurrentBetAmt());
+                            // System.out.println(o.getName() + ": The table's pot is now $" + table1.getPot()
+                            //         + " after I added $" + callAmt);
+                            // System.out.println(o.getName() + ": The table's bet is now $" + table1.getCurrentBetAmt());
                             o.setIsChecked(true);
                             numPlayersChecked++;
                             previousAction = "Check";
                         } else { // Check
-                            if (o.getIsBigBlind() && !afterRound1 && !o.getIsBlindPaid()) {
-                                System.out.println(o.getName() + ": Check, I check the big blind");
-                            } else {
-                                System.out.println(o.getName() + ": Check");
-                            }
+                            // if (o.getIsBigBlind() && !afterRound1 && !o.getIsBlindPaid()) {
+                            //     System.out.println(o.getName() + ": Check, I check the big blind");
+                            // } else {
+                            //     System.out.println(o.getName() + ": Check");
+                            // }
+                            System.out.println(o.getName() + ": I Check");
 
                             o.setIsChecked(true);
                             numPlayersChecked++;
                             previousAction = "Check";
                         }
+                        wait(2000);
                     } else if (botAction == 2) {
 
                         PlayerBot pb = (PlayerBot) o;
                         int bettingAmount = PlayerBot.getBotRaiseAmt(pb.getTightness(),
                                 HandEval.getHandValue(pb.getHand(), table1.getCommCards()), o); // -> how much bot wants to
                                                                                              // increase TO
-                        System.out.println(
-                                o.getName() + ": I want to bet $" + bettingAmount + " because my cards' value is "
-                                        + HandEval.getHandValue(pb.getHand(), table1.getCommCards())); // REMOVE
 
                         // If the amount to bet is almost the balance, might as well all in
                         if (bettingAmount >= 0.75 * o.getBalance()) { 
@@ -327,13 +329,14 @@ public class Game {
                         }
 
                         if (bettingAmount >= o.getBalance()) {// Not enough to bet/raise what YOU want-> All in
-                            System.out.println("Oh, I don't have enough, guess I'll all in");
+                            System.out.println(o.getName() + ": Oh, I don't have enough, guess I'll all in");
                             bettingAmount = o.getBalance();
                             if (o.getBet() + bettingAmount > table1.getCurrentBetAmt()) { // All in increases table bet
                                 table1.raiseCurrentBetAmt(bettingAmount);
                             } // else, don't need change table bet
                             o.raiseBet(bettingAmount);
                             table1.raisePot(bettingAmount);
+                            wait(2000);
 
                         } else { // Enough to bet/raise what YOU want
                             table1.setCurrentBetAmt(bettingAmount);
@@ -346,13 +349,26 @@ public class Game {
                         if (o.getBalance() == 0) {
                             System.out.println(o.getName() + ": " + "ALL IN BABY. I got N" + o.getBalance()
                                     + "thing left and my bet is $" + o.getBet());
+                            wait(2000);
                         } else {
-                            System.out.println(o.getName() + ": My bet increases TO $" + o.getBet()
-                                    + " cause I increased BY" + bettingAmount);
+                            if (!afterRound1) {
+                                if (table1.getCurrentBetAmt() == 0) {
+                                    System.out.println(o.getName() + ": I bet to $" + o.getBet());
+                                } else {
+                                    System.out.println(o.getName() + ": I raise to $" + o.getBet());
+                                }
+                            } else {
+                                if (table1.getCurrentBetAmt() == 10) {
+                                    System.out.println(o.getName() + ": I bet to $" + o.getBet());
+                                } else {
+                                    System.out.println(o.getName() + ": I raise to $" + o.getBet());
+                                }
+                            }
+                            wait(2000);
                         }
-                        System.out.println(o.getName() + ": The table's pot is now $" + table1.getPot()
-                                + " after I added $" + bettingAmount);
-                        System.out.println(o.getName() + ": The table's bet is now $" + table1.getCurrentBetAmt());
+                        // System.out.println(o.getName() + ": The table's pot is now $" + table1.getPot()
+                        //         + " after I added $" + bettingAmount);
+                        // System.out.println(o.getName() + ": The table's bet is now $" + table1.getCurrentBetAmt());
 
                         // DON'T REMOVE BELOW
                         // o.setChecked(true);
@@ -371,6 +387,7 @@ public class Game {
                         previousAction = "Bet";
                     } else if (botAction == 3) {
                         System.out.println(o.getName() + ": I'm folding");
+                        wait(2000);
                         o.setIsPlaying(false);
                         previousAction = "Fold";
                     }
@@ -378,6 +395,7 @@ public class Game {
                     if (!afterRound1 && (o.getIsBigBlind() || o.getIsSmallBlind()) && !o.getIsBlindPaid()) {
                         o.setIsBlindPaid(true);
                     }
+                    System.out.println("-------------------------------------------------------------------------------");
                 }
 
                 try {
@@ -389,7 +407,7 @@ public class Game {
                 if (getCurrentSize(currentPlayers) == 1) {
                     return;
                 }
-
+                
             }
 
         }
@@ -400,6 +418,7 @@ public class Game {
         }
         table1.setCurrentBetAmt(0);
         System.out.println("This concludes the betting for " + bettingRoundName + " phase");
+        wait(2000);
         System.out.println();
     }
 
@@ -412,6 +431,14 @@ public class Game {
             }
         }
         return numCurrentPlayers;
+    }
+
+    public static void wait(int waitTime) {
+        try {
+                Thread.sleep(waitTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
     public static boolean timeToOpenHand(ArrayList<Player> playersList, Table table1, Deck deck1, int numTimesBet) {

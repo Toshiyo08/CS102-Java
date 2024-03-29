@@ -1,7 +1,10 @@
 package Poker;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+
 
 import Base.*;
 import GameRound.*;
@@ -24,21 +27,52 @@ public class TexasHoldEm {
         ArrayList<Player> playersList = new ArrayList<Player>();
 
         TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
-        texasHoldEm.startingScreen();
+        // texasHoldEm.startingScreen();
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your name: ");
-        String name = sc.nextLine();
+        // System.out.println("Enter your name: ");
+        // String name = sc.nextLine();
+        String name = "";
+        System.out.println("Please enter a name between 3 and 6 characters"); 
+        while (true) {
+            try {
+                System.out.print("Name> ");
+                Scanner scName = new Scanner(System.in);
+                name = scName.nextLine();
+                name = name.trim();
+                if (name == "") {
+                    throw new InputMismatchException("No name was entered!");
+                } 
+                if (name.length() >= 7) {
+                    throw new InputMismatchException("Please enter a name of not more than 6 characters!");
+                }
+                if (name.length() <= 2) {
+                    throw new InputMismatchException("Please enter a name of at least 3 characters!");
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
 
         // Initialise a player that user controls and add into list of players
         // correct to initialise here
+        Random ran = new Random();
+        int randomTightness1 = ran.nextInt(31) + 10; //generates a tightness of 10 to 30
         Player userPlayer = new Player(name, "Player");
         playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Bot1", "Bot", 20);
+        Player userPlayer1 = new PlayerBot("Bot1", "Bot", randomTightness1);
+        System.out.println(randomTightness1);
         playersList.add(userPlayer1);
-        Player userPlayer2 = new PlayerBot("Bot2", "Bot", 20);
-
+        int randomTightness2 = ran.nextInt(31) + 10;
+        Player userPlayer2 = new PlayerBot("Bot2", "Bot", randomTightness2);
+        System.out.println(randomTightness2);
         playersList.add(userPlayer2);
+        int randomTightness3 = ran.nextInt(31) + 10;
+        Player userPlayer3 = new PlayerBot("Bot3", "Bot", randomTightness3);
+        System.out.println(randomTightness3);
+        playersList.add(userPlayer3);
 
         int originalBalance = userPlayer.getBalance();
 
@@ -180,8 +214,8 @@ public class TexasHoldEm {
                 continue;
             }
 
-            // for second game
-            System.out.println(table1.getPot());
+            //for second game
+            // System.out.println(table1.getPot());
 
             Winner.getWinner(playersList, table1);
 

@@ -48,7 +48,7 @@ public class PlayerBot extends Player{
             if ((handValue) <= 28 && (handValue > 7)) { // ok hand
                 //consider if bot need to call
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
@@ -58,8 +58,7 @@ public class PlayerBot extends Player{
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
                     if (ranInt >= botTightness/10) {
-                        System.out.println("increaseBetTo: " + increaseBetTo);
-                        System.out.println("Risky bet");
+                        // System.out.println("increaseBetTo: " + increaseBetTo);
                         return 2;
                     }
                 }
@@ -83,7 +82,7 @@ public class PlayerBot extends Player{
                     if (o.getBalance() - (increaseBetTo - o.getBet()) < botTightness/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
-                    System.out.println("increaseBetTo: " + increaseBetTo);
+                    // System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
                 }
             } else { // badhand
@@ -92,7 +91,7 @@ public class PlayerBot extends Player{
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
@@ -105,7 +104,7 @@ public class PlayerBot extends Player{
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
@@ -125,13 +124,13 @@ public class PlayerBot extends Player{
                     if (o.getBalance() - (increaseBetTo - o.getBet()) < botTightness/100.0 * o.getBalance()) { // prospective remaining balance < remaining balance limit
                         return 1;
                     }
-                    System.out.println("increaseBetTo: " + increaseBetTo);
+                    // System.out.println("increaseBetTo: " + increaseBetTo);
                     return 2;
                 }
             } else { // Ok hand
                 
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100 - botTightness)/100) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
                         return 3;
                     }
                     return 1;
@@ -141,8 +140,8 @@ public class PlayerBot extends Player{
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
                     if (ranInt >= botTightness%10) {
-                        System.out.println("increaseBetTo: " + increaseBetTo);
-                        System.out.println("Cheeky bet");
+                        // System.out.println("increaseBetTo: " + increaseBetTo);
+                        System.out.println("Risky bet");
                         return 2;
                     }
                 }

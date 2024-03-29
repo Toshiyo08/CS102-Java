@@ -10,17 +10,17 @@ public class GameTextDisplay {
 
         System.out.println("                                                                       Welcome to");
         System.out.println(
-                "                                                        .------..------..------..------..------.          ");
+                "                                                        .------..------..------..------..------."          );
         System.out.println(
-                "                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |          ");
+                "                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |"          );
         System.out.println(
-                "                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |          ");
+                "                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |"          );
         System.out.println(
-                "                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |          ");
+                "                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |"          );
         System.out.println(
-                "                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|          ");
+                "                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|"          );
         System.out.println(
-                "                                                        `------'`------'`------'`------'`------'          ");
+                "                                                        `------'`------'`------'`------'`------'"          );
         System.out.println(
                 "                                                .------..------..------..------..------..------..------.");
         System.out.println(
@@ -92,8 +92,12 @@ public class GameTextDisplay {
 
     public static void showPlayerAttributes(Player o, Table table1, boolean afterRound1) {
         String playerName = o.getName();
-        System.out.println(playerName + " hand: ");
-        GameTextDisplay.printCard(o.getHand());
+        
+        if (o.getType().equals("Player")){
+            System.out.println(playerName + " hand: ");
+            GameTextDisplay.printCard(o.getHand());
+        }
+        
         System.out.println("┌────────────────┐──────┐");
         switch (playerName.length()) {
             case 6:

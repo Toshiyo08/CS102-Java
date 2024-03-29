@@ -14,8 +14,8 @@ public class Winner {
 
         for (Player o : playersList) {
             if (o.getIsPlaying()) {
-                System.out.println("Player " + o.getName() + " hand:");
-                GameTextDisplay.printCard(o.getHand());
+                // System.out.println("Player " + o.getName() + " hand:");
+                // GameTextDisplay.printCard(o.getHand());
                 winner.put(o, HandEval.getHandValue(o.getHand(), table1.getCommCards()));
                 System.out.println();
             }
@@ -30,7 +30,6 @@ public class Winner {
         }
 
         ArrayList<Player> winnerList = new ArrayList<Player>();
-        System.out.println(highest);
         for (Player player : winner.keySet()) {
             if (winner.get(player) == highest) {
                 winnerList.add(player);
