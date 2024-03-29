@@ -1,8 +1,12 @@
+package Players;
 // // package CS102cardgame.src;
 
 import java.util.*;
 
-public class PlayerBot extends Player {
+import Cards.*;
+import Poker.*;
+
+public class PlayerBot extends Player{
     /** Tightness (0 = loose, 100 = tight). */
     private int tightness;
 
@@ -84,6 +88,7 @@ public class PlayerBot extends Player {
                 }
             } else { // badhand
                 if (previousAction.equals("Check") || previousAction.equals("Fold")) {
+                    System.out.println("i should check");
                     return 1;
                 } else {
                     
@@ -154,6 +159,10 @@ public class PlayerBot extends Player {
 
     public static int getBotRaiseAmt(int tightness, int handValue, Player o) { // If betting, minimally a pair
         double bettingAmount = 300.0 * ((100.0 - tightness)/100.0) * (handValue/425.0) + (0.15*o.getBalance());
+        if (bettingAmount >= 0.9 * o.getBalance()){ //Bet amount is large proportion of remaning balance, should all in instead
+            bettingAmount = o.getBalance();
+            System.out.println("i want to all in");
+        }
         return (int)bettingAmount;
     }
 

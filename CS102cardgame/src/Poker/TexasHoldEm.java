@@ -1,6 +1,12 @@
+package Poker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+
+import Cards.*;
+import GameRound.*;
+import Input.*;
+import Players.*;
 
 public class TexasHoldEm {
     private GameTextDisplay gameTextDisplay;
@@ -27,9 +33,9 @@ public class TexasHoldEm {
         // correct to initialise here
         Player userPlayer = new Player(name, "Player");
         playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Bot1", "Bot", 10);
+        Player userPlayer1 = new PlayerBot("Bot1", "Bot", 20);
         playersList.add(userPlayer1);
-        Player userPlayer2 = new PlayerBot("Bot2", "Bot", 70);
+        Player userPlayer2 = new PlayerBot("Bot2", "Bot", 20);
 
         playersList.add(userPlayer2);
 

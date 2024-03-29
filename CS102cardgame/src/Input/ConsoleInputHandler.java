@@ -1,5 +1,9 @@
+package Input;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import Players.Player;
 
 public class ConsoleInputHandler implements InputHandler {
     private Scanner sc;

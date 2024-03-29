@@ -1,5 +1,4 @@
-
-//package CS102cardgame.src;
+package Cards;
 
 import java.util.*;
 
@@ -34,8 +33,7 @@ public class Deck {
         return cards.remove(0);
     }
 
-    public Card burnCard() {
-        cards.remove(0);
+    public void burnCard() {
         return cards.remove(0);
     }
 

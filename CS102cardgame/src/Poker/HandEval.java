@@ -1,8 +1,11 @@
+package Poker;
 // package CS102cardgame.src;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import Cards.Card;
 
  // Royal Straight Flush 13 AKQJ10, same suit
         // Straight Flush 12 56789, same suit
@@ -54,8 +57,8 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         } else if (isF(handTable, copy) != 0) {
             score = isF(handTable, copy);
             return score;                           // 202-236
-        } else if (str8(copy) != 0) {
-            score = str8(copy);
+        } else if (isStraight(copy) != 0) {
+            score = isStraight(copy);
             return score;                           // 160-200
         } else if (is3Kind(copy) != 0) {
             score = is3Kind(copy);
@@ -66,8 +69,8 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         } else if (isPair(copy) != 0) {
             score = isPair(copy);
             return score;                           // 18-42
-        } else if (highCard(copy) != 0) {
-            score = highCard(copy);                 // 2-14
+        } else if (isHighCard(copy) != 0) {
+            score = isHighCard(copy);                 // 2-14
             return score;
         }
 
@@ -169,7 +172,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
                     } else if (isPair(copy) != 0) {
                         return 200 + isPair(copy);
                     } else {
-                        return 200 + highCard(copy);
+                        return 200 + isHighCard(copy);
                     }
                 }
             }
@@ -179,7 +182,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         return 0;
     }
 
-    public static int str8(int[] copy) {
+    public static int isStraight(int[] copy) {
         int consecutiveCounter = 0;
         int sum = 0;
         for (int i = 14; i > 0; i--) {
@@ -240,7 +243,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         return 0;
     }
 
-    public static int highCard(int[] copy) {
+    public static int isHighCard(int[] copy) {
 
         for (int i = 14; i > 0; i--) {
             if (copy[i] == 1) {

@@ -1,6 +1,13 @@
+package GameRound;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import Cards.Card;
+import Players.Player;
+import Poker.HandEval;
+import Poker.Table;
 
 public class Winner {
     public static void getWinner(ArrayList<Player> playersList, Table table1) {
@@ -42,7 +49,7 @@ public class Winner {
         }
     }
 
-    public static Boolean isWinLose(ArrayList<Player> playersList) {
+    public static boolean isWinLose(ArrayList<Player> playersList) {
         int loser = 0;
         for (Player p : playersList) { // Player win
             if (!p.getType().equals("Player")) {

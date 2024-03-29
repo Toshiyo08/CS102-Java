@@ -1,6 +1,9 @@
+package Players;
 // package CS102cardgame.src;
 
 import java.util.ArrayList;
+
+import Cards.*;
 
 public class Player {
     private String type; // Player or Bot

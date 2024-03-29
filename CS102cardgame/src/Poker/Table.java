@@ -1,6 +1,9 @@
+package Poker;
 // package CS102cardgame.src;
 
 import java.util.*;
+
+import Cards.Card;
 
 public class Table {
     private ArrayList<Card> commCards;

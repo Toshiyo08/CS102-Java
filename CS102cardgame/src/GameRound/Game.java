@@ -1,7 +1,16 @@
+package GameRound;
 
 //package CS102cardgame.src;
 
 import java.util.*;
+
+import Cards.Card;
+import Cards.Deck;
+import Input.InputHandler;
+import Players.Player;
+import Players.PlayerBot;
+import Poker.HandEval;
+import Poker.Table;
 
 public class Game {
 
@@ -13,7 +22,7 @@ public class Game {
     }
 
     public void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1,
-            Player[] turnOrder, int numTimesBet) {
+        Player[] turnOrder, int numTimesBet) {
         ArrayList<Player> currentPlayers = new ArrayList<Player>();
         // active users
         for (Player o : turnOrder) {
@@ -423,8 +432,8 @@ public class Game {
         return numCurrentPlayers;
     }
 
-    public static Boolean timeToOpenHand(ArrayList<Player> playersList, Table table1, Deck deck1, int numTimesBet) {
-        Boolean isOpenHandTime = false;
+    public static boolean timeToOpenHand(ArrayList<Player> playersList, Table table1, Deck deck1, int numTimesBet) {
+        boolean isOpenHandTime = false;
         int bankruptCounter = 0;
         int activePlayerCounter = 0;
         for (Player g : playersList) {
