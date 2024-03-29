@@ -27,11 +27,12 @@ public class Game {
         // active users
         for (Player o : turnOrder) {
             if (o.getIsPlaying() == true) {
+                //check active players
                 currentPlayers.add(o);
             }
         }
 
-        //check active players
+        
         int numPlayersChecked = 0;
         String previousAction = null;
         String bettingRoundName = null;
@@ -64,20 +65,8 @@ public class Game {
                     if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) {
                         System.out.println("Pot: Big Blind! That's $10 thanks");
 
-                        while (true) {
-                            try {
-                                System.out.println("Check / Bet / Fold");
-                                System.out.print("Action> ");
-                                action = inputHandler.getInput();
-                                if (action.equals("call") || action.equals("raise")) {
-                                    throw new InputMismatchException("You cannot " + action + "!");
-                                }
-                                o.setIsBlindPaid(true);
-                                break;
-                            } catch (InputMismatchException e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
+                        //modified this, want to modify for small blind
+                        action = inputHandler.getBigBlindInput(action, o);
 
                         // If Small Blind
                     } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
@@ -125,7 +114,7 @@ public class Game {
                             // action = getInput();
                             while (true) {
                                 try {
-                                    System.out.println("Check /       / Fold");
+                                    System.out.println("Check / ??   / Fold");
                                     System.out.print("Action> ");
                                     action = inputHandler.getInput();
                                     if (action.equals("call") || action.equals("raise") || action.equals("bet")) {
@@ -510,18 +499,6 @@ public class Game {
         table1.setPot(0);
     }
 
-    public static void moveBlind(Player[] turnOrder) {
-        Player temp = turnOrder[0];
-        for (int i = 1; i < turnOrder.length; i++) {
-            turnOrder[i - 1] = turnOrder[i];
-            turnOrder[i].setIsBlindPaid(false);
-            turnOrder[i].setIsBigBlind(false);
-            turnOrder[i].setIsSmallBlind(false);
-        }
-
-        turnOrder[turnOrder.length - 1] = temp;
-        turnOrder[0].setIsBigBlind(true);
-        turnOrder[1].setIsSmallBlind(true);
-    }
+  
 
 }

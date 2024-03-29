@@ -192,9 +192,9 @@ public class PlayerBot extends Player{
         System.out.println();
     }
 
-    public static void randomangryreply(String talkerName, String raiserName, int randomreply) {
+    public static void randomAngryReply(String talkerName, String raiserName, int randomReply) {
         String angryreply = null;
-        switch (randomreply) {
+        switch (randomReply) {
             case 1:
                 angryreply = "You mf";
                 break;

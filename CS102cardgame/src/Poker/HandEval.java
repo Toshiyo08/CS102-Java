@@ -120,7 +120,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
                 }
             }
         }
-
+        
         return 0;
     }
 

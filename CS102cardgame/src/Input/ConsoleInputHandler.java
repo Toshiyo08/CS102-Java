@@ -15,16 +15,15 @@ public class ConsoleInputHandler implements InputHandler {
     @Override
     public String getInput() {
         while (true) {
-        try {
+            try {
                 sc = new Scanner(System.in);
                 String inputCommand = sc.nextLine();
                 inputCommand = inputCommand.trim().toLowerCase();
                 // inputCommand = inputCommand.replaceAll("\\s", "");
-                if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")  
-                || inputCommand.equals("bet")|| inputCommand.equals("raise")){
+                if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")
+                        || inputCommand.equals("bet") || inputCommand.equals("raise")) {
                     return inputCommand;
-                } 
-                else {
+                } else {
                     throw new InputMismatchException("Invalid input");
                 }
             } catch (InputMismatchException e) {
@@ -35,7 +34,7 @@ public class ConsoleInputHandler implements InputHandler {
 
     @Override
     public int getBetInput(Player p) {
-         int inputBet;
+        int inputBet;
         while (true) {
             try {
                 sc = new Scanner(System.in);
@@ -78,5 +77,23 @@ public class ConsoleInputHandler implements InputHandler {
         }
     }
 
+    public String getBigBlindInput(String action, Player o) {
+        ConsoleInputHandler handler = new ConsoleInputHandler();
+        while (true) {
+            try {
+                System.out.println("Check / Bet / Fold");
+                System.out.print("Action> ");
+                action = handler.getInput();
+                if (action.equals("call") || action.equals("raise")) {
+                    throw new InputMismatchException("You cannot " + action + "!");
+                }
+                o.setIsBlindPaid(true);
+                return action;
+                //break;
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
 }

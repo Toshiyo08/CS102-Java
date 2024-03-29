@@ -15,7 +15,7 @@ public class Player {
     private boolean isBlindPaid;
     private int betAmt;
     private int balance;
-    private ArrayList<Card> hand; // 10jqka|23456789 10|11|12|13|14
+    private ArrayList<Card> hand; 
     
     //what is type?
     public Player(String name, String type) {
@@ -46,11 +46,11 @@ public class Player {
         this.isChecked = isChecked;
     }
 
-    public Boolean getIsPlaying() {
+    public boolean getIsPlaying() {
         return this.isPlaying;
     }
 
-    public void setIsPlaying(Boolean isPlaying) {
+    public void setIsPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
 
@@ -62,9 +62,9 @@ public class Player {
         this.betAmt = newBet;
     }
 
-    public void raiseBet(int raisedamt) {
-        this.betAmt += raisedamt;
-        this.balance -= raisedamt;
+    public void raiseBet(int raisedAmt) {
+        this.betAmt += raisedAmt;
+        this.balance -= raisedAmt;
     }
 
     public int getBalance(){

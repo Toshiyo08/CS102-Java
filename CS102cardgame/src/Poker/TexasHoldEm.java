@@ -41,13 +41,9 @@ public class TexasHoldEm {
 
         int originalBalance = userPlayer.getBalance();
 
-        // keep track of player's turn
-        Player[] turnOrder = new Player[playersList.size()];
-        for (int i = 0; i < playersList.size(); i++) {
-            turnOrder[i] = playersList.get(i);
-        }
-        turnOrder[0].setIsBigBlind(true);
-        turnOrder[1].setIsSmallBlind(true);
+        // set initial blinds
+        Player[] turnOrder = PlayerOrder.setInitialBlinds(playersList);
+
         boolean gameContinue = true;
 
         int gameCounter = 1;
@@ -88,7 +84,7 @@ public class TexasHoldEm {
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
                     // Reset everything
-                    Game.moveBlind(turnOrder);
+                    PlayerOrder.moveBlind(turnOrder);
                     continue;
                 }
 
@@ -120,7 +116,7 @@ public class TexasHoldEm {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    Game.moveBlind(turnOrder);
+                    PlayerOrder.moveBlind(turnOrder);
                     continue;
                 }
 
@@ -148,7 +144,7 @@ public class TexasHoldEm {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    Game.moveBlind(turnOrder);
+                    PlayerOrder.moveBlind(turnOrder);
                     continue;
                 }
 
@@ -176,7 +172,7 @@ public class TexasHoldEm {
                     gameContinue = false;
                     scRoundEndallin.close();
                 } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    Game.moveBlind(turnOrder);
+                    PlayerOrder.moveBlind(turnOrder);
                     continue;
                 }
 
@@ -202,7 +198,7 @@ public class TexasHoldEm {
                 scRoundEndallin.close();
             } else if (newRound.equals("Y") || newRound.equals("y")) {
                 Game.resetRound(playersList, table1);
-                Game.moveBlind(turnOrder); // moves big blind small blind, moves order of players
+                PlayerOrder.moveBlind(turnOrder); // moves big blind small blind, moves order of players
                 continue;
             }
 
@@ -224,7 +220,5 @@ public class TexasHoldEm {
         }
 
     }
-
-    
 
 }
