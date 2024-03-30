@@ -10,9 +10,9 @@ public class Player {
     private String name;
     private boolean isPlaying; //active Player or not
     private boolean isChecked; //checked/called or not
-    private boolean isBigBlind;
-    private boolean isSmallBlind;
-    private boolean isBlindPaid;
+    private boolean isBigBlind; //Big Blind or not
+    private boolean isSmallBlind; //Small Blind or not
+    private boolean isBlindPaid; //Check if the player has paid the blind
     private int betAmt;
     private int balance;
     private ArrayList<Card> hand; 

@@ -30,8 +30,6 @@ public class TexasHoldEm {
         // texasHoldEm.startingScreen();
 
         Scanner sc = new Scanner(System.in);
-        // System.out.println("Enter your name: ");
-        // String name = sc.nextLine();
         String name = "";
         System.out.println("Please enter a name between 3 and 6 characters"); 
         while (true) {
@@ -63,15 +61,12 @@ public class TexasHoldEm {
         Player userPlayer = new Player(name, "Player");
         playersList.add(userPlayer);
         Player userPlayer1 = new PlayerBot("Bot1", "Bot", randomTightness1);
-        System.out.println(randomTightness1);
         playersList.add(userPlayer1);
         int randomTightness2 = ran.nextInt(31) + 10;
         Player userPlayer2 = new PlayerBot("Bot2", "Bot", randomTightness2);
-        System.out.println(randomTightness2);
         playersList.add(userPlayer2);
         int randomTightness3 = ran.nextInt(31) + 10;
         Player userPlayer3 = new PlayerBot("Bot3", "Bot", randomTightness3);
-        System.out.println(randomTightness3);
         playersList.add(userPlayer3);
 
         int originalBalance = userPlayer.getBalance();
@@ -82,6 +77,8 @@ public class TexasHoldEm {
         boolean gameContinue = true;
 
         int gameCounter = 1;
+
+        //used while loop to start new game instead of for loop (for loop runs finite number of times)
 
         while (gameContinue) {
             int numTimesBet = 0;
@@ -96,6 +93,7 @@ public class TexasHoldEm {
             // Shuffle Deck
             Collections.shuffle(deck1.getCards());
 
+            //Dealing player cards
             for (Player e : playersList) {
                 e.draw(deck1.dealCard());
                 e.draw(deck1.dealCard());
@@ -110,17 +108,10 @@ public class TexasHoldEm {
                     gameContinue = false;
                     break;
                 }
-
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
-                    // Reset everything
+                if (inputHandler.getGameContinue()){
                     PlayerOrder.moveBlind(turnOrder);
-                    continue;
+                } else {
+                    gameContinue = false;
                 }
 
                 continue;
@@ -143,16 +134,10 @@ public class TexasHoldEm {
                     gameContinue = false;
                     break;
                 }
-
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
+                if (inputHandler.getGameContinue()){
                     PlayerOrder.moveBlind(turnOrder);
-                    continue;
+                } else {
+                    gameContinue = false;
                 }
 
                 continue;
@@ -172,15 +157,11 @@ public class TexasHoldEm {
                     gameContinue = false;
                     break;
                 }
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
+
+                if (inputHandler.getGameContinue()){
                     PlayerOrder.moveBlind(turnOrder);
-                    continue;
+                } else {
+                    gameContinue = false;
                 }
 
                 continue;
@@ -200,23 +181,23 @@ public class TexasHoldEm {
                     gameContinue = false;
                     break;
                 }
-                Scanner scRoundEndallin = new Scanner(System.in);
-                System.out.println("Start new round?(Y / N)> ");
-                String newRound = scRoundEndallin.nextLine();
-                if (newRound.equals("N") || newRound.equals("n")) {
-                    gameContinue = false;
-                    scRoundEndallin.close();
-                } else if (newRound.equals("Y") || newRound.equals("y")) {
+
+                if (inputHandler.getGameContinue()){
                     PlayerOrder.moveBlind(turnOrder);
-                    continue;
+                } else {
+                    gameContinue = false;
                 }
 
                 continue;
             }
-
-            //for second game
-            // System.out.println(table1.getPot());
-
+            
+            ArrayList<Player> activePlayers = new ArrayList<Player>();
+            for (Player o : playersList) {
+                activePlayers.add(o);
+            }
+            GameTextDisplay.printCard(table1.getCommCards());
+            GameTextDisplay.printShowDown(activePlayers);
+            
             Winner.getWinner(playersList, table1);
 
             System.out.println("Round over");
@@ -225,17 +206,13 @@ public class TexasHoldEm {
                 gameContinue = false;
                 break;
             }
-            Scanner scRoundEndallin = new Scanner(System.in);
-            System.out.println("Start new round?(Y / N)> ");
-            String newRound = scRoundEndallin.nextLine();
-            if (newRound.equals("N") || newRound.equals("n")) {
-                gameContinue = false;
-                scRoundEndallin.close();
-            } else if (newRound.equals("Y") || newRound.equals("y")) {
-                Game.resetRound(playersList, table1);
-                PlayerOrder.moveBlind(turnOrder); // moves big blind small blind, moves order of players
-                continue;
-            }
+
+            if (inputHandler.getGameContinue()){
+                    Game.resetRound(playersList, table1);
+                    PlayerOrder.moveBlind(turnOrder);
+                } else {
+                    gameContinue = false;
+                }
 
             continue;
         }
@@ -250,7 +227,7 @@ public class TexasHoldEm {
             System.out.println("You lost everything!");
         } else if (userPlayer.getBalance() == 300) {
             System.out.println("Damn, you didn't win anything? Congrats on wasting your time!");
-        } else /* if (originalBalance < userPlayer.getBalance()) */ {
+        } else  {
             System.out.println("You won $" + (userPlayer.getBalance() - originalBalance));
         }
 

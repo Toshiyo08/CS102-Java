@@ -17,9 +17,9 @@ public class ConsoleInputHandler implements InputHandler {
         while (true) {
             try {
                 sc = new Scanner(System.in);
+                System.out.print("Action> ");
                 String inputCommand = sc.nextLine();
                 inputCommand = inputCommand.trim().toLowerCase();
-                // inputCommand = inputCommand.replaceAll("\\s", "");
                 if (inputCommand.equals("check") || inputCommand.equals("fold") || inputCommand.equals("call")
                         || inputCommand.equals("bet") || inputCommand.equals("raise")) {
                     return inputCommand;
@@ -33,22 +33,27 @@ public class ConsoleInputHandler implements InputHandler {
     }
 
     @Override
-    public int getBetInput(Player p) {
+    public int getBetInput(Player p, String action) {
         int inputBet;
         while (true) {
             try {
                 sc = new Scanner(System.in);
-                if (sc.hasNextInt()) {
+                if (action.equals("bet")) {
+                        System.out.print("Bet to?> ");
+                } else {
+                    System.out.print("Raise to?> ");
+                }
+                if (sc.hasNextInt()){
                     inputBet = sc.nextInt();
                     if (inputBet - p.getBet() > p.getBalance()) {
-                        throw new InputMismatchException("Insufficient Balance, Enter new bet> ");
+                        throw new InputMismatchException("Insufficient Balance!");
                     }
                     return inputBet;
                 } else {
-                    throw new InputMismatchException("Invalid input");
+                    throw new InputMismatchException("Invalid input!");
                 }
             } catch (InputMismatchException e) {
-                System.out.print(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -82,15 +87,33 @@ public class ConsoleInputHandler implements InputHandler {
         while (true) {
             try {
                 System.out.println("Check / Bet / Fold");
-                System.out.print("Action> ");
                 action = handler.getInput();
                 if (action.equals("call") || action.equals("raise")) {
                     throw new InputMismatchException("You cannot " + action + "!");
                 }
                 o.setIsBlindPaid(true);
                 return action;
-                //break;
             } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public boolean getGameContinue() {
+        while (true) {
+            Scanner scRoundEndallin = new Scanner(System.in);
+            try {
+                System.out.print("Start new round?(Y / N)> ");
+                String newRound = scRoundEndallin.nextLine();
+                if (newRound.equals("Y") || newRound.equals("y")) {
+                    return true;
+                } else if (newRound.equals("N") || newRound.equals("n")) {
+                    return false;
+                } else {
+                    throw new InputMismatchException("Invalid input!");
+                }
+            } catch (InputMismatchException e) {
+
                 System.out.println(e.getMessage());
             }
         }

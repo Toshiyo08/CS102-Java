@@ -1,9 +1,9 @@
 package Eval;
-// package CS102cardgame.src;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import Base.*;
 
@@ -18,7 +18,7 @@ import Base.*;
         // 1 pair 2 '665K2 --> 6 is the pair
         // High Card 1 2846'A' --> A is the highest card
 
-
+//This class is used to evaluate the hand of the player and the table community cards
 
 public class HandEval { /* If no Turn or River, value taken in parameter is 0 or B */
     public static int getHandValue(ArrayList<Card> playerHand, ArrayList<Card> tableCommCards) {
@@ -32,7 +32,6 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
             handTable.add(tableCommCards.get(i));
         }
         Collections.sort(handTable, Comparator.comparing(Card::getRank).reversed());
-        // System.out.println(handTable);
 
         int copy[] = new int[15];
         for (int i = 0; i < 14; i++) {
@@ -251,5 +250,73 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
             }
         }
         return 0;
+    }
+
+    public static double calculateChenScore(List<Card> hand) {
+        Card card1 = hand.get(0);
+        Card card2 = hand.get(1);
+        int rank1 = card1.getRank();
+        String suit1 = card1.getSuit();
+        int rank2 = card2.getRank();
+        String suit2 = card2.getSuit();
+        int highRank = Math.max(rank1, rank2);
+        int lowRank = Math.min(rank1, rank2);
+        int rankDiff = highRank - lowRank;
+        int gap = (rankDiff > 1) ? rankDiff - 1 : 0;
+        boolean isPair = (rank1 == rank2);
+        boolean isSuited = (suit1.equals(suit2));
+
+        double score = 0;
+
+        // 1. Base score highest rank only
+        // Ace
+        if (highRank == 14) {
+            score = 10.0;
+        } else if (highRank == 13) {
+            score = 8.0;
+        } else if (highRank == 12) {
+            score = 7.0;
+        } else if (highRank == 11) {
+            score = 6.0;
+        } else {
+            score = (highRank + 2) / 2.0;
+        }
+
+        // 2. If pair, double score, with minimum score of 5.
+        if (isPair) {
+            score *= 2.0;
+            if (score < 5.0) {
+                score = 5.0;
+            }
+        }
+
+        // 3. If suited, add 2 points.
+        if (isSuited) {
+            score += 2.0;
+        }
+
+        // 4. Subtract points for gap.
+        if (gap == 1) {
+            score -= 1.0;
+        } else if (gap == 2) {
+            score -= 2.0;
+        } else if (gap == 3) {
+            score -= 4.0;
+        } else if (gap > 3) {
+            score -= 5.0;
+        }
+
+        // 5. Add 1 point for a 0 or 1 gap and both cards lower than a Queen.
+        if (!isPair && gap < 2 && rank1 < 12 && rank2 < 12) {
+            score += 1.0;
+        }
+
+        // Minimum score is 0.
+        if (score < 0.0) {
+            score = 0.0;
+        }
+
+        // 6. Round half point scores up.
+        return score;
     }
 }

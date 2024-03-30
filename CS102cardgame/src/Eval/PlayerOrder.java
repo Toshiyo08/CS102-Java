@@ -3,6 +3,8 @@ package Eval;
 import Players.*;
 import java.util.ArrayList;
 
+//This class is responsible for keeping track of the order of the players in the game.
+
 public class PlayerOrder {
     private Player[] players;
 

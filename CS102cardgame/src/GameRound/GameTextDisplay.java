@@ -1,26 +1,29 @@
 package GameRound;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 import Base.*;
 import Players.*;
+import Input.*;
 
+//Single Responsibility Principle -> only changing print statements here
 public class GameTextDisplay {
     public void startingScreen() {
 
         System.out.println("                                                                       Welcome to");
         System.out.println(
-                "                                                        .------..------..------..------..------."          );
+                "                                                        .------..------..------..------..------.");
         System.out.println(
-                "                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |"          );
+                "                                                        |T.--. ||E.--. ||X.--. ||A.--. ||S.--. |");
         System.out.println(
-                "                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |"          );
+                "                                                        | :/\\: || (\\/) || :/\\: || (\\/) || :/\\: |");
         System.out.println(
-                "                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |"          );
+                "                                                        | (__) || :\\/: || (__) || :\\/: || :\\/: |");
         System.out.println(
-                "                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|"          );
+                "                                                        | '--'T|| '--'E|| '--'X|| '--'A|| '--'S|");
         System.out.println(
-                "                                                        `------'`------'`------'`------'`------'"          );
+                "                                                        `------'`------'`------'`------'`------'");
         System.out.println(
                 "                                                .------..------..------..------..------..------..------.");
         System.out.println(
@@ -34,7 +37,7 @@ public class GameTextDisplay {
         System.out.println(
                 "                                                `------'`------'`------'`------'`------'`------'`------'");
         System.out.print("Shuffling Cards ");
-      
+
         for (int i = 0; i < 3; i++) {
             try {
                 Thread.sleep(700);
@@ -92,12 +95,12 @@ public class GameTextDisplay {
 
     public static void showPlayerAttributes(Player o, Table table1, boolean afterRound1) {
         String playerName = o.getName();
-        
-        if (o.getType().equals("Player")){
+
+        if (o.getType().equals("Player")) {
             System.out.println(playerName + " hand: ");
             GameTextDisplay.printCard(o.getHand());
         }
-        
+
         System.out.println("┌────────────────┐──────┐");
         switch (playerName.length()) {
             case 6:
@@ -113,7 +116,8 @@ public class GameTextDisplay {
                 System.out.print("| " + playerName + " balance    | ");
                 break;
         }
-        if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) { // Not chen round, big blind, and not blinded yet
+        if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) { // Not chen round, big blind, and not blinded
+                                                                        // yet
             o.raiseBet(10);
             table1.raiseCurrentBetAmt(10);
             table1.raisePot(10);
@@ -350,6 +354,116 @@ public class GameTextDisplay {
         }
         System.out.println();
 
+    }
+
+    public static void printShowDown(ArrayList<Player> showDownPlayers) {
+        ArrayList<Card> showDownCards = new ArrayList<Card>();
+        for (Player h : showDownPlayers) {
+            if (h.getIsPlaying()) {
+                switch (h.getName().length()) {
+                    case 6:
+                        System.out.print(" " + h.getName() + "                   ");
+                        break;
+                    case 5:
+                        System.out.print(" " + h.getName() + "                    ");
+                        break;
+                    case 4:
+                        System.out.print(" " + h.getName() + "                     ");
+                        break;
+                    default:
+                        System.out.print(" " + h.getName() + "                      ");
+                        break;
+                }
+                showDownCards.addAll(h.getHand());
+            }
+        }
+        System.out.println();
+        GameTextDisplay.printCard(showDownCards);
+    }
+
+    public static String getSmallBlindInput(Player o, Table table1, InputHandler inputHandler, String action) {
+        while (true) {
+            try {
+                if (o.getBet() < table1.getCurrentBetAmt()) { // Someone raised
+                    if (table1.getCurrentBetAmt() == 10) {
+                        System.out.println("Call / Bet / Fold");
+                        action = inputHandler.getInput();
+                        if (action.equals("check") || action.equals("raise")) {
+                            throw new InputMismatchException("You cannot " + action + "!");
+                        }
+                    } else {
+                        System.out.println("Call / Raise / Fold");
+                        action = inputHandler.getInput();
+                        if (action.equals("check") || action.equals("bet")) {
+                            throw new InputMismatchException("You cannot " + action + "!");
+                        }
+                    }
+                } else { // No one raised yet
+                    System.out.println("Check / Bet / Fold");
+                    action = inputHandler.getInput();
+                    if (action.equals("call") || action.equals("raise")) {
+                        throw new InputMismatchException("You cannot " + action + "!");
+                    }
+                }
+                o.setIsBlindPaid(true);
+                return action;
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static String getNonBlindPlayerInput(Player o, Table table1, InputHandler inputHandler, String action){
+        // If broke
+        if (o.getBalance() == 0) {
+            System.out.println("You have 0 balance left, no actions available");
+            action = "check";
+            return action;
+            // If not broke
+        } else {
+            while (true) {
+                try {
+                    // Someone raised
+                    if (o.getBet() < table1.getCurrentBetAmt()) {
+
+                        // Not enough to raise beyond, balance not enough
+                        if (o.getBalance() + o.getBet() <= table1.getCurrentBetAmt()) {
+                            System.out.println("Call (All in) /       / Fold");
+                            action = inputHandler.getInput();
+
+                            if (action.equals("check") || action.equals("raise")
+                                    || action.equals("bet")) {
+                                throw new InputMismatchException("You cannot " + action + "!");
+                            }
+                            return action;
+
+                            // Enough to call OR raise beyond
+                        } else {
+                            System.out.println("Call / Raise / Fold");
+                            action = inputHandler.getInput();
+
+                            if (action.equals("check") || action.equals("bet")) {
+                                throw new InputMismatchException("You cannot " + action + "!");
+                            }
+                            return action;
+                        }
+
+                        // No one raised
+                    } else {
+                        System.out.println("Check / Bet / Fold");
+                        action = inputHandler.getInput();
+
+                        if (action.equals("call") || action.equals("raise")) {
+                            throw new InputMismatchException("You cannot " + action + "!");
+                        }
+                        return action;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+        }
     }
 
 }

@@ -2,20 +2,19 @@ package GameRound;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import Base.*;
 import Eval.*;
 import Players.*;
 
+
+// Winner class is used to determine the winner of the game
 public class Winner {
     public static void getWinner(ArrayList<Player> playersList, Table table1) {
-        Map<Player, Integer> winner = new HashMap<>();
+        HashMap<Player, Integer> winner = new HashMap<>();
 
         for (Player o : playersList) {
             if (o.getIsPlaying()) {
-                // System.out.println("Player " + o.getName() + " hand:");
-                // GameTextDisplay.printCard(o.getHand());
                 winner.put(o, HandEval.getHandValue(o.getHand(), table1.getCommCards()));
                 System.out.println();
             }

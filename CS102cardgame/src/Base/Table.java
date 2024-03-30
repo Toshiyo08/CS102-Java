@@ -1,6 +1,4 @@
 package Base;
-// package CS102cardgame.src;
-import Base.Card;
 
 import java.util.*;
 
@@ -14,7 +12,6 @@ public class Table {
         this.pot = 0;
         this.currentBetAmt = 0;
     }
-
 
     public ArrayList<Card> getCommCards() {
         return commCards;
@@ -31,7 +28,6 @@ public class Table {
     public int getCurrentBetAmt () {
         return currentBetAmt;
     }
-
 
     public void drawComm(Card newCard) {
         this.commCards.add(newCard);
