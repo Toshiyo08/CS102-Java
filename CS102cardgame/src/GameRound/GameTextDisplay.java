@@ -65,9 +65,11 @@ public class GameTextDisplay {
         System.out.println();
     }
 
+    // Prints the Player's/Bot's Balance, Bet, Blind and Table's Bet, Pot
     public static void showPlayerAttributes(Player o, Table table1, boolean afterRound1) {
         String playerName = o.getName();
 
+        // Only if player type is a Player, print the player's hand
         if (o.getType().equals("Player")) {
             System.out.println(playerName + " hand: ");
             GameTextDisplay.printCard(o.getHand());
@@ -88,8 +90,8 @@ public class GameTextDisplay {
                 System.out.print("| " + playerName + " balance    | ");
                 break;
         }
-        if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) { // Not chen round, big blind, and not blinded
-                                                                        // yet
+        if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) { // Pre-Flop, big blind, and not blinded
+            // Change blind amount accordingly to whether bot can pay it
             if (o.getBalance() < 10) {
                 int remainingBalance = o.getBalance();
                 o.raiseBet(remainingBalance);
@@ -103,7 +105,8 @@ public class GameTextDisplay {
             
             System.out.print(o.getBalance());
 
-        } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
+        } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) { // Pre-Flop, big blind, and not blinded
+            // Change blind amount accordingly to whether bot can pay it
             if (o.getBalance() < 5){
                 int remainingBalance = o.getBalance();
                 if (remainingBalance > table1.getCurrentBetAmt()) {
@@ -121,7 +124,7 @@ public class GameTextDisplay {
             
             System.out.print(o.getBalance());
 
-        } else {
+        } else { // Flop/Turn/River balance
             System.out.print(o.getBalance());
         }
         if (o.getBalance() >= 1000) {
@@ -171,6 +174,7 @@ public class GameTextDisplay {
         System.out.println("└────────────────┘──────┘");
     }
 
+    // Prints the card for however many cards there are in the given ArrayList
     public static void printCard(ArrayList<Card> handTable) {
         for (int i = 0; i < handTable.size(); i++) {
             System.out.print(" ┌─────────┐ ");
@@ -374,6 +378,25 @@ public class GameTextDisplay {
         GameTextDisplay.printCard(showDownCards);
     }
 
+    // Changes the Player's action prompts accordingly if they have a big blind
+    public static String getBigBlindInput(String action, Player o) {
+        ConsoleInputHandler handler = new ConsoleInputHandler();
+        while (true) {
+            try {
+                System.out.println("Check / Bet / Fold");
+                action = handler.getInput();
+                if (action.equals("call") || action.equals("raise")) {
+                    throw new InputMismatchException("You cannot " + action + "!");
+                }
+                o.setIsBlindPaid(true);
+                return action;
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    // Changes the Player's action prompts accordingly if they have a small blind
     public static String getSmallBlindInput(Player o, Table table1, InputHandler inputHandler, String action) {
         while (true) {
             try {
@@ -405,7 +428,7 @@ public class GameTextDisplay {
             }
         }
     }
-
+    // Changes the Player's action prompts accordingly if they have no blind
     public static String getNonBlindPlayerInput(Player o, Table table1, InputHandler inputHandler, String action){
         // If broke
         if (o.getBalance() == 0) {

@@ -76,7 +76,7 @@ public class Game {
                         System.out.println("Pot: Big Blind! That's $10 thanks");
 
                         //modified this, want to modify for small blind
-                        action = inputHandler.getBigBlindInput(action, o);
+                        action = GameTextDisplay.getBigBlindInput(action, o);
 
                         // If Small Blind
                     } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {

@@ -8,7 +8,6 @@ import Players.Player;
 public interface InputHandler {
     String getInput();
     int getBetInput(Player p, String action);
-    String getBigBlindInput(String action, Player o);
     boolean getGameContinue();
     
 }
