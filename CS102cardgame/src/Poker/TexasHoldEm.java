@@ -11,12 +11,15 @@ import GameRound.*;
 import Input.*;
 import Players.*;
 import Eval.*;
+import Input.*;
 
 public class TexasHoldEm {
     private GameTextDisplay gameTextDisplay;
+    private ConsoleInputHandler inputHandler;
 
-    public TexasHoldEm(GameTextDisplay gameTextDisplay) {
+    public TexasHoldEm(GameTextDisplay gameTextDisplay, ConsoleInputHandler inputHandler) {
         this.gameTextDisplay = gameTextDisplay;
+        this.inputHandler = inputHandler;
     }
 
     public void startingScreen() {
@@ -26,15 +29,34 @@ public class TexasHoldEm {
     public static void main(String[] args) {
         ArrayList<Player> playersList = new ArrayList<Player>();
 
-        TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
+        TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay(), new ConsoleInputHandler());
         // texasHoldEm.startingScreen();
 
         // Get player's name 
-        String name = ConsoleInputHandler.getPlayerNameInput();
-
-
+        Scanner sc = new Scanner(System.in);
+        String name = "";
+        System.out.println("Please enter a name between 3 and 6 characters"); 
+        while (true) {
+            try {
+                System.out.print("Name> ");
+                Scanner scName = new Scanner(System.in);
+                name = scName.nextLine();
+                name = name.trim();
+                if (name == "") {
+                    throw new InputMismatchException("No name was entered!");
+                } 
+                if (name.length() >= 7) {
+                    throw new InputMismatchException("Please enter a name of not more than 6 characters!");
+                }
+                if (name.length() <= 2) {
+                    throw new InputMismatchException("Please enter a name of at least 3 characters!");
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         // Initialise a player that user controls and add into list of players
-        // 
         Random ran = new Random();
         int randomTightness1 = ran.nextInt(361) + 20; //generates a tightness of 20 to 60
         Player userPlayer = new Player(name, "Player");
@@ -58,7 +80,6 @@ public class TexasHoldEm {
         int gameCounter = 1;
 
         //used while loop to start new game instead of for loop (for loop runs finite number of times)
-
         while (gameContinue) {
             int numTimesBet = 0;
             boolean afterRound1 = false;

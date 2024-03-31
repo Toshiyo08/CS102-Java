@@ -58,32 +58,6 @@ public class ConsoleInputHandler implements InputHandler {
         }
     }
 
-    public static int getNumBot() {
-        int numberOfPlayers = 0;
-        while (true) {
-            try {
-                System.out.print("Please enter the number of desired bots> ");
-                Scanner playerNumbers = new Scanner(System.in);
-                if (playerNumbers.hasNextInt()) {
-                    numberOfPlayers = playerNumbers.nextInt();
-                    if (numberOfPlayers <= 0) {
-                        throw new InputMismatchException("There must be at least 1 bot!");
-                    }
-                    if (numberOfPlayers >= 10) {
-                        throw new InputMismatchException("Too many! You can have at most 9 bots");
-                    }
-                    return numberOfPlayers;
-                } else {
-                    throw new InputMismatchException("Invalid input");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    
-
     public boolean getGameContinue() {
         while (true) {
             Scanner scRoundEndallin = new Scanner(System.in);
@@ -104,31 +78,5 @@ public class ConsoleInputHandler implements InputHandler {
         }
     }
 
-    public static String getPlayerNameInput() {
-        Scanner sc = new Scanner(System.in);
-        String name = "";
-        System.out.println("Please enter a name between 3 and 6 characters"); 
-        while (true) {
-            try {
-                System.out.print("Name> ");
-                Scanner scName = new Scanner(System.in);
-                name = scName.nextLine();
-                name = name.trim();
-                if (name == "") {
-                    throw new InputMismatchException("No name was entered!");
-                } 
-                if (name.length() >= 7) {
-                    throw new InputMismatchException("Please enter a name of not more than 6 characters!");
-                }
-                if (name.length() <= 2) {
-                    throw new InputMismatchException("Please enter a name of at least 3 characters!");
-                }
-                return name;
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        
-    }
 
 }
