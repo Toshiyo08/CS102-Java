@@ -54,6 +54,7 @@ public class Game {
         // System.out.println("Betting Phase: " + bettingRoundName);
         if (!(bettingRoundName.equals("Pre-Flop"))) {
             GameTextDisplay.printCard(table1.getCommCards());
+            wait(1000);
         }
         
 
@@ -311,7 +312,6 @@ public class Game {
         //if only 1 player is not bankrupt, all remaining players to open hand
         if (bankruptCounter >= activePlayerCounter - 1 || activePlayerCounter == 1) {
             isOpenHandTime = true;
-            System.out.println("OPENHAND");
         } else {
             return false;
         }
@@ -333,6 +333,7 @@ public class Game {
             //if everybody all in or all but one all in, then show hand
             System.out.println("Community Cards");
             GameTextDisplay.printCard(table1.getCommCards());
+            Game.wait(1000);
             GameTextDisplay.printShowDown(activePlayers);
             Winner.getWinner(playersList, table1);
 
@@ -354,6 +355,7 @@ public class Game {
                 o.setIsPlaying(true);
             }
             o.setBet(0);
+            System.out.println();
         }
         table1.getCommCards().clear();
         table1.setCurrentBetAmt(0);
