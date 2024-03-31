@@ -57,10 +57,10 @@ public class TexasHoldEm {
         // Initialise a player that user controls and add into list of players
         // correct to initialise here
         Random ran = new Random();
-        int randomTightness1 = ran.nextInt(31) + 10; //generates a tightness of 10 to 30
+        int randomTightness1 = ran.nextInt(361) + 20; //generates a tightness of 20 to 60
         Player userPlayer = new Player(name, "Player");
         playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Bot1", "Bot", randomTightness1);
+        Player userPlayer1 = new PlayerBot("Bot1", "Bot", 60); // change back
         playersList.add(userPlayer1);
         int randomTightness2 = ran.nextInt(31) + 10;
         Player userPlayer2 = new PlayerBot("Bot2", "Bot", randomTightness2);
@@ -102,7 +102,7 @@ public class TexasHoldEm {
             // 1st Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
             if (Game.timeToOpenHand(playersList, table1, deck1, numTimesBet)) {
-                Game.resetRound(playersList, table1); // Resets player and table attributes
+                Game.resetRound(playersList, table1); // Resets player (except player's balance) and table attributes
 
                 if (Winner.isWinLose(playersList)) { // If you win all or lost all, game ends.
                     gameContinue = false;
