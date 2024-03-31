@@ -29,29 +29,30 @@ public class TexasHoldEm {
         TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
         // texasHoldEm.startingScreen();
 
-        Scanner sc = new Scanner(System.in);
-        String name = "";
-        System.out.println("Please enter a name between 3 and 6 characters"); 
-        while (true) {
-            try {
-                System.out.print("Name> ");
-                Scanner scName = new Scanner(System.in);
-                name = scName.nextLine();
-                name = name.trim();
-                if (name == "") {
-                    throw new InputMismatchException("No name was entered!");
-                } 
-                if (name.length() >= 7) {
-                    throw new InputMismatchException("Please enter a name of not more than 6 characters!");
-                }
-                if (name.length() <= 2) {
-                    throw new InputMismatchException("Please enter a name of at least 3 characters!");
-                }
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        String name = ConsoleInputHandler.getPlayerNameInput();
+        // Scanner sc = new Scanner(System.in);
+        // String name = "";
+        // System.out.println("Please enter a name between 3 and 6 characters"); 
+        // while (true) {
+        //     try {
+        //         System.out.print("Name> ");
+        //         Scanner scName = new Scanner(System.in);
+        //         name = scName.nextLine();
+        //         name = name.trim();
+        //         if (name == "") {
+        //             throw new InputMismatchException("No name was entered!");
+        //         } 
+        //         if (name.length() >= 7) {
+        //             throw new InputMismatchException("Please enter a name of not more than 6 characters!");
+        //         }
+        //         if (name.length() <= 2) {
+        //             throw new InputMismatchException("Please enter a name of at least 3 characters!");
+        //         }
+        //         break;
+        //     } catch (InputMismatchException e) {
+        //         System.out.println(e.getMessage());
+        //     }
+        // }
 
 
         // Initialise a player that user controls and add into list of players

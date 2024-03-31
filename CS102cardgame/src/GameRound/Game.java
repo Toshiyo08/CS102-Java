@@ -54,6 +54,7 @@ public class Game {
         // System.out.println("Betting Phase: " + bettingRoundName);
         if (!(bettingRoundName.equals("Pre-Flop"))) {
             GameTextDisplay.printCard(table1.getCommCards());
+            wait(1000);
         }
         
 
