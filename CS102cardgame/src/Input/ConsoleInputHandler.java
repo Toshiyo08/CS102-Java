@@ -82,22 +82,7 @@ public class ConsoleInputHandler implements InputHandler {
         }
     }
 
-    public String getBigBlindInput(String action, Player o) {
-        ConsoleInputHandler handler = new ConsoleInputHandler();
-        while (true) {
-            try {
-                System.out.println("Check / Bet / Fold");
-                action = handler.getInput();
-                if (action.equals("call") || action.equals("raise")) {
-                    throw new InputMismatchException("You cannot " + action + "!");
-                }
-                o.setIsBlindPaid(true);
-                return action;
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+    
 
     public boolean getGameContinue() {
         while (true) {
