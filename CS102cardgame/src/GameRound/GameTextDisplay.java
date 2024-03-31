@@ -103,6 +103,7 @@ public class GameTextDisplay {
             
             System.out.print(o.getBalance());
 
+<<<<<<< Updated upstream
         } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
             if (o.getBalance() < 5){
                 int remainingBalance = o.getBalance();
@@ -119,21 +120,32 @@ public class GameTextDisplay {
                 table1.raisePot(5);
             }
             
+=======
+        } 
+        else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
+            o.raiseBet(5);
+            table1.raisePot(5);
+>>>>>>> Stashed changes
             System.out.print(o.getBalance());
 
         } else {
             System.out.print(o.getBalance());
         }
+
         if (o.getBalance() >= 1000) {
             System.out.println(" |");
         } else if (o.getBalance() >= 100) {
             System.out.println("  |");
         } else if (o.getBalance() >= 10) {
             System.out.println("   |");
-        } else {
+        } 
+        
+        else {
             System.out.println("    |");
         }
         System.out.print("| Your bet       | " + o.getBet());
+
+        
         if (o.getBet() >= 1000) {
             System.out.println(" |");
         } else if (o.getBet() >= 100) {

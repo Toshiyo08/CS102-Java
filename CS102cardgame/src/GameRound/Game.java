@@ -6,15 +6,16 @@ import Base.*;
 import Eval.*;
 import Input.*;
 import Players.*;
+import Bot.*;
 
 public class Game {
 
     /** The maximum number of community cards. */
     private InputHandler inputHandler;
-    //private PlayerBot PlayerBot;
 
     public Game(InputHandler inputHandler) {
         this.inputHandler = inputHandler;
+
     }
 
     public void bettingRound(ArrayList<Player> playersList, Table table1, boolean afterRound1,
