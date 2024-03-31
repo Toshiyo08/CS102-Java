@@ -244,12 +244,6 @@ public class Game {
                     wait(2000);
                 }
 
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 if (getCurrentSize(currentPlayers) == 1) {
                     return;
                 }
@@ -349,9 +343,9 @@ public class Game {
         for (Player o : playersList) {
             o.setIsChecked(false);
             o.getHand().clear();
-            if (o.getBalance() != 0) {
-                o.setIsPlaying(true);
-            }
+            if (o.getBalance() == 0) {
+                o.setIsPlaying(false);
+            } 
             o.setBet(0);
         }
         table1.getCommCards().clear();
