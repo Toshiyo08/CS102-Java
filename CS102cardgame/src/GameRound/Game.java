@@ -309,7 +309,6 @@ public class Game {
         }
         if (bankruptCounter >= activePlayerCounter - 1 || activePlayerCounter == 1) {
             isOpenHandTime = true;
-            System.out.println("OPENHAND");
         } else {
             return false;
         }
@@ -331,7 +330,9 @@ public class Game {
             //if everybody all in or all but one all in, then show hand
             System.out.println("Community Cards");
             GameTextDisplay.printCard(table1.getCommCards());
+            Game.wait(1000);
             GameTextDisplay.printShowDown(activePlayers);
+            Game.wait(1000);
             // DELETE ONLY FOR MAC DEBUGGING BELOW
             for (Card card : table1.getCommCards()){
                 System.out.println(card.getRank() + " of " + card.getSuit());
@@ -362,6 +363,7 @@ public class Game {
                 o.setIsPlaying(true);
             }
             o.setBet(0);
+            System.out.println();
         }
         table1.getCommCards().clear();
         table1.setCurrentBetAmt(0);

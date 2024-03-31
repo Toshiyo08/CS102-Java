@@ -198,7 +198,9 @@ public class TexasHoldEm {
             }
             System.out.println("Community Cards");
             GameTextDisplay.printCard(table1.getCommCards());
+            Game.wait(1000);
             GameTextDisplay.printShowDown(activePlayers);
+            Game.wait(1000);
             // DELETE ONLY FOR MAC DEBUGGING BELOW
             for (Card card : table1.getCommCards()){
                 System.out.println(card.getRank() + " of " + card.getSuit());
