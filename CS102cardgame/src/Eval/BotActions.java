@@ -32,7 +32,7 @@ public class BotActions implements BotLogic{
             if ((handValue) <= 28 && (handValue > 7)) { // ok hand
                 //consider if bot need to call
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance() && o.getBalance() != 0) {
                         return 3;
                     }
                     return 1;
@@ -52,7 +52,7 @@ public class BotActions implements BotLogic{
                 return 1;
             } else if (handValue > 28) {// if handValue > 28 = if better than a pair of 2 good hand
                 
-                if (callAmt > 0.9 * o.getBalance() && handValue < 38) {
+                if ((callAmt > 0.9 * o.getBalance() && handValue < 38)  && o.getBalance() != 0) {
                     return 3;
                 }
                 if (increaseBetTo <= table1.getCurrentBetAmt()) {
@@ -73,7 +73,7 @@ public class BotActions implements BotLogic{
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()  && o.getBalance() != 0) {
                         return 3;
                     }
                     return 1;
@@ -86,14 +86,14 @@ public class BotActions implements BotLogic{
                     return 1;
                 } else {
                     
-                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance() && o.getBalance() != 0) {
                         return 3;
                     }
                     return 1;
                 }
             } else if ((chenScore - chenScoreToPlay) >= (20 - chenScoreToPlay) / 4.0) { // Bot has good hadn enuf to bet
                 
-                if (callAmt > 0.9 * o.getBalance() && chenScore < 14) {
+                if ((callAmt > 0.9 * o.getBalance() && chenScore < 14) && o.getBalance() != 0) {
                     return 3;
                 }
                 if (increaseBetTo <= table1.getCurrentBetAmt()) {
@@ -111,7 +111,7 @@ public class BotActions implements BotLogic{
             } else { // Ok hand
                 
                 if (o.getBet() < table1.getCurrentBetAmt()) {
-                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance()) {
+                    if (callAmt > ((100.0 - botTightness)/100.0) * o.getBalance() && o.getBalance() != 0) {
                         return 3;
                     }
                     return 1;
