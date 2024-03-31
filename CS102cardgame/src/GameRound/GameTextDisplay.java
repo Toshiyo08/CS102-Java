@@ -39,56 +39,28 @@ public class GameTextDisplay {
         System.out.print("Shuffling Cards ");
 
         for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Game.wait(700);
             System.out.print(". ");
         }
 
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Game.wait(800);
         System.out.println();
         System.out.print("Stacking Chips ");
         for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Game.wait(700);
             System.out.print(". ");
         }
 
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Game.wait(800);
         System.out.println();
         System.out.print("Loading ");
         for (int i = 0; i < 10; i++) {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Game.wait(700);
             System.out.print(Character.toChars(0x2593));
         }
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Game.wait(800);
         System.out.print(" 100%");
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Game.wait(1500);
         System.out.println();
         System.out.println();
     }
@@ -487,4 +459,53 @@ public class GameTextDisplay {
         }
     }
 
+    public static void bettingRoundNameArt(int bettingRoundNumber) {
+        switch (bettingRoundNumber) {
+            case 1:
+                System.out.println(".------..------..------.        .------..------..------..------.");
+                System.out.println("|P.--. ||R.--. ||E.--. |        |F.--. ||L.--. ||O.--. ||P.--. |");
+                System.out.println("| :/\\: || :(): || (\\/) |        | :(): || :/\\: || :/\\: || :/\\: |");
+                System.out.println("| (__) || ()() || :\\/: |        | ()() || (__) || :\\/: || (__) |");
+                System.out.println("| '--'P|| '--'R|| '--'E|        | '--'F|| '--'L|| '--'O|| '--'P|");
+                System.out.println("`------'`------'`------'        `------'`------'`------'`------'");
+                break;
+            case 2:
+            System.out.println(".------..------..------..------.");
+            System.out.println("|F.--. ||L.--. ||O.--. ||P.--. |");
+            System.out.println("| :(): || :/\\: || :/\\: || :/\\: |");
+            System.out.println("| ()() || (__) || :\\/: || (__) |");
+            System.out.println("| '--'F|| '--'L|| '--'O|| '--'P|");
+            System.out.println("`------'`------'`------'`------'");
+                break;
+            case 3:
+                System.out.println(".------..------..------..------.");
+                System.out.println("|T.--. ||U.--. ||R.--. ||N.--. |");
+                System.out.println("| :/\\: || (\\/) || :(): || :(): |");
+                System.out.println("| (__) || :\\/: || ()() || ()() |");
+                System.out.println("| '--'T|| '--'U|| '--'R|| '--'N|");
+                System.out.println("`------'`------'`------'`------'");
+
+
+                break;
+            case 4:
+                System.out.println(".------..------..------..------..------.");
+                System.out.println("|R.--. ||I.--. ||V.--. ||E.--. ||R.--. |");
+                System.out.println("| :(): || (\\/) || :(): || (\\/) || :(): |");
+                System.out.println("| ()() || :\\/: || ()() || :\\/: || ()() |");
+                System.out.println("| '--'R|| '--'I|| '--'V|| '--'E|| '--'R|");
+                System.out.println("`------'`------'`------'`------'`------'");
+                break;
+            default:
+                System.out.println(".------..------..------..------.        .------..------..------..------.");
+                System.out.println("|S.--. ||H.--. ||O.--. ||W.--. |        |D.--. ||O.--. ||W.--. ||N.--. |");
+                System.out.println("| :/\\: || :/\\: || :/\\: || :/\\: |        | :/\\: || :/\\: || :/\\: || :(): |");
+                System.out.println("| :\\/: || (__) || :\\/: || :\\/: |        | (__) || :\\/: || :\\/: || ()() |");
+                System.out.println("| '--'S|| '--'H|| '--'O|| '--'W|        | '--'D|| '--'O|| '--'W|| '--'N|");
+                System.out.println("`------'`------'`------'`------'        `------'`------'`------'`------'");
+                break;
+        }
+        
+
+
+    }
 }

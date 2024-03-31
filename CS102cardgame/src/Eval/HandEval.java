@@ -20,7 +20,7 @@ import Base.*;
 
 //This class is used to evaluate the hand of the player and the table community cards
 
-public class HandEval { /* If no Turn or River, value taken in parameter is 0 or B */
+public class HandEval { //Once flop is shown, handeval will evaluate 5 - 7 cards (community and own cards)
     public static int getHandValue(ArrayList<Card> playerHand, ArrayList<Card> tableCommCards) {
        
         // Create an array for the function to refer
@@ -252,7 +252,7 @@ public class HandEval { /* If no Turn or River, value taken in parameter is 0 or
         return 0;
     }
 
-    public static double calculateChenScore(List<Card> hand) {
+    public static double calculateChenScore(List<Card> hand) { //ChenScore min: 0 max: 20, used preflop, evaluates 2 hand cards
         Card card1 = hand.get(0);
         Card card2 = hand.get(1);
         int rank1 = card1.getRank();

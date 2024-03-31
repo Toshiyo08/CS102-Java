@@ -128,7 +128,6 @@ public class BotActions implements BotLogic{
                     Random random = new Random();
                     int ranInt = random.nextInt(10) + 1;
                     if (ranInt >= botTightness%10) {
-                        System.out.println("Risky bet");
                         return 2;
                     }
                 }
@@ -144,6 +143,7 @@ public class BotActions implements BotLogic{
 
     public void botThinking(String name) { //prints out "hmmmm"
         System.out.print(name + ": ");
+        Game.wait(500);
         Random random = new Random();
         int randomint = random.nextInt(6) + 1;
         Game.wait(100);
@@ -152,11 +152,7 @@ public class BotActions implements BotLogic{
             Game.wait(100);
             System.out.print("m");
         }
-        try {
-            Thread.sleep(1000); // Wait for 0.1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Game.wait(1000);
         System.out.println();
     }
 }
