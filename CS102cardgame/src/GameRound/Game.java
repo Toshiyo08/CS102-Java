@@ -345,7 +345,9 @@ public class Game {
             o.getHand().clear();
             if (o.getBalance() == 0) {
                 o.setIsPlaying(false);
-            } 
+            } else {
+                o.setIsPlaying(true);
+            }
             o.setBet(0);
         }
         table1.getCommCards().clear();
