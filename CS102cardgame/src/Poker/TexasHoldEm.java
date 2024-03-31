@@ -123,7 +123,7 @@ public class TexasHoldEm {
                 deck1.burnCard();
                 table1.drawComm(deck1.dealCard());
             }
-            GameTextDisplay.printCard(table1.getCommCards());
+            // GameTextDisplay.printCard(table1.getCommCards());
 
             // 2nd Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -146,7 +146,7 @@ public class TexasHoldEm {
             // Deal Turn
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
-            GameTextDisplay.printCard(table1.getCommCards());
+            // GameTextDisplay.printCard(table1.getCommCards());
 
             // 3rd Betting Round------------------------------
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -170,7 +170,7 @@ public class TexasHoldEm {
             // Deal River
             deck1.burnCard();
             table1.drawComm(deck1.dealCard());
-            GameTextDisplay.printCard(table1.getCommCards());
+            // GameTextDisplay.printCard(table1.getCommCards());
 
             // Last Betting Round
             game.bettingRound(playersList, table1, afterRound1, turnOrder, ++numTimesBet);
@@ -195,6 +195,7 @@ public class TexasHoldEm {
             for (Player o : playersList) {
                 activePlayers.add(o);
             }
+            System.out.println("Community Cards");
             GameTextDisplay.printCard(table1.getCommCards());
             GameTextDisplay.printShowDown(activePlayers);
             // DELETE ONLY FOR MAC DEBUGGING BELOW

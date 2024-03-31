@@ -30,6 +30,9 @@ public class Game {
         
         int numPlayersChecked = 0;
         String previousAction = null;
+        GameTextDisplay.bettingRoundNameArt(numTimesBet);
+        System.out.println();
+        wait(1000);
         String bettingRoundName = null;
         switch (numTimesBet) {
             case 1:
@@ -43,15 +46,23 @@ public class Game {
                 break;
             case 4:
                 bettingRoundName = "River";
+                break;
             default:
                 bettingRoundName = "Showdown";
                 break;
         }
+        // System.out.println("Betting Phase: " + bettingRoundName);
+        if (!(bettingRoundName.equals("Pre-Flop"))) {
+            GameTextDisplay.printCard(table1.getCommCards());
+        }
+        
 
         while (numPlayersChecked != getCurrentSize(currentPlayers)) {
             for (Player o : currentPlayers) {
                 if (o.getType().equals("Player") && o.getIsChecked() == false && o.getIsPlaying() == true) {
-                    System.out.println("Betting Phase: " + bettingRoundName);
+                    if (!(turnOrder[0].getType().equals("Player"))){
+                        System.out.println("Betting Phase: " + bettingRoundName);
+                    }
                     String action = null;
                     GameTextDisplay.showPlayerAttributes(o, table1, afterRound1);
                     if (action == null){
@@ -142,6 +153,7 @@ public class Game {
                 } else if (o.getType().equals("Bot") && o.getIsChecked() == false && o.getIsPlaying() == true) {
 
                     GameTextDisplay.showPlayerAttributes(o, table1, afterRound1);
+                    wait(500);
 
                     int botAction = PlayerBot.getBotAction(o, previousAction, afterRound1, table1);
 
@@ -251,15 +263,14 @@ public class Game {
             }
 
         }
-
+        System.out.println("This concludes the betting for the " + bettingRoundName + " phase");
         for (Player o : playersList) {
             o.setIsChecked(false);
             o.setBet(0);
+            System.out.println();
         }
         table1.setCurrentBetAmt(0);
-        System.out.println("This concludes the betting for " + bettingRoundName + " phase");
         wait(2000);
-        System.out.println();
     }
 
    
@@ -317,6 +328,7 @@ public class Game {
             }
 
             //if everybody all in or all but one all in, then show hand
+            System.out.println("Community Cards");
             GameTextDisplay.printCard(table1.getCommCards());
             GameTextDisplay.printShowDown(activePlayers);
             // DELETE ONLY FOR MAC DEBUGGING BELOW
