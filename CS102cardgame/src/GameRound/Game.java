@@ -344,7 +344,9 @@ public class Game {
         for (Player o : playersList) {
             o.setIsChecked(false);
             o.getHand().clear();
-            o.setIsPlaying(true);
+            if (o.getBalance() != 0) {
+                o.setIsPlaying(true);
+            }
             o.setBet(0);
         }
         table1.getCommCards().clear();
