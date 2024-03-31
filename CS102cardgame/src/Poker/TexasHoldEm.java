@@ -11,15 +11,12 @@ import GameRound.*;
 import Input.*;
 import Players.*;
 import Eval.*;
-import Input.*;
 
 public class TexasHoldEm {
     private GameTextDisplay gameTextDisplay;
-    private ConsoleInputHandler inputHandler;
 
-    public TexasHoldEm(GameTextDisplay gameTextDisplay, ConsoleInputHandler inputHandler) {
+    public TexasHoldEm(GameTextDisplay gameTextDisplay) {
         this.gameTextDisplay = gameTextDisplay;
-        this.inputHandler = inputHandler;
     }
 
     public void startingScreen() {
@@ -29,8 +26,8 @@ public class TexasHoldEm {
     public static void main(String[] args) {
         ArrayList<Player> playersList = new ArrayList<Player>();
 
-        TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay(), new ConsoleInputHandler());
-        // texasHoldEm.startingScreen();
+        TexasHoldEm texasHoldEm = new TexasHoldEm(new GameTextDisplay());
+        texasHoldEm.startingScreen();
 
         // Get player's name 
         Scanner sc = new Scanner(System.in);
@@ -61,8 +58,7 @@ public class TexasHoldEm {
         int randomTightness1 = ran.nextInt(361) + 20; //generates a tightness of 20 to 60
         Player userPlayer = new Player(name, "Player");
         playersList.add(userPlayer);
-        Player userPlayer1 = new PlayerBot("Bot1", "Bot", 60); // change back
-        playersList.add(userPlayer1);
+        Player userPlayer1 = new PlayerBot("Bot1", "Bot", randomTightness1); 
         int randomTightness2 = ran.nextInt(31) + 10;
         Player userPlayer2 = new PlayerBot("Bot2", "Bot", randomTightness2);
         playersList.add(userPlayer2);
