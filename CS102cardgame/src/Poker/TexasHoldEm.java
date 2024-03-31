@@ -197,6 +197,17 @@ public class TexasHoldEm {
             }
             GameTextDisplay.printCard(table1.getCommCards());
             GameTextDisplay.printShowDown(activePlayers);
+            // DELETE ONLY FOR MAC DEBUGGING BELOW
+            for (Card card : table1.getCommCards()){
+                System.out.println(card.getRank() + " of " + card.getSuit());
+            }
+            for (Player plyr : activePlayers){
+                for (Card card : plyr.getHand()){
+                    System.out.println(card.getRank() + " of " + card.getSuit());
+                }
+                
+            }
+            // DELETE ABOVE ONLY FOR MAC DEBUGGING ABOVE
             
             Winner.getWinner(playersList, table1);
 
