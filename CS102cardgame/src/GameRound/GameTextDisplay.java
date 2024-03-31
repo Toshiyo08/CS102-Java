@@ -118,14 +118,35 @@ public class GameTextDisplay {
         }
         if (!afterRound1 && o.getIsBigBlind() && !o.getIsBlindPaid()) { // Not chen round, big blind, and not blinded
                                                                         // yet
-            o.raiseBet(10);
-            table1.raiseCurrentBetAmt(10);
-            table1.raisePot(10);
+            if (o.getBalance() < 10) {
+                int remainingBalance = o.getBalance();
+                o.raiseBet(remainingBalance);
+                table1.raiseCurrentBetAmt(remainingBalance);
+                table1.raisePot(remainingBalance);
+            } else {
+                o.raiseBet(10);
+                table1.raiseCurrentBetAmt(10);
+                table1.raisePot(10);
+            }
+            
             System.out.print(o.getBalance());
 
         } else if (!afterRound1 && o.getIsSmallBlind() && !o.getIsBlindPaid()) {
-            o.raiseBet(5);
-            table1.raisePot(5);
+            if (o.getBalance() < 5){
+                int remainingBalance = o.getBalance();
+                if (remainingBalance > table1.getCurrentBetAmt()) {
+                    table1.raiseCurrentBetAmt(remainingBalance - table1.getCurrentBetAmt());
+                }
+                o.raiseBet(remainingBalance);
+                table1.raisePot(remainingBalance);
+            } else {
+                if (5 > table1.getCurrentBetAmt()) {
+                    table1.raiseCurrentBetAmt(5-table1.getCurrentBetAmt());
+                }
+                o.raiseBet(5);
+                table1.raisePot(5);
+            }
+            
             System.out.print(o.getBalance());
 
         } else {

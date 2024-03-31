@@ -196,7 +196,7 @@ public class Game {
                             System.out.println(o.getName() + ": Oh, I don't have enough, guess I'll all in");
                             bettingAmount = o.getBalance();
                             if (o.getBet() + bettingAmount > table1.getCurrentBetAmt()) { // All in increases table bet
-                                table1.raiseCurrentBetAmt(bettingAmount);
+                                table1.raiseCurrentBetAmt((o.getBet() + bettingAmount) - table1.getCurrentBetAmt());
                             } // else, don't need change table bet
                             o.raiseBet(bettingAmount);
                             table1.raisePot(bettingAmount);
