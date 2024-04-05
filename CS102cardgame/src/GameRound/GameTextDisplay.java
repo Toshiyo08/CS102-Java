@@ -39,23 +39,23 @@ public class GameTextDisplay {
         System.out.print("Shuffling Cards ");
 
         for (int i = 0; i < 3; i++) {
-            Game.wait(700);
+            Game.wait(300);
             System.out.print(". ");
         }
 
-        Game.wait(800);
+        Game.wait(500);
         System.out.println();
         System.out.print("Stacking Chips ");
         for (int i = 0; i < 3; i++) {
-            Game.wait(700);
+            Game.wait(300);
             System.out.print(". ");
         }
 
-        Game.wait(800);
+        Game.wait(500);
         System.out.println();
         System.out.print("Loading ");
         for (int i = 0; i < 10; i++) {
-            Game.wait(700);
+            Game.wait(200);
             System.out.print(Character.toChars(0x2593));
         }
         Game.wait(800);
